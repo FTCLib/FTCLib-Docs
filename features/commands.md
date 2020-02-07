@@ -28,3 +28,29 @@ Defines a single, executable command. A Command defines the actions of multiples
 
 `Command` also provides a `isFinished()` method which returns `true` if the Command has completed and `false` otherwise. Note: `end()` will always run after the Command is unscheduled. You do not need to check if the Command `isFinished()` to run your own `end()` method.
 
+## CommandOpMode
+
+Defines an `OpMode` which is designed to run on [Commands](commands.md#command) as opposed to manual method calls. Before using a CommandOpMode, Commands and [Subsystems](commands.md#subsystem) need to be defined. CommandOpMode runs an internal `ElapsedTimer` which ensures Commands terminate after their specified timeouts.
+
+Although CommandOpMode extends `LinearOpMode` , it is not required to use any of the methods provided explicitly. These methods are all called internally by `runOpMode()` \(it is not necessary to override this method within your own extension of CommandOpMode\) within the three lifecycle phases of a CommandOpMode \(it _is_ required to override these methods\):
+
+* `initialize()`: Sets up and calls `initialize()` of all attached Subsystems and Commands. It is vital to setup Subsystems before their Commands, as doing the reverse could likely raise NullPointerExceptions. 
+* `initLoop()`: Called repeatedly after `initialize()` but before the user presses "Play" on the Driver Station
+* `run()`: The main loop of a CommandOpMode. Called immediately after the user presses the "Play" button on the Driver Station.
+
+Internally, these three lifecycle phases are tied together under an override of the `runOpMode()` method of `LinearOpMode`:
+
+```java
+@Override
+public void runOpMode() throws InterruptedException {
+    commandTimer = new ElapsedTime();
+    initialize();
+    while(!isStopRequested() && !isStarted()) { // Runs after "Init" 
+        initLoop();                             // but before "Play"
+    }
+    run();
+}
+```
+
+Once the user defines Commands, Subsystems, and the three lifecycle phases, the user can add Commands to the workflow using `addSequential()`. `addSequential()` adds a Command to be run within a certain specified timeout. The user can also optionally set a custom loop interval time \(which defaults to 20 ms\). `addSequential()` first initializes its passed-in Command, runs it every 20 ms \(terminating if it reaches its timeout\), and checks if the Command `isFinished()`. If true, the Command will exit the loop and run its `end()` method.
+
