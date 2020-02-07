@@ -52,5 +52,5 @@ public void runOpMode() throws InterruptedException {
 }
 ```
 
-Once the user defines Commands, Subsystems, and the three lifecycle phases, the user can add Commands to the workflow using `addSequential()`. `addSequential()` adds a Command to be run within a certain specified timeout. The user can also optionally set a custom loop interval time \(which defaults to 20 ms\). `addSequential()` first initializes its passed-in Command, runs it every 20 ms \(terminating if it reaches its timeout\), and checks if the Command `isFinished()`. If true, the Command will exit the loop and run its `end()` method.
+Once the user defines Commands, Subsystems, and the three lifecycle phases, the user can add Commands to the workflow using `addSequential()`. `addSequential()` adds a Command to be run within a certain specified timeout. The user can also optionally set a custom loop interval time \(which defaults to 20 ms\). `addSequential()` first initializes its passed-in Command, runs it every 20 ms \(terminating if it reaches its timeout\), and checks if the Command `isFinished()`. If true, the Command will exit the loop and run its `end()` lifecycle method.
 
