@@ -6,12 +6,6 @@ description: package com.arcrobotics.ftclib.command
 
 The FTCLib provides a Command-based OpMode to define your robot's `OpMode` routine. Instead of hard-coding instructions in your OpMode, you can leverage the reusability of the `CommandOpMode` structure to predefined `Command` routines and run them sequentially. You can also set timeouts for a `Command` to automatically terminate a running command.
 
-#### Contents
-
-* [Subsystem](commands.md#subsystem)
-* [Command](commands.md#command)
-* CommandOpMode
-
 ## Subsystem
 
 Defines an organized module on your robot. One such example is a linear slide lift powered by a motor connected to a spool, additionally using encoders or touch/magnetic sensors to act as limit switches, preventing the lift from exceeding its bounds. In this example, the motor, its encoder, and any sensors used would fall under a single "Lift" Subsystem.
