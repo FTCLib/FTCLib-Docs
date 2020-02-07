@@ -8,8 +8,8 @@ The FTCLib provides a Command-based OpMode to define your robot's `OpMode` routi
 
 #### Contents
 
-* `Subsystem`
-* `Command`
+* \`\`[`Subsystem`](commands.md#subsystem)\`\`
+* \`\`[`Command`](commands.md#command)\`\`
 * `CommandOpMode`
 
 ## Subsystem
