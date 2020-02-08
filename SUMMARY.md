@@ -5,4 +5,5 @@
 ## Features
 
 * [Commands](features/commands.md)
+* [Gamepad Extensions](features/gamepad-extensions.md)
 
