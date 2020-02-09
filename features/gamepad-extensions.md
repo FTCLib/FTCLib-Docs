@@ -23,6 +23,18 @@ An extension of the stock FTC SDK `Gamepad` class. Constructed simply from a Gam
 
 ## KeyReader
 
+The `KeyReader` interface is the base for objects that monitor an individual button or trigger on a gamepad. All `Reader` classes must implement these functions:
+
+* `readValue()`: Reads the current value of the key, true or false. This must be called in a loop in order to use functions that depend on the previous value of the key such as `wasJustPressed()` , `wasJustReleased()` , `stateJustChanged()` , or `getState` with `ToggleButtonReader` class. 
+* `isDown()` : Checks if key is currently down. Will return a boolean of whether that key is pressed.
+* `wasJustPressed()` : Returns boolean whether the key is pressed, but only if it was previously not pressed. 
+* `wasJustReleased()` : Returns boolean indicating whether the key is not pressed, but only if it was previously pressed. 
+* `stateJustChanged` : Returns boolean indicating that the key's value has switched. 
+
+ 
+
+
+
 ## TriggerReader
 
 ## ButtonReader
