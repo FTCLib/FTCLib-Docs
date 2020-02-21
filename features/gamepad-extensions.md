@@ -47,5 +47,14 @@ The `TriggerReader` class implements the `KeyReader` interface. Because `Gamepad
 
 ## ButtonReader
 
+The `ButtonReader`class implements the `KeyReader` interface. It checks if a button is pressed, released, or is down.
+
+* `ButtonReader(GamepadEx gamepad, GamepadKeys.Button button)`: Constructs a new Button Reader with a `GamepadEx` gamepad and a `GamepadKeys.Button` button. 
+* `ButtonReader(BooleanSupplier supplier)`: Constructs a new Button Reader using the value of a boolean supplier instead of a gamepad, which allows reading value states easily without a gamepad.
+
 ## ToggleButtonReader
+
+The `ToggleButtonReader` class extends `ButtonReader` and adds the ability to get the status of a toggle. `readValue()` needs to be run in a loop to get the state of the toggle.
+
+`getState()` : Gets the toggle value of a button or boolean supplier.
 
