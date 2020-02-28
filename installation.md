@@ -47,7 +47,7 @@ Add this dependency block:
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
 dependencies {
-    implementation 'com.arcrobotics:ftclib:2.0.2'
+    implementation 'com.arcrobotics:ftclib:2.0.8'
 }
 ```
 {% endcode %}
