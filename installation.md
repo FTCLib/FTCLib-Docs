@@ -42,7 +42,7 @@ compileOptions {
 
 ### build.gradle \(TeamCode\)
 
-Add this dependency block:
+Add this dependency block in the teamcode `build.gradle` file (or create the dependencies block if it doesn't exist):
 
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
