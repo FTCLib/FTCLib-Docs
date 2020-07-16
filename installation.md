@@ -42,12 +42,12 @@ compileOptions {
 
 ### build.gradle \(TeamCode\)
 
-Add this dependency block in the teamcode `build.gradle` file (or create the dependencies block if it doesn't exist):
+Add this dependency block:
 
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.0.0'
+    implementation 'com.arcrobotics:ftclib:1.0.0' // current version
 }
 ```
 {% endcode %}

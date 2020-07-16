@@ -29,21 +29,13 @@ The `KeyReader` interface is the base for objects that monitor an individual but
 * `isDown()` : Checks if key is currently down. Will return a boolean of whether that key is pressed.
 * `wasJustPressed()` : Returns boolean whether the key is pressed, but only if it was previously not pressed. 
 * `wasJustReleased()` : Returns boolean indicating whether the key is not pressed, but only if it was previously pressed. 
-* `stateJustChanged` : Returns boolean indicating that the key's value has switched. 
-
- 
-
-
+* `stateJustChanged` : Returns boolean indicating that the key's value has switched.
 
 ## TriggerReader
 
 The `TriggerReader` class implements the `KeyReader` interface. Because `GamepadEx` Triggers return a `double` , the `TriggerReader` class interprets a value of greater than `0.5` as a trigger press.
 
 * `TriggerReader(GamepadEx gamepad, GamepadKeys.Trigger trigger, [String triggerName, Telemetry telemetry])` : Constructs a new Trigger Reader with a `GamepadEx` gamepad and `GamepadKeys.Trigger` trigger. `triggerName` and `telemetry` are optional parameters that display the boolean value of the trigger on the Driver Station phone's telemetry.
-
-
-
-
 
 ## ButtonReader
 
