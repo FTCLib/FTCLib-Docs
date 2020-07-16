@@ -82,7 +82,7 @@ public class GripperSubsystem extends SubsystemBase {
 
 “Default commands” are commands that run automatically whenever a subsystem is not being used by another command.
 
-Setting a default command for a subsystem is very easy; one simply calls `CommandScheduler.getInstance().setDefaultCommand()`, or, more simply, the `setDefaultCommand()` method of the `Subsystem` interface:
+Setting a default command for a subsystem is very easy; one simply calls `CommandScheduler.getInstance().setDefaultCommand()`, or, more simply, the `setDefaultCommand()` method of the `Subsystem` interface which can be called in the OpMode:
 
 ```java
 CommandScheduler.getInstance().setDefaultCommand(exampleSubsystem, exampleCommand);
