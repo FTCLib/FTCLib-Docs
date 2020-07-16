@@ -49,8 +49,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * A gripper mechanism that grabs a stone from the quarry.
- * Centered around the Skystone game for FTC that was done in the 2020
- * to 2021 season.
+ * Centered around the Skystone game for FTC that was done in the 2019
+ * to 2020 season.
  */
 public class GripperSubsystem extends SubsystemBase {
 
@@ -82,7 +82,7 @@ public class GripperSubsystem extends SubsystemBase {
 
 “Default commands” are commands that run automatically whenever a subsystem is not being used by another command.
 
-Setting a default command for a subsystem is very easy; one simply calls `CommandScheduler.getInstance().setDefaultCommand()`, or, more simply, the `setDefaultCommand()` method of the `Subsystem` interface:
+Setting a default command for a subsystem is very easy; one simply calls `CommandScheduler.getInstance().setDefaultCommand()`, or, more simply, the `setDefaultCommand()` method of the `Subsystem` interface which can be called in the OpMode:
 
 ```java
 CommandScheduler.getInstance().setDefaultCommand(exampleSubsystem, exampleCommand);
