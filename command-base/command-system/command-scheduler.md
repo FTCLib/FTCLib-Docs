@@ -14,9 +14,9 @@ The `CommandScheduler` is a _singleton_, meaning that it is a globally-accessibl
 
 For the most part, users do not have to call scheduler methods directly - almost all important scheduler methods have convenience wrappers elsewhere \(e.g. in the `Command` and `Subsystem` interfaces\).
 
-However, there is one exception: users _must_ call `CommandScheduler.getInstance().run()` from the `robotPeriodic()` method of their `Robot` class. If this is not done, the scheduler will never run, and the command framework will not work. The provided command-based project template has this call already included.
+However, there is one exception: users _must_ call `CommandScheduler.getInstance().run()` from the periodic method of their opmode. If this is not done, the scheduler will never run, and the command framework will not work. 
 
-To schedule a command, users call the `schedule()` method \([Java](https://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj2/command/CommandScheduler.html#schedule%28boolean,edu.wpi.first.wpilibj2.command.Command...%29), [C++](https://first.wpi.edu/FRC/roborio/release/docs/cpp/classfrc2_1_1CommandScheduler.html#a26c120054ec626806d740f2c42d9dc4f). This method takes a command \(and, optionally, a specification as to whether that command is interruptible\), and attempts to add it to list of currently-running commands, pending whether it is already running or whether its requirements are available. If it is added, its `initialize()` method is called.
+To schedule a command, users call the `schedule()` method. This method takes a command \(and, optionally, a specification as to whether that command is interruptible\), and attempts to add it to list of currently-running commands, pending whether it is already running or whether its requirements are available. If it is added, its `initialize()` method is called.
 
 ## The Scheduler Run Sequence
 

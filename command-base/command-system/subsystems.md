@@ -75,7 +75,6 @@ public class GripperSubsystem extends SubsystemBase {
     }
 
 }
-
 ```
 
 ## Setting Default Commands
