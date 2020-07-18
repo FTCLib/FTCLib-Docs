@@ -5,6 +5,7 @@
 
 ## Features
 
+* [Geometry](features/geometry.md)
 * [Controllers](features/controllers.md)
 * [Gamepad Extensions](features/gamepad-extensions.md)
 
