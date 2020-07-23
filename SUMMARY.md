@@ -9,6 +9,8 @@
 * [Drivebases](features/drivebases.md)
 * [Gamepad Extensions](features/gamepad-extensions.md)
 * [Geometry](features/geometry.md)
+* [Hardware](features/hardware/README.md)
+  * [Motors](features/hardware/motors.md)
 
 ## Command Base
 
@@ -19,4 +21,8 @@
   * [Command Scheduler](command-base/command-system/command-scheduler.md)
   * [Binding Commands to Triggers](command-base/command-system/binding-commands-to-triggers.md)
 * [Old Commands](command-base/old-commands.md)
+
+---
+
+* [Support FTCLib](support-ftclib.md)
 

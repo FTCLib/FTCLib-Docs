@@ -49,7 +49,7 @@ An X-drive is a holonomic base that has four omniwheels positioned into an "X" s
 
 A mecanum drivebase is a type of holonomic drive that utilizes [mecanum wheels](https://en.wikipedia.org/wiki/Mecanum_wheel) for movement.
 
-![The goBILDA strafer chassis](../.gitbook/assets/mecanum-drive.png)
+![A custom parallel plate mecanum drivetrain](../.gitbook/assets/final-drivebase-render-light.png)
 
 For more information on mecanum drives, please watch this video: [https://www.youtube.com/watch?v=8rhAkjViHEQ](https://www.youtube.com/watch?v=8rhAkjViHEQ).
 
