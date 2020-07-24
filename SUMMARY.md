@@ -25,4 +25,5 @@
 ---
 
 * [Support FTCLib](support-ftclib.md)
+* [Additional Reading](additional-reading.md)
 
