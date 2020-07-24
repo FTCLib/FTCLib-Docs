@@ -4,7 +4,7 @@ FTCLib is solely community-driven and currently is not the standard tool for pro
 
 You can use our logo to put a sticker on your robot as seen here:
 
-![CAD courtesy of Jeremiah from FTC Team 10461](.gitbook/assets/small-bot.png)
+![CAD courtesy of Jeremiah from FTC Team 10641](.gitbook/assets/small-bot.png)
 
 We would also greatly appreciate it if you would contribute to FTCLib. Make sure to read our [contributing page](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md) on the GitHub for information on how to contribute. We are always willing to accept new pull requests.
 

@@ -79,7 +79,7 @@ Remember that button binding is _declarative_: bindings only need to be declared
 
 ## Composing Triggers
 
-The `Trigger` class \(including its `Button` subclasses\) can be composed to create composite triggers through the `and()`, `or()`, and `negate()` methods \(or, in C++, the `&&`, `||`, and `!` operators\). For example:
+The `Trigger` class \(including its `Button` subclasses\) can be composed to create composite triggers through the `and()`, `or()`, and `negate()` methods. For example:
 
 ```java
 // Binds an ExampleCommand to be scheduled when both the 'X' and 'Y' buttons of the driver gamepad are pressed
@@ -110,5 +110,5 @@ Alternatively, this can also be done inline by passing a lambda to the construct
 Trigger exampleTrigger = new Trigger(condition::get);
 ```
 
-**Note**: This is not very effective, but can be done if you want to write your own custom methods \(A.K.A. being a tryhard\).
+**Note**: This is not very effective, but can be done if you want to write your own custom methods \(A.K.A. being a try-hard\).
 

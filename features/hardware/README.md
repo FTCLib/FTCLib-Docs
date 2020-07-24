@@ -23,5 +23,35 @@ We currently have a sample implementation that can be found in the [JSTEncoder](
 
 ## Gyro Extensions
 
-The `GyroEx` class is an extended gyro 
+The `GyroEx` class is an extended gyro that allows users to add more configurable methods and possible control to their gyro. An example would be creating a `ModernRoboticsGyro` class. The abstract class has the following methods:
+
+* `init()`: initializes the gyro and sets the current direction to the 0 heading
+* `getHeading()`: returns the heading of the robot compared to the last reset
+* `getAbsoluteHeading()`: returns the absolute heading relative to the initial direction
+* `getAngles()`: returns the x, y, and z orientation of the gyro. This is functionally the same as yaw, pitch, and roll.
+* `getRotation2d()`: transforms the heading into a `Rotation2d` object
+* `reset()`: applies an offset so that `getHeading()` returns the 0 position
+
+A useful implementation of this is the [RevIMU](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/RevIMU.java) class for the built-in imu on your REV hub.
+
+## Sensors
+
+There are a few sensors that are offered in FTCLib:
+
+* [SensorColor](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/SensorColor.java)
+* [SensorDistance](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/SensorDistance.java) & [SensorDistanceEx](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/SensorDistanceEx.java)
+* [SensorRevTOFDistance](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/SensorRevTOFDistance.java)
+* [RevColorSensorV3](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/RevColorSensorV3.java)
+
+The `SensorColor` class is just an extension for the `ColorSensor` class that is in the SDK.
+
+`SensorDistance` and `SensorDistanceEx` are interfaces for creating custom distance sensors if desired. An implementation of the `SensorDistanceEx` interface is `SensorRevTOFDistance` which utilizes the time-of-flight mechanic to track distance.
+
+The `RevColorSensorV3` is a combination of a TOF sensor and a color sensor.
+
+## Servos
+
+The [ServoEx](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/ServoEx.java) interface allows for more methods and actions than the normal servo class in the SDK. You can change the position of the servo relative to the last position or set it to an absolute position. You can either specify a position within the range of the servo's motion or have it rotate in degrees.
+
+An example implementation of this can be found in the [SimpleServo](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/SimpleServo.java) class.
 
