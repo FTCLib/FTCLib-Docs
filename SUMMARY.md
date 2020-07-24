@@ -7,7 +7,7 @@
 
 * [Controllers](features/controllers.md)
 * [Drivebases](features/drivebases.md)
-* [Gamepad Extensions](features/gamepad-extensions.md)
+* [Gamepad](features/gamepad-extensions.md)
 * [Geometry](features/geometry.md)
 * [Hardware](features/hardware/README.md)
   * [Motors](features/hardware/motors.md)
