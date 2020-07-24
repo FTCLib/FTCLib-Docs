@@ -24,4 +24,5 @@ We would also greatly appreciate it if you would contribute to FTCLib. Make sure
 * Shengming - FTC 4781 alum
 * Noah - FTC 16626 alum
 * Purav - FTC 14614
+* Dan - FTC 7026
 
