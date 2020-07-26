@@ -12,6 +12,7 @@
 * [Hardware](features/hardware/README.md)
   * [Motors](features/hardware/motors.md)
 * [Trajectory](features/trajectory.md)
+* [Computer Vision](features/computer-vision.md)
 
 ## Command Base
 
