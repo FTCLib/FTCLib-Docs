@@ -12,7 +12,7 @@ The heart of the skystone detector is the pipeline. A pipeline is just a fancy w
 
 ### Receiving the Input
 
-```text
+```java
 public Mat processFrame(Mat input) 
 ```
 
@@ -20,7 +20,7 @@ In this line, what the camera sees is being passed in and represented as a matri
 
 ### Manipulating the Input
 
-```text
+```java
 Imgproc.cvtColor(input, matYCrCb, Imgproc.COLOR_RGB2YCrCb);
 setValues(input.width(), input.height());
 
@@ -36,7 +36,7 @@ The first line will convert the input matrix color space from RGB to YCrCb. Beca
 
 ### Determining the Position
 
-```text
+```java
 Scalar max = means.get(0);
 int biggestIndex = 0;
 
@@ -56,7 +56,7 @@ The SkystoneDetector is a LinearOpMode that will show how you would use pipeline
 
 ### Setting Up the Camera
 
-```text
+```java
 int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
 phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
 phoneCam.openCameraDevice();
@@ -73,19 +73,19 @@ phoneCam.setPipeline(visionPipeLine);
 
 SkystoneDetectorPipeline's constructor is overloaded. You can choose between:
 
-```text
+```java
 public SkystoneDetectorPipeline(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight)
 ```
 
-```text
+```java
 public SkystoneDetectorPipeline(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight, Telemetry tl){
 ```
 
-```text
+```java
 public SkystoneDetectorPipeline()
 ```
 
-```text
+```java
 public SkystoneDetectorPipeline(Telemetry tl)
 ```
 
