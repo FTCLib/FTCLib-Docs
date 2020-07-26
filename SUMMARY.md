@@ -11,6 +11,7 @@
 * [Geometry](features/geometry.md)
 * [Hardware](features/hardware/README.md)
   * [Motors](features/hardware/motors.md)
+* [Trajectory](features/trajectory.md)
 
 ## Command Base
 
