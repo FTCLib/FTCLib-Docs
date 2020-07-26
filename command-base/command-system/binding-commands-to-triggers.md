@@ -8,7 +8,7 @@ Apart from autonomous commands, which are scheduled at the start of the autonomo
 
 As mentioned earlier, command-based is a [declarative](https://en.wikipedia.org/wiki/Declarative_programming) paradigm. Accordingly, binding buttons to commands is done declaratively; the association of a button and a command is “declared” once, during robot initialization. The library then does all the hard work of checking the button state and scheduling \(or cancelling\) the command as needed, behind-the-scenes. Users only need to worry about designing their desired UI setup - not about implementing it!
 
-Command binding is done through the `Trigger` class \([Java](https://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj2/command/button/Trigger.html), [C++](https://first.wpi.edu/FRC/roborio/release/docs/cpp/classfrc2_1_1Trigger.html)\) and its various `Button` subclasses.
+Command binding is done through the `Trigger` class and its various `Button` subclasses.
 
 ## Trigger/Button Bindings
 
