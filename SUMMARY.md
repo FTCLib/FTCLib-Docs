@@ -11,7 +11,12 @@
 * [Geometry](features/geometry.md)
 * [Hardware](features/hardware/README.md)
   * [Motors](features/hardware/motors.md)
-* [Trajectory](features/trajectory.md)
+* [Trajectory](features/trajectory/README.md)
+  * [Trajectory Generation](features/trajectory/trajectory-generation.md)
+  * [Trajectory Constraints](features/trajectory/trajectory-constraints.md)
+  * [Manipulating Trajectories](features/trajectory/manipulating-trajectories.md)
+  * [Transforming Trajectories](features/trajectory/transforming-trajectories.md)
+  * [Ramsete Controller](features/trajectory/ramsete-controller.md)
 * [Computer Vision](features/computer-vision.md)
 
 ## Command Base

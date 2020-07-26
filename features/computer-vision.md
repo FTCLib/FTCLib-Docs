@@ -4,7 +4,7 @@ description: package com.arcrobotics.ftclib.vision
 
 # Computer Vision
 
-Computer Vision is the process of helping computers to understand the digital images such as photographs and videos provided to them. FTCLib provides examples on the object detection needed for the current season\(right now being Skystone detection\) using the [EasyOpenCV library](https://github.com/OpenFTC/EasyOpenCV).
+Computer Vision is the process of helping computers to understand the digital images such as photographs and videos provided to them. FTCLib provides examples on the object detection needed for the current season \(right now being Skystone detection\) using the [EasyOpenCV library](https://github.com/OpenFTC/EasyOpenCV).
 
 ## SkystoneDetectorPipeline
 

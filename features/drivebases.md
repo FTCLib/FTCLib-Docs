@@ -59,9 +59,9 @@ Like how the differential drive has two different control schemes, so too does h
 
 #### Robot-Centric
 
-Robot-centric assumes that each push of the joystick is in relation to the local position of the robot--this means that whenever the user pushes the drive stick forward, the robot will drive in the direction of its front-facing side.
+Robot-centric assumes that each push of the joystick is in relation to the local position of the robot—this means that whenever the user pushes the drive stick forward, the robot will drive in the direction of its front-facing side.
 
 #### Field-Centric
 
-Field-centric assumes that each push of the joystick is in relation to the global position of the robot--this means that whenever the user pushes the drive stick forward, the robot will move away from the driver no matter its orientation. This is done by rotating the direction of the joystick clockwise by an angle measurement equivalent to the global heading of the robot.
+Field-centric assumes that each push of the joystick is in relation to the global position of the robot—this means that whenever the user pushes the drive stick forward, the robot will move away from the driver no matter its orientation. This is done by rotating the direction of the joystick clockwise by an angle measurement equivalent to the global heading of the robot.
 
