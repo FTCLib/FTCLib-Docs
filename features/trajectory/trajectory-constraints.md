@@ -24,15 +24,18 @@ Users can create their own constraint by implementing the `TrajectoryConstraint`
 
 ```java
 @Override
-public double getMaxVelocityMetersPerSecond(Pose2d poseMeters, double curvatureRadPerMeter,
-                                            double velocityMetersPerSecond) {
+public double getMaxVelocityMetersPerSecond(
+  Pose2d poseMeters,
+  double curvatureRadPerMeter,
+  double velocityMetersPerSecond) {
   // code here
 }
 
 @Override
-public MinMax getMinMaxAccelerationMetersPerSecondSq(Pose2d poseMeters,
-                                                     double curvatureRadPerMeter,
-                                                     double velocityMetersPerSecond) {
+public MinMax getMinMaxAccelerationMetersPerSecondSq(
+  Pose2d poseMeters,
+  double curvatureRadPerMeter,
+  double velocityMetersPerSecond) {
   // code here
 }
 ```
