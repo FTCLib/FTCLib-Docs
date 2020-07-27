@@ -39,11 +39,35 @@ A three wheel holonomic drivebase, otherwise known as a "Kiwi" or "Killough," is
 
 ![A Kiwi Drive concept from VEX](../.gitbook/assets/kiwi-drive.jpg)
 
+You can create the kiwi drive as such:
+
+```java
+// for if the wheels are oriented at 60 degrees,
+// 120 degrees, and 270 degrees
+HDrive kiwi_A = new HDrive(left, right, slide);
+
+// for if the wheels are oriented at other angles
+HDrive kiwi_B = new HDrive(left, right, slide,
+                           leftAngle, rightAngle, slideAngle);
+```
+
+Your slide motor is generally the back of the kiwi drive and the others are self-explanatory.
+
 #### X-Drive
 
 An X-drive is a holonomic base that has four omniwheels positioned into an "X" shape as seen below.
 
 ![An X-Drive concept from VEX](../.gitbook/assets/x-drive.jpg)
+
+
+
+You can create the x-drive drive as such:
+
+```java
+// input motors exactly as shown below
+HDrive xDrive = new HDrive(frontLeft, frontRight,
+                           backLeft, backRight);
+```
 
 #### Mecanum
 
@@ -55,6 +79,14 @@ For more information on mecanum drives, please watch this video:
 
 {% embed url="https://www.youtube.com/watch?v=8rhAkjViHEQ" %}
 
+You can create the mecanum drive as such:
+
+```java
+// input motors exactly as shown below
+MecanumDrive mecanum = new MecanumDrive(frontLeft, frontRight,
+                                        backLeft, backRight);
+```
+
 ### Control Scheme
 
 Like how the differential drive has two different control schemes, so too does holonomic. There is field-centric and robot-centric. The only difference is that there is some sort of interpolation of the robot's heading \(the direction the forward face is pointing globally\).
@@ -63,7 +95,11 @@ Like how the differential drive has two different control schemes, so too does h
 
 Robot-centric assumes that each push of the joystick is in relation to the local position of the robot—this means that whenever the user pushes the drive stick forward, the robot will drive in the direction of its front-facing side.
 
+For all types of holonomic drive you do this by calling the .`driveRobotCentric()` method that takes the gamepad inputs and converts them into directional values.
+
 #### Field-Centric
 
 Field-centric assumes that each push of the joystick is in relation to the global position of the robot—this means that whenever the user pushes the drive stick forward, the robot will move away from the driver no matter its orientation. This is done by rotating the direction of the joystick clockwise by an angle measurement equivalent to the global heading of the robot.
+
+For all types of holonomic drive you do this by calling the .`driveFieldCentric()` method that takes the gamepad inputs and converts them into directional values. Additionally, you include the gyro value for the heading of the robot so that it can account for that in its movement.
 
