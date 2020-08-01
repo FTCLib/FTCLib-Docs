@@ -19,6 +19,8 @@ All of the following drive types are available for use in FTCLib. All that's nee
 
 A differential drive is one that has two motors or motor groups on either side of the robot. Each side acts as a connected set or motor group. There are two types of drive systems here. You can use the tank and arcade control schemes with a differential drive.
 
+![CAD by Hrithik and Sanjay from FTC Team 16439](../.gitbook/assets/tank.jpg)
+
 ### Arcade
 
 Arcade drive use a y-value input from the controller and a value from the turn stick. We know that when the turn stick is pushed left, the right side should move forward and the left side should move backwards. Therefore, since pushing the turn stick to the left returns a negative value, it should be added to the left speed and subtracted from the right speed.
@@ -33,11 +35,11 @@ In FTCLib, we shortened holonomic drive to the generic term H-Drive. A holonomic
 
 ### Holonomic Drivebases
 
-#### Three Wheel H-Drive
+#### Three Wheel Holonomic
 
 A three wheel holonomic drivebase, otherwise known as a "Kiwi" or "Killough," is a drivetrain with omnidirectional motion while utilizing three omniwheels.
 
-![A Kiwi Drive concept from VEX](../.gitbook/assets/kiwi-drive.jpg)
+![Rendered by Pranay from FTC 16236, CAD made by Eric from FTC 18246](../.gitbook/assets/ftclib_kiwi_v4.png)
 
 You can create the kiwi drive as such:
 
