@@ -11,6 +11,7 @@
 * [Geometry](features/geometry.md)
 * [Hardware](features/hardware/README.md)
   * [Motors](features/hardware/motors.md)
+* [Pure Pursuit](features/pure-pursuit.md)
 * [Trajectory](features/trajectory/README.md)
   * [Trajectory Generation](features/trajectory/trajectory-generation.md)
   * [Trajectory Constraints](features/trajectory/trajectory-constraints.md)
