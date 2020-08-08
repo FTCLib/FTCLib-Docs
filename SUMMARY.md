@@ -11,14 +11,17 @@
 * [Geometry](features/geometry.md)
 * [Hardware](features/hardware/README.md)
   * [Motors](features/hardware/motors.md)
-* [Pure Pursuit](features/pure-pursuit.md)
-* [Trajectory](features/trajectory/README.md)
-  * [Trajectory Generation](features/trajectory/trajectory-generation.md)
-  * [Trajectory Constraints](features/trajectory/trajectory-constraints.md)
-  * [Manipulating Trajectories](features/trajectory/manipulating-trajectories.md)
-  * [Transforming Trajectories](features/trajectory/transforming-trajectories.md)
-  * [Ramsete Controller](features/trajectory/ramsete-controller.md)
 * [Computer Vision](features/computer-vision.md)
+
+## Pathing
+
+* [Pure Pursuit](pathing/pure-pursuit.md)
+* [Trajectory](pathing/trajectory/README.md)
+  * [Trajectory Generation](pathing/trajectory/trajectory-generation.md)
+  * [Trajectory Constraints](pathing/trajectory/trajectory-constraints.md)
+  * [Manipulating Trajectories](pathing/trajectory/manipulating-trajectories.md)
+  * [Transforming Trajectories](pathing/trajectory/transforming-trajectories.md)
+  * [Ramsete Controller](pathing/trajectory/ramsete-controller.md)
 
 ## Command Base
 
