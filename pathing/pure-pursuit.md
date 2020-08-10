@@ -184,6 +184,7 @@ Waypoint p5 = new PointTurnWaypoint(
     positionBuffer, rotationBuffer
 );
 ```
+
 ## Creating the Path
 
 Before you can call the `loop()` or `followPath()` method, you need to follow the proper procedure. If you are using `loop()`, you need to call the `init()` method to ensure your path is legal and set up the unconfigured waypoints.
@@ -199,16 +200,18 @@ If the path is not legal, an exception will be thrown.
 
 ### Intersections
 
-An intersection is the point where the follow distance represented by a circle around the robot meets the drawn path derived from the waypoints. The "best intersection" is determined by either waypoint order or heading. This intersection point where the circle meets the path is where the robot will move to. The pure pursuit algorithm determines the best intersection and calculates the motor powers needed to reach said position. This updates with each loop, so the intersection point can change with each step due to the movement of the robot. While the conventional pure pursuit algorithm used heading controlled waypoints, FTCLib features a custom type of intersection control we call "order controlled". This type of control is more powerful and less prone to errors then heading controlled and is enabled by default. If you wish to use heading controlled instead, use this (not recommended):
+An intersection is the point where the follow distance represented by a circle around the robot meets the drawn path derived from the waypoints. The "best intersection" is determined by either waypoint order or heading. This intersection point where the circle meets the path is where the robot will move to. The pure pursuit algorithm determines the best intersection and calculates the motor powers needed to reach said position. This updates with each loop, so the intersection point can change with each step due to the movement of the robot. While the conventional pure pursuit algorithm used heading controlled waypoints, FTCLib features a custom type of intersection control we call "order controlled". This type of control is more powerful and less prone to errors then heading controlled and is enabled by default. If you wish to use heading controlled instead, use this \(not recommended\):
+
 ```java
-path.setPathType(PathType.HEADING_CONTROLLED);
+m_path.setPathType(PathType.HEADING_CONTROLLED);
 ```
 
 ### Retrace
 
-FTCLib's pure pursuit implementation includes a unique feature we call retrace. One common issue with pure pursuit is that the robot can lose it's path. Retrace solves this issue. If enabled (retrace is enabled by default) and the robot loses it's path, the software will automatically plot a temporary path back to it's last known path position. Once the robot finds the path again it will continue on as normal. If you wish to disable retrace (not recommended), do this:
+FTCLib's pure pursuit implementation includes a unique feature we call retrace. One common issue with pure pursuit is that the robot can lose it's path. Retrace solves this issue. If enabled \(retrace is enabled by default\) and the robot loses it's path, the software will automatically plot a temporary path back to it's last known path position. Once the robot finds the path again it will continue on as normal. If you wish to disable retrace \(not recommended\), do this:
+
 ```java
-path.disableRetrace();
+m_path.disableRetrace();
 ```
 
 ### Timeouts
@@ -217,20 +220,21 @@ Advanced teams may want to have more control over how long the robot get to have
 
 ```java
 // For an entire path
-path.setWaypointTimeouts(timeout);
+m_path.setWaypointTimeouts(timeout);
 
 // For individual waypoints
-path.setWaypointTimeouts(p1_timeout, p2_timeout, p3_timeout, ...);
+m_path.setWaypointTimeouts(p1_timeout, p2_timeout, p3_timeout, ...);
 
 // Reset timeouts.
-path.resetTimeouts();
+m_path.resetTimeouts();
 ```
+
 ### Reseting the Path
 
 If you want to use a path more than once in the same opmode, make sure to reset between uses. You can do this as follows:
 
 ```java
-path.reset()
+m_path.reset()
 ```
 
 ## Using `followPath()`
@@ -288,11 +292,7 @@ The important thing for odometry is to remember to update the position of the ro
 
 ### Calling the Method
 
-This is the principle path method. After everything is configured and initiated, this method can be used.
- Using the robot's x, y, and rotation, this method calculates the appropriate motor powers for the 
-robot to follow the path. This method calls all triggered/interrupted actions automatically. If this 
-returns zero motor speeds `{0, 0, 0}` that means the path has either \(1\) timed out, \(2\) lost the path and
- retrace was disabled, or \(3\) reached the destination. Use `isFinished()` and `timedOut()` to troubleshoot.
+This is the principle path method. After everything is configured and initiated, this method can be used. Using the robot's x, y, and rotation, this method calculates the appropriate motor powers for the robot to follow the path. This method calls all triggered/interrupted actions automatically. If this returns zero motor speeds `{0, 0, 0}` that means the path has either \(1\) timed out, \(2\) lost the path and retrace was disabled, or \(3\) reached the destination. Use `isFinished()` and `timedOut()` to troubleshoot.
 
 Below is an example using a custom robot class that includes the drivebase and odometry:
 
@@ -300,11 +300,11 @@ Below is an example using a custom robot class that includes the drivebase and o
 while (!m_path.isFinished()) {
     if (m_path.timedOut())
         throw new InterruptedException("Timed out");
-    
+
     // return the motor speeds
     double speeds[] = m_path.loop(m_robot.getX(), m_robot.getY(),
                                   m_robot.getHeading());
-    
+
     m_robot.drive(speeds[0], speeds[1], speeds[2]);
     m_robot.updatePose();
 }
