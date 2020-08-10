@@ -234,7 +234,7 @@ m_path.resetTimeouts();
 If you want to use a path more than once in the same opmode, make sure to reset between uses. You can do this as follows:
 
 ```java
-m_path.reset()
+m_path.reset();
 ```
 
 ## Using `followPath()`
