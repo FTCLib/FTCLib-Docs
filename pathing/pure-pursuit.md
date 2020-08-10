@@ -29,42 +29,46 @@ You can create a waypoint by calling the various constructors.
 **StartWaypoint**
 
 ```java
-// empty constructor
-StartWaypoint waypoint_1 = new StartWaypoint();
-// Pose2d
-waypoint_1 = new StartWaypoint(pose2d);
-// X and Y coordinates
-waypoint_1 = new StartWaypoint(x, y);
-// Translation2d
-waypoint_1 = new StartWaypoint(translation2d);
+// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+Waypoint p1 = new StartWaypoint();
+// With Pose2d.
+Waypoint p1 = new StartWaypoint(pose2d);
+// With X and Y coordinates.
+Waypoint p1 = new StartWaypoint(x, y);
+// With Translation2d.
+Waypoint p1 = new StartWaypoint(translation2d);
 ```
 
 **GeneralWaypoint**
 
 ```java
-// empty constructor
-GeneralWaypoint waypoint_2 = new GeneralWaypoint();
-// X and Y coordinates
-waypoint_2 = new GeneralWaypoint(x, y);
+// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+Waypoint p2 = new GeneralWaypoint();
+// With X and Y coordinates. This waypoint will inherit it's settings from the previous waypoint. Useful for long strings of waypoints. Note: Will not work if the waypoint preceding this is not an instance of GeneralWaypoint. 
+Waypoint p2 = new GeneralWaypoint(x, y);
 
 /**
- * More detailed constructors
+ * Normal constructors.
  */
-waypoint_2 = new GeneralWaypoint(
+// With Translation2d and Rotation2d.
+Waypoint p2 = new GeneralWaypoint(
     translation2d, rotation2d,
     movementSpeed, turnSpeed,
     followRadius
 );
-waypoint_2 = new GeneralWaypoint(
+// With Pose2D.
+Waypoint p2 = new GeneralWaypoint(
     pose2d, movementSpeed, turnSpeed,
     followRadius
 );
-waypoint_2 = new GeneralWaypoint(
+// With X and Y coordinates.
+Waypoint p2 = new GeneralWaypoint(
     x, y, movementSpeed,
     turnSpeed, followRadius
 );
-waypoint_2 = new GeneralWaypoint(
-    x, y, rotationRadians,    // if you have a preferred angle
+// With a preferred angle.
+Waypoint p2 = new GeneralWaypoint(
+    x, y, rotationRadians,    
     movementSpeed, turnSpeed,
     followRadius
 );
@@ -75,29 +79,33 @@ waypoint_2 = new GeneralWaypoint(
 As you will see here, a "buffer" is a sort of expected error. This sets up a tolerance given that the robot might be a bit offset from the desired position or rotation.
 
 ```java
-// empty constructor
-PointTurnWaypoint waypoint_3 = new PointTurnWaypoint();
+// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+Waypoint p3 = new PointTurnWaypoint();
 
 /**
- * More detailed constructors
+ * Normal constructors.
  */
-waypoint_3 = new PointTurnWaypoint(
+// With Translation2d and Rotation2d.
+Waypoint p3 = new PointTurnWaypoint(
     translation2d, rotation2d,
     movementSpeed, turnSpeed,
     followRadius, positionBuffer,
     rotationBuffer
 );
-waypoint_3 = new PointTurnWaypoint(
+// With Pose2D.
+Waypoint p3 = new PointTurnWaypoint(
     pose2d, movementSpeed,
     turnSpeed, followRadius,
     positionBuffer, rotationBuffer
 );
-waypoint_3 = new PointTurnWaypoint(
+// With X and Y coordinates and preferred angle.
+Waypoint p3 = new PointTurnWaypoint(
     x, y, rotationRadians, movementSpeed,
     turnSpeed, followRadius,
     positionBuffer, rotationBuffer
 );
-waypoint_3 = new PointTurnWaypoint(
+// With X and Y coordinates.
+Waypoint p3 = new PointTurnWaypoint(
     x, y, movementSpeed,
     turnSpeed, followRadius,
     positionBuffer, rotationBuffer
@@ -109,67 +117,121 @@ waypoint_3 = new PointTurnWaypoint(
 The `action` here is an [InterruptAction](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/purepursuit/actions/InterruptAction.java), which is an interface that the user can implement to create a custom action to occur at this point. A recommendation is to pair this with the [command paradigm](../command-base/command-system/) that FTCLib provides.
 
 ```java
-// empty constructor
-InterruptWaypoint waypoint_4 = new InterruptWaypoint();
+// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+Waypoint p4 = new InterruptWaypoint();
 
 /**
- * More detailed constructors
+ * Normal constructors.
  */
-waypoint_4 = new InterruptWaypoint(
+// With Translation2d and Rotation2d.
+Waypoint p4 = new InterruptWaypoint(
     translation2d, rotation2d,
     movementSpeed, turnSpeed,
     followRadius, positionBuffer,
     rotationBuffer, action
 );
-waypoint_4 = new InterruptWaypoint(
+// With Pose2D.
+Waypoint p4 = new InterruptWaypoint(
     pose2d, movementSpeed, turnSpeed,
     followRadius, positionBuffer,
     rotationBuffer, action
 );
-waypoint_4 = new InterruptWaypoint(
+// With X and Y coordinates and preferred angle.
+Waypoint p4 = new InterruptWaypoint(
     x, y, rotationRadians,
     movementSpeed, turnSpeed,
     followRadius, positionBuffer,
     rotationBuffer, action
 );
-waypoint_4 = new InterruptWaypoint(
+// With X and Y coordinates.
+Waypoint p4 = new InterruptWaypoint(
     x, y, movementSpeed,
     turnSpeed, followRadius,
     positionBuffer, rotationBuffer,
     action
 );
+
+// With java 8 you can use a lambda expression to easily add an action. For example:
+Waypoint p4 = new InterruptWaypoint(x, y, movementSpeed, turnSpeed, followRadius, positionBuffer, rotationBuffer, () -> grabBlock());
 ```
 
 **EndWaypoint**
 
 ```java
-// empty constructor
-EndWaypoint waypoint_5 = new EndWaypoint();
+// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+Waypoint p5 = new EndWaypoint();
 
 /**
- * More detailed constructors
+ * Normal constructors.
  */
-waypoint_5 = new PointTurnWaypoint(
+// With Translation2d and Rotation2d.
+Waypoint p5 = new PointTurnWaypoint(
     translation2d, rotation2d,
     movementSpeed, turnSpeed,
     followRadius, positionBuffer,
     rotationBuffer
 );
-waypoint_5 = new PointTurnWaypoint(
+// With Pose2D.
+Waypoint p5 = new PointTurnWaypoint(
     pose2d, movementSpeed,
     turnSpeed, followRadius,
     positionBuffer, rotationBuffer
 );
-waypoint_5 = new PointTurnWaypoint(
+// With X and Y coordinates and preferred angle (A preferred angle is needed for an EndWaypoint).
+Waypoint p5 = new PointTurnWaypoint(
     x, y, rotationRadians, movementSpeed,
     turnSpeed, followRadius,
     positionBuffer, rotationBuffer
 );
 ```
+## Creating the Path
+
+Before you can call the `loop()` or `followPath()` method, you need to follow the proper procedure. If you are using `loop()`, you need to call the `init()` method to ensure your path is legal and set up the unconfigured waypoints.
+
+```java
+// we are using the waypoints we made in the above examples
+Path m_path = new Path(p1, p2, p3, p4, p5);
+
+m_path.init(); // initialize the path
+```
+
+If the path is not legal, an exception will be thrown.
 
 ### Intersections
 
-An intersection is the point where the follow distance represented by a circle around the robot meets the drawn path derived from the waypoints. The "best intersection" is determined by either waypoint order or heading. This intersection point where the circle meets the path is where the robot will move to. The pure pursuit algorithm determines the best intersection and calculates the motor powers needed to reach said position. This updates with each loop, so the intersection point can change with each step due to the movement of the robot.
+An intersection is the point where the follow distance represented by a circle around the robot meets the drawn path derived from the waypoints. The "best intersection" is determined by either waypoint order or heading. This intersection point where the circle meets the path is where the robot will move to. The pure pursuit algorithm determines the best intersection and calculates the motor powers needed to reach said position. This updates with each loop, so the intersection point can change with each step due to the movement of the robot. While the conventional pure pursuit algorithm used heading controlled waypoints, FTCLib features a custom type of intersection control we call "order controlled". This type of control is more powerful and less prone to errors then heading controlled and is enabled by default. If you wish to use heading controlled instead, use this (not recommended):
+```java
+path.setPathType(PathType.HEADING_CONTROLLED);
+```
+
+### Retrace
+
+FTCLib's pure pursuit implementation includes a unique feature we call retrace. One common issue with pure pursuit is that the robot can lose it's path. Retrace solves this issue. If enabled (retrace is enabled by default) and the robot loses it's path, the software will automatically plot a temporary path back to it's last known path position. Once the robot finds the path again it will continue on as normal. If you wish to disable retrace (not recommended), do this:
+```java
+path.disableRetrace();
+```
+
+### Timeouts
+
+Advanced teams may want to have more control over how long the robot get to have to complete a path. If the robot is stuck on a path/waypoint for too long, you may want to stop the path to avoid accidental penalties. To set timeouts do the following:
+
+```java
+// For an entire path
+path.setWaypointTimeouts(timeout);
+
+// For individual waypoints
+path.setWaypointTimeouts(p1_timeout, p2_timeout, p3_timeout, ...);
+
+// Reset timeouts.
+path.resetTimeouts();
+```
+### Reseting the Path
+
+If you want to use a path more than once in the same opmode, make sure to reset between uses. You can do this as follows:
+
+```java
+path.reset()
+```
 
 ## Using `followPath()`
 
@@ -178,10 +240,6 @@ The `followPath()` method is the automatic implementation of pure pursuit for FT
 An important note for the pure pursuit algorithm is that it only works well with odometry. You can use the various odometry systems provided by FTCLib. An important thing to note is that `followPath()` makes use of the [Odometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/Odometry.java) abstract class and the [mecanum drivebase](https://docs.ftclib.org/ftclib/features/drivebases#mecanum). Then, the method will call the loop method and do everything for you.
 
 ```java
-// we are using the waypoints we made in the above examples
-Path m_path = new Path(waypoint_1, waypoint_2, waypoint_3,
-                       waypoint_4, waypoint_5);
-
 // follow path
 m_path.followPath(m_robotDrive, m_robotOdometry);
 ```
@@ -228,23 +286,13 @@ The odometry is much more open for this. You can use whatever constructor you de
 
 The important thing for odometry is to remember to update the position of the robot after each iteration after manually inputting the motor speeds.
 
-### Initializing the Path
-
-Before you can call the `loop()` method, you need to follow the proper procedure. You need to call the `init()` method to ensure your path is legal and set up the unconfigured waypoints.
-
-```java
-// we are using the waypoints we made in the above examples
-Path m_path = new Path(waypoint_1, waypoint_2, waypoint_3,
-                       waypoint_4, waypoint_5);
-
-m_path.init(); // initialize the path
-```
-
-If the path is not legal, an exception will be thrown.
-
 ### Calling the Method
 
-This is the principle path method. After everything is configured and initiated, this method can be used. Using the robot's x, y, and rotation, this method calculates the appropriate motor powers for the robot to follow the path. This method calls all triggered/interrupted actions automatically. If this returns zero motor speeds `{0, 0, 0}` that means the path has either \(1\) timed out, \(2\) lost the path and retrace was disabled, or \(3\) reached the destination. Use `isFinished()` and `timedOut()` to troubleshoot.
+This is the principle path method. After everything is configured and initiated, this method can be used.
+ Using the robot's x, y, and rotation, this method calculates the appropriate motor powers for the 
+robot to follow the path. This method calls all triggered/interrupted actions automatically. If this 
+returns zero motor speeds `{0, 0, 0}` that means the path has either \(1\) timed out, \(2\) lost the path and
+ retrace was disabled, or \(3\) reached the destination. Use `isFinished()` and `timedOut()` to troubleshoot.
 
 Below is an example using a custom robot class that includes the drivebase and odometry:
 
