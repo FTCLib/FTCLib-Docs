@@ -13,6 +13,17 @@
   * [Motors](features/hardware/motors.md)
 * [Computer Vision](features/computer-vision.md)
 
+## Kinematics
+
+* [Odometry](kinematics/odometry.md)
+* [WPILib Kinematics](kinematics/wpilib-kinematics/README.md)
+  * [Differential Drive Kinematics](kinematics/wpilib-kinematics/differential-drive-kinematics.md)
+  * [Differential Drive Odometry](kinematics/wpilib-kinematics/differential-drive-odometry.md)
+  * [Swerve Drive Kinematics](kinematics/wpilib-kinematics/swerve-drive-kinematics.md)
+  * [Swerve Drive Odometry](kinematics/wpilib-kinematics/swerve-drive-odometry.md)
+  * [Mecanum Drive Kinematics](kinematics/wpilib-kinematics/mecanum-drive-kinematics.md)
+  * [Mecanum Drive Odometry](kinematics/wpilib-kinematics/mecanum-drive-odometry.md)
+
 ## Pathing
 
 * [Pure Pursuit](pathing/pure-pursuit.md)
