@@ -18,6 +18,8 @@ Provides a way to store values in a table to quickly retrieve them. For example,
 When you request 1.1, it will return 1.
 ### Example Usage:
 ```java
+import com.arcrobotics.ftclib.util.LUT;
+
 LUT<Double, Double> speeds = new LUT<Double, Double>()
 {{
     add(5.0, 1.0);
@@ -31,12 +33,14 @@ double distance = odometry.getPose().getTranslation().getDistance(new Translatio
 shooter.set(speeds.getClosest(distance));
 ```
 
-## InerpLUT (Interpolated Look Up Table)
+## InterpLUT (Interpolated Look Up Table)
 
 Provides a way to fill in the gaps in the data. Similarly to the LUT above, this allows you to add data points and retrieve a data point given an output. The difference between a normal LUT and interpLUT is that interpolated LUT uses math to fill in all the gaps. Effectively generating filler data based on the data around it.
 
 ### Example Usage:
 ```java
+import com.arcrobotics.ftclib.util.InterpLUT;
+
 InterpLUT lut;
 
 //Adding each val with a key
