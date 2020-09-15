@@ -10,7 +10,7 @@ The FTClib provides several utility features. These classes are for various func
 
 Provides a way to store values in a table to quickly retrieve them. For example, this might be used to store different speeds or angles based on certain distances. This class allows you to find the closest entry to the input. Ex: you enter:
 |Input | Output|
---------------
+|-------|-------|
 |0|0|
 |1|1|
 |2|1|
