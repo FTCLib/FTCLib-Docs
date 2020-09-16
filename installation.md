@@ -4,7 +4,7 @@ description: How to import FTCLib into your Android Studio FTC Project
 
 # Installation
 
-### build.common.gradle
+## build.common.gradle
 
 First, you need to add the `jcenter` library repository to your `build.common.gradle` file:
 
@@ -28,8 +28,7 @@ defaultConfig {
 ```
 {% endcode %}
 
-Next, change `JavaVersion` to `8` :  
-
+Next, change `JavaVersion` to `8` :
 
 {% code title="build.common.gradle" %}
 ```groovy
@@ -40,7 +39,7 @@ compileOptions {
 ```
 {% endcode %}
 
-### build.gradle \(TeamCode\)
+## build.gradle \(TeamCode\)
 
 Add this dependency block:
 
@@ -52,11 +51,11 @@ dependencies {
 ```
 {% endcode %}
 
-### Install EasyOpenCV Dependency on the Phone
+## Install EasyOpenCV Dependency on the Phone
 
-Since FTCLib depends on EasyOpenCV for vision, and because EasyOpenCV depends on [OpenCV-Repackaged](https://github.com/OpenFTC/OpenCV-Repackaged), you will need to copy [`libOpenCvNative.so`](https://github.com/OpenFTC/OpenCV-Repackaged/blob/master/doc/libOpenCvNative.so) from the `/doc` folder of that repo into the `FIRST` folder on the USB storage of the Robot Controller (i.e. connect the Robot Controller to your computer with a USB cable, put it into MTP mode, and drag 'n drop the file)
+Since FTCLib depends on EasyOpenCV for vision, and because EasyOpenCV depends on [OpenCV-Repackaged](https://github.com/OpenFTC/OpenCV-Repackaged), you will need to copy [`libOpenCvNative.so`](https://github.com/OpenFTC/OpenCV-Repackaged/blob/master/doc/libOpenCvNative.so) from the `/doc` folder of that repo into the `FIRST` folder on the USB storage of the Robot Controller \(i.e. connect the Robot Controller to your computer with a USB cable, put it into MTP mode, and drag 'n drop the file\)
 
-
-#### Sync Gradle and Finished!
+### Sync Gradle and Finished!
 
 ![Click that button and if successful, you can now use FTCLib](.gitbook/assets/image%20%281%29.png)
+
