@@ -12,7 +12,7 @@
 * [Hardware](features/hardware/README.md)
   * [Motors](features/hardware/motors.md)
 * [Computer Vision](features/computer-vision.md)
-* [Look Up Tables](features/look-up-tables.md)
+* [Utility Functions](features/util.md)
 
 ## Kinematics
 

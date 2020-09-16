@@ -2,7 +2,18 @@
 description: package com.arcrobotics.ftclib.util;
 ---
 
-# Look Up Tables
+# Utility Functions
+
+FTCLib comes with many different Utility Functions:
+
+* Look Up Tables
+* Timing Functions
+* Math Utilities
+* Directional Enums
+
+## What is a Look Up Table?
+
+A look up table or LUT for short is used to store values and be able to quickly recall them.
 
 The FTClib provides 2 different variations of look up tables. In this year's game they can be used to store different set and tested velocities or angles. You can either retrieve the closest reference or you can interpolate through them.
 
@@ -64,5 +75,20 @@ shooter.set(lut.get(distance));
 //getting the velo required and passing it to the shooter.
 ```
 
+## Timing Functions
 
+FTCLib Comes with multiple timers and Timing Functions. They let you set the length, unit, can act as a stopwatch or even return the loop time.
+
+### Timer
+
+A timer can be created with a length or length and Time Unit. The various functions nested within the Timer object are: 
+
+| Function | Return Type | Description |
+| :--- | :--- | :--- |
+| `timer.start()` | Void | Starts the Timer |
+| `timer.pause()` | Void | Pauses the Timer |
+| `timer.resume()` | Void | Resumes the Timer |
+| `timer.currentTime()` | long | Returns the Current Time |
+| `timer.done()` | Boolean | Returns if the Timer is Completed |
+| `timer.isTimerOn()` | Boolean | Returns if the Timer is Active |
 
