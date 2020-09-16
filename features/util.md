@@ -8,7 +8,7 @@ FTCLib comes with many different Utility Functions:
 
 * [Look Up Tables](https://docs.ftclib.org/ftclib/v/v1.1.0/features/util#what-is-a-look-up-table)
 * [Timing Functions](https://docs.ftclib.org/ftclib/v/v1.1.0/features/util#timing-functions)
-* Math Utilities
+* [Math Utilities](https://docs.ftclib.org/ftclib/v/v1.1.0/features/util#math-utilities)
 * Directional Enums
 
 ## What is a Look Up Table?
