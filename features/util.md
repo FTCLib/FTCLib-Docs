@@ -58,7 +58,8 @@ Provides a way to fill in the gaps in the data. Similarly to the LUT above, this
 ```java
 import com.arcrobotics.ftclib.util.InterpLUT;
 
-InterpLUT lut;
+//Init the Look up table
+InterpLUT lut = new InterpLUT();
 
 //Adding each val with a key
 lut.add(5, 1);
