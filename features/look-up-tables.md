@@ -4,19 +4,24 @@ description: package com.arcrobotics.ftclib.util;
 
 # Look Up Tables
 
-The FTClib provides several utility features. These classes are for various functions and can be used in many cases.
+The FTClib provides 2 different variations of look up tables. In this year's game they can be used to store different set and tested velocities or angles. You can either retrieve the closest reference or you can interpolate through them.
 
-## LUT (Look Up Table)
+## LUT \(Look Up Table\)
 
-Provides a way to store values in a table to quickly retrieve them. For example, this might be used to store different speeds or angles based on certain distances. This class allows you to find the closest entry to the input. Ex: you enter:
-|Input | Output|
-|-------|-------|
-|0|0|
-|1|1|
-|2|1|
+Provides a way to store values in a table to quickly retrieve them. For example, this might be used to store different speeds or angles based on certain distances. This class allows you to find the closest entry to the input. 
+
+For Example if you enter:
+
+| Input | Output |
+| :---: | :---: |
+| 0 | 0 |
+| 1 | 1 |
+| 2 | 1 |
 
 When you request 1.1, it will return 1.
+
 ### Example Usage:
+
 ```java
 import com.arcrobotics.ftclib.util.LUT;
 
@@ -33,11 +38,12 @@ double distance = odometry.getPose().getTranslation().getDistance(new Translatio
 shooter.set(speeds.getClosest(distance));
 ```
 
-## InterpLUT (Interpolated Look Up Table)
+## InterpLUT \(Interpolated Look Up Table\)
 
 Provides a way to fill in the gaps in the data. Similarly to the LUT above, this allows you to add data points and retrieve a data point given an output. The difference between a normal LUT and interpLUT is that interpolated LUT uses math to fill in all the gaps. Effectively generating filler data based on the data around it.
 
 ### Example Usage:
+
 ```java
 import com.arcrobotics.ftclib.util.InterpLUT;
 
@@ -54,5 +60,9 @@ lut.createLUT();
 
 double distance = odometry.getPose().getTranslation().getDistance(new Translation2d(5, 10));
 shooter.set(lut.get(distance));
+
 //getting the velo required and passing it to the shooter.
 ```
+
+
+
