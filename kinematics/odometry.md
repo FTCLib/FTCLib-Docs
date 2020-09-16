@@ -27,9 +27,9 @@ $$
 
 If you have a differential drivetrain, $$\Delta{x_{\perp}}=0$$ because the drivebase cannot move horizontally \(in the sideways direction\).
 
-## Pose Integration
+## Pose Exponential
 
-Pose integration is a general FRC term for the constant velocity method of odometry utilized in FTC. The [ConstantVeloMecanumOdometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/ConstantVeloMecanumOdometry.java) class uses these calculations for a general holonomic base despite the name of the classfile.
+Pose Exponential is a general FRC term for the constant velocity method of odometry utilized in FTC. The [ConstantVeloMecanumOdometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/ConstantVeloMecanumOdometry.java) class uses these calculations for a general holonomic base despite the name of the classfile.
 
 This method uses differential equations to solve the nonlinear position of the robot given constant curvature. As such, we will not explain the math here. Instead, we will only go over how the classfile can be used.
 

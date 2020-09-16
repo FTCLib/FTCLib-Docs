@@ -10,7 +10,7 @@ The FTClib provides 2 different variations of look up tables. In this year's gam
 
 Provides a way to store values in a table to quickly retrieve them. For example, this might be used to store different speeds or angles based on certain distances. This class allows you to find the closest entry to the input. 
 
-For Example if you enter:
+For example if you enter:
 
 | Input | Output |
 | :---: | :---: |
@@ -40,7 +40,7 @@ shooter.set(speeds.getClosest(distance));
 
 ## InterpLUT \(Interpolated Look Up Table\)
 
-Provides a way to fill in the gaps in the data. Similarly to the LUT above, this allows you to add data points and retrieve a data point given an output. The difference between a normal LUT and interpLUT is that interpolated LUT uses math to fill in all the gaps. Effectively generating filler data based on the data around it.
+Provides a way to fill in the gaps in the data. Similarly to the LUT above, this allows you to add data points and retrieve a data point given an output. The difference between a normal LUT and InterpLUT is that the interpolated LUT uses math to fill in all the gaps. Effectively generating filler data based on the data around it.
 
 ### Example Usage:
 
