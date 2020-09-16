@@ -6,8 +6,8 @@ description: package com.arcrobotics.ftclib.util;
 
 FTCLib comes with many different Utility Functions:
 
-* Look Up Tables
-* Timing Functions
+* [Look Up Tables](https://docs.ftclib.org/ftclib/v/v1.1.0/features/util#what-is-a-look-up-table)
+* [Timing Functions](https://docs.ftclib.org/ftclib/v/v1.1.0/features/util#timing-functions)
 * Math Utilities
 * Directional Enums
 
@@ -91,4 +91,38 @@ A timer can be created with a length or length and Time Unit. The various functi
 | `timer.currentTime()` | long | Returns the Current Time |
 | `timer.done()` | Boolean | Returns if the Timer is Completed |
 | `timer.isTimerOn()` | Boolean | Returns if the Timer is Active |
+
+## Math Utilities
+
+FTCLib currently adds 1 math utility, clamp. It lets you restrict a value to a certain max and min and is usable in double and int. 
+
+**Example Usage:** 
+
+Double Method:
+
+```java
+import com.arcrobotics.ftclib.util;
+
+double ValueToClamp;
+double LowestPossibleValue;
+double HighestPossibleValue;
+
+double OutputVal = clamp(ValueToClamp,
+                         LowestPossibleValue,
+                         HighestPossibleValue);
+```
+
+Int Method:
+
+```java
+import com.arcrobotics.ftclib.util;
+
+int ValueToClamp;
+int LowestPossibleValue;
+int HighestPossibleValue;
+
+int OutputVal = clamp(ValueToClamp,
+                         LowestPossibleValue,
+                         HighestPossibleValue);
+```
 
