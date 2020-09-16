@@ -39,7 +39,7 @@ ChassisSpeeds speeds = new ChassisSpeeds(3.0, -2.0, Math.PI);
 
 A `ChassisSpeeds` object can also be created from a set of field-relative speeds when the robot angle is given. This converts a set of desired velocities relative to the field \(for example, toward the opposite alliance station and toward the right field boundary\) to a `ChassisSpeeds` object which represents speeds that are relative to the robot frame. This is useful for implementing field-oriented controls for a swerve or mecanum drive robot.
 
- The static `ChassisSpeeds.fromFieldRelativeSpeeds()` method can be used to generate the `ChassisSpeeds` object from field-relative speeds. This method accepts the `vx` \(relative to the field\), `vy` \(relative to the field\), `omega`, and the robot angle.
+The static `ChassisSpeeds.fromFieldRelativeSpeeds()` method can be used to generate the `ChassisSpeeds` object from field-relative speeds. This method accepts the `vx` \(relative to the field\), `vy` \(relative to the field\), `omega`, and the robot angle.
 
 ```java
 // The desired field relative speed here is 2 meters per second

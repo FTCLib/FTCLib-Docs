@@ -2,7 +2,7 @@
 
 Trajectories can be transformed from one coordinate system to another and moved within a coordinate system using the `relativeTo` and the `transformBy` methods. These methods are useful for moving trajectories within space, or redefining an already existing trajectory in another frame of reference.
 
-#### Note
+### Note
 
 Neither of these methods changes the shape of the original trajectory.
 

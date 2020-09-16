@@ -23,7 +23,7 @@ A configuration must be created in order to generate a trajectory. The config co
 * `setReversed(boolean reversed)`
 * `addConstraint(TrajectoryConstraint constraint)`
 
-#### NOTE
+### NOTE
 
 The `reversed` property simply represents whether the robot is traveling backward. If you specify four waypoints, a, b, c, and d, the robot will still travel in the same order through the waypoints when the `reversed` flag is set to `true`. This also means that you must account for the direction of the robot when providing the waypoints. For example, if your robot is facing your alliance station wall and travels backwards to some field element, the starting waypoint should have a rotation of 180 degrees.
 

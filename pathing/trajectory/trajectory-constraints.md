@@ -14,7 +14,7 @@ FTCLib includes a set of predefined constraints that users can utilize when gene
 * `MecanumDriveKinematicsConstraint`: Limits the velocity of the robot around turns such that no wheel of a [mecanum](https://docs.ftclib.org/ftclib/features/drivebases#mecanum)-drive robot goes over a specified maximum velocity.
 * `SwerveDriveKinematicsConstraint`: Limits the velocity of the robot around turns such that no wheel of a swerve-drive robot goes over a specified maximum velocity.
 
-#### Note
+### Note
 
 The `DifferentialDriveVoltageConstraint` only ensures that theoretical voltage commands do not go over the specified maximum using a [feedforward model](https://docs.ftclib.org/ftclib/features/controllers#simplemotorfeedforward). If the robot were to deviate from the reference while tracking, the commanded voltage may be higher than the specified maximum.
 

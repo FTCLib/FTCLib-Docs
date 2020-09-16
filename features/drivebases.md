@@ -17,17 +17,17 @@ All of the following drive types are available for use in FTCLib. All that's nee
 
 ## Differential
 
-A differential drive is one that has two motors or motor groups on either side of the robot. Each side acts as a connected set or motor group. There are two types of drive systems here. You can use the tank and arcade control schemes with a differential drive.
+A differential drive is one that has two motors or motor groups on either side of the robot. Each side acts as a connected set or motor group. There are two types of drive systems here. You can use the tank and arcade control schemes with a differential drive.
 
 ![CAD by Hrithik and Sanjay from FTC Team 16439](../.gitbook/assets/tank.jpg)
 
 ### Arcade
 
-Arcade drive use a y-value input from the controller and a value from the turn stick. We know that when the turn stick is pushed left, the right side should move forward and the left side should move backwards. Therefore, since pushing the turn stick to the left returns a negative value, it should be added to the left speed and subtracted from the right speed.
+Arcade drive use a y-value input from the controller and a value from the turn stick. We know that when the turn stick is pushed left, the right side should move forward and the left side should move backwards. Therefore, since pushing the turn stick to the left returns a negative value, it should be added to the left speed and subtracted from the right speed.
 
 ### Tank
 
-Tank drive uses a y-value input from the left and right sticks. The sticks control their respective side of the robot.
+Tank drive uses a y-value input from the left and right sticks. The sticks control their respective side of the robot.
 
 ## Holonomic
 
@@ -61,8 +61,6 @@ An X-drive is a holonomic base that has four omniwheels positioned into an "X" s
 
 ![An X-Drive concept from VEX](../.gitbook/assets/x-drive.jpg)
 
-
-
 You can create the x-drive drive as such:
 
 ```java
@@ -79,7 +77,7 @@ A mecanum drivebase is a type of holonomic drive that utilizes [mecanum wheels](
 
 For more information on mecanum drives, please watch this video:
 
-{% embed url="https://www.youtube.com/watch?v=8rhAkjViHEQ" %}
+{% embed url="https://www.youtube.com/watch?v=8rhAkjViHEQ" caption="" %}
 
 You can create the mecanum drive as such:
 

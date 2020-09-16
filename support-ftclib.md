@@ -10,14 +10,14 @@ You can use our logo to put a sticker on your robot as seen here:
 
 We would also greatly appreciate it if you would contribute to FTCLib. Make sure to read our [contributing page](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md) on the GitHub for information on how to contribute. We are always willing to accept new pull requests. In fact, FTCLib is built on community contributions and would not have been possible if not for our contributors:
 
-### Core Developers
+## Core Developers
 
 * Jackson - FTC 9686 alum
 * Pranav - FTC 5387 alum
 * Peter - FTC 5890
 * Ryan - FTC 1002
 
-### Other Contributors
+## Other Contributors
 
 * Jiaming - FTC 6964
 * Xing - FTC 15303

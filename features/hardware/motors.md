@@ -19,16 +19,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class YellowJacket435 implements Motor {
-  
+
     private DcMotor m_motor;
     private double resetVal;
-    
+
     public static final double TICKS_PER_REV = 383.6;
 
     public YellowJacket435(HardwareMap hMap, String name) {
       m_motor = hMap.get(DcMotor.class, name);
     }
-    
+
     @Override
     void set(double speed) {
       m_motor.setPower(speed);
@@ -58,12 +58,12 @@ public class YellowJacket435 implements Motor {
     void pidWrite(double output) {
       set(output);
     }
-    
+
     @Override
     void stopMotor() {
       set(0);
     }
-    
+
     public double getEncoderCount() {
       return m_motor.getCurrentPosition() - resetVal;
     }

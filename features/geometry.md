@@ -8,7 +8,7 @@ FTCLib provides access to geometry classes taken from WPILib. Since we like copy
 
 ## Translation
 
-Translation in 2 dimensions is represented by FTCLib's`Translation2d` class. This class has an x and y component, representing the point $$(x,y)$$ or the vector $$\begin{bmatrix} x\\  y \end{bmatrix}$$ on a 2-dimensional coordinate system.
+Translation in 2 dimensions is represented by FTCLib's`Translation2d` class. This class has an x and y component, representing the point $$(x,y)$$ or the vector $$\begin{bmatrix} x\\ y \end{bmatrix}$$ on a 2-dimensional coordinate system.
 
 You can get the distance to another `Translation2d` object by using the `getDistance(Translation2d other)`, which returns the distance to another `Translation2d` by using the Pythagorean theorem.
 
@@ -18,11 +18,11 @@ Rotation in 2 dimensions is represented by FTCLib’s `Rotation2d` class. This c
 
 ## Pose
 
-Pose is a combination of both translation and rotation and is represented by the `Pose2d` class. It can be used to describe the pose of your robot in the field coordinate system, or the pose of objects, such as vision targets, relative to your robot in the robot coordinate system. `Pose2d` can also represent the vector $$\begin{bmatrix} x\\  y\\ \theta \end{bmatrix}$$ .
+Pose is a combination of both translation and rotation and is represented by the `Pose2d` class. It can be used to describe the pose of your robot in the field coordinate system, or the pose of objects, such as vision targets, relative to your robot in the robot coordinate system. `Pose2d` can also represent the vector $$\begin{bmatrix} x\\ y\\ \theta \end{bmatrix}$$ .
 
 ## Vector
 
-A vector in 2 dimensions is represented by the `Vector2d` class. It holds an $$x$$ and a $$y$$ value similarly to a `Translation2d`. These components representing the point $$(x,y)$$ or as the matrix$$\begin{bmatrix} x\\  y \end{bmatrix}$$.
+A vector in 2 dimensions is represented by the `Vector2d` class. It holds an $$x$$ and a $$y$$ value similarly to a `Translation2d`. These components representing the point $$(x,y)$$ or as the matrix$$\begin{bmatrix} x\\ y \end{bmatrix}$$.
 
 Unlike a `Translation2d`, there are a few different methods and features.
 
@@ -35,6 +35,4 @@ FTCLib provides 2 classes, `Transform2d`, which represents a transformation to a
 `Twist2d` represents a change in distance along an arc. Usually, this class is used to represent the movement of a drivetrain, where the x component is the forward distance driven, the y component is the distance driven to the side \(left positive\), and the $$\theta$$ component is the change in heading.
 
 Both classes can be used to estimate robot location. `Twist2d` is used in some of the FTCLib odometry classes to update the robot’s pose based on movement, while `Transform2d` can be used to estimate the robot’s global position from vision data.
-
-
 

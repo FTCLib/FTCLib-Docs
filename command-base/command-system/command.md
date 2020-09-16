@@ -33,7 +33,7 @@ public class ExampleCommand extends CommandBase {
 }
 ```
 
- As before, this contains several convenience features. It automatically overrides the `getRequirements()` method for users, returning a list of requirements that is empty by default, but can be added to with the `addRequirements()` method.
+As before, this contains several convenience features. It automatically overrides the `getRequirements()` method for users, returning a list of requirements that is empty by default, but can be added to with the `addRequirements()` method.
 
 Also as before, advanced users seeking more flexibility are free to simply create their own class implementing the `Command` interface.
 
@@ -139,5 +139,5 @@ public class DefaultDrive extends CommandBase {
 }
 ```
 
- Notice that this command does not override `isFinished()`, and thus will never end.
+Notice that this command does not override `isFinished()`, and thus will never end.
 

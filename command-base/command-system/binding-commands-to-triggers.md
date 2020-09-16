@@ -44,7 +44,7 @@ The most-common way to trigger a command is to bind a command to a button on the
 
 ### Creating a GamepadButton
 
-In order to create a `GamepadButton`, we first need a `GamapadEx`. 
+In order to create a `GamepadButton`, we first need a `GamapadEx`.
 
 ```java
 GamepadEx driverOp = new GamepadEx(gamepad1);

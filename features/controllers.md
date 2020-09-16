@@ -4,7 +4,7 @@ description: package com.arcrobotics.ftclib.controller
 
 # Controllers
 
-In FTCLib, there are controllers that can improve the motion of mechanisms in FTC.  This includes PID control and feedforward control.
+In FTCLib, there are controllers that can improve the motion of mechanisms in FTC. This includes PID control and feedforward control.
 
 ## PID Control
 
@@ -89,7 +89,7 @@ FTCLib currently provides the following three helper classes for feedforward con
 
 The `SimpleMotorFeedforward` class calculates feedforwards for mechanisms that consist of permanent-magnet DC motors with no external loading other than friction and inertia, such as flywheels and robot drives.
 
- To create a `SimpleMotorFeedforward`, simply construct it with the required gains:
+To create a `SimpleMotorFeedforward`, simply construct it with the required gains:
 
 ```java
 // Create a new SimpleMotorFeedforward with gains kS, kV, and kA
@@ -137,7 +137,7 @@ To create a `ElevatorFeedforward`, simply construct it with the required gains:
 ElevatorFeedforward feedforward = new ElevatorFeedforward(kS, kG, kV, kA);
 ```
 
- To calculate the feedforward, simply call the `calculate()` method with the desired motor velocity and acceleration:
+To calculate the feedforward, simply call the `calculate()` method with the desired motor velocity and acceleration:
 
 ```java
 // Calculates the feedforward for a position of 10 units, velocity of 20 units/second,

@@ -12,7 +12,7 @@ When using these classes, it is important to keep your distance in inches and an
 
 The first method of odometry, seen in the `HolonomicOdometry` and `DifferentialOdometry` classes, is Euler integration. Euler integration makes use of the half angle method for updating the pose of the robot. Instead of relying on calculus, this method uses solely basic linear algebraic principles.
 
-{% embed url="https://www.youtube.com/watch?v=UcUuPVjpEqs" %}
+{% embed url="https://www.youtube.com/watch?v=UcUuPVjpEqs" caption="" %}
 
 The contents of this video can be simplified to the following formula:
 
