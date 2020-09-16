@@ -126,3 +126,16 @@ int OutputVal = clamp(ValueToClamp,
                          HighestPossibleValue);
 ```
 
+## Directional Enums
+
+FTCLib comes with multiple directional enums for all your directional needs! You can use these for any autonomous or TeleOP States or anything you want!
+
+| Direction | Index |
+| :--- | :--- |
+| LEFT | 0 |
+| RIGHT | 1 |
+| UP | 2 |
+| DOWN | 3 |
+| FORWARD | 4 |
+| BACKWARDS | 5 |
+
