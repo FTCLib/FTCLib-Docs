@@ -39,17 +39,51 @@ compileOptions {
 ```
 {% endcode %}
 
+## Only If Using CV:
+
+Remove all instances of `"arm64-v8a"`
+
+```groovy
+build.common.gradle
+
+ndk {
+abiFilters "armeabi-v7a"
+}
+
+
+ndk {
+abiFilters "armeabi-v7a"
+}
+```
+
+
+
 ## build.gradle \(TeamCode\)
 
-Add this dependency block:
+Add this dependency block for the base library:
 
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.1.0' // current version
+    implementation 'com.arcrobotics:ftclib:1.1.0' // current core version
 }
 ```
 {% endcode %}
+
+## OR
+
+Add this dependency block for the vision library:
+
+{% code title="build.gradle \(Module: TeamCode\)" %}
+```groovy
+dependencies {
+    implementation 'com.arcrobotics:ftclib:vision:1.1.0' // current vision version
+    implementation 'com.arcrobotics:ftclib:1.1.0' //current core version
+}
+```
+{% endcode %}
+
+
 
 ## Install EasyOpenCV Dependency on the Phone
 
