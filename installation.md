@@ -39,6 +39,21 @@ compileOptions {
 ```
 {% endcode %}
 
+Then remove all instances of `"arm64-v8a"`
+
+```groovy
+build.common.gradle
+
+ndk {
+abiFilters "armeabi-v7a"
+}
+
+
+ndk {
+abiFilters "armeabi-v7a"
+}
+```
+
 ## build.gradle \(TeamCode\)
 
 Add this dependency block:
