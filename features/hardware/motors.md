@@ -13,9 +13,12 @@ Creating a motor is as simple as passing in the hardware map, the name of the de
 ```java
 Motor m_motor_1 = new Motor(hardwareMap, "motorOne");
 Motor m_motor_2 = new Motor(hardwareMap, "motorTwo", GoBILDA.RPM_312);
+
+// grab the internal DcMotor object
+DcMotor motorOne = m_motor_1.motor;
 ```
 
-### Establishing a RunMode
+### Using a RunMode
 
 A RunMode is a method of running the motor when power is supplied. There are three modes: `VelocityControl`, `PositionControl`, and `RawPower`.
 
@@ -83,11 +86,48 @@ double[] ffCoeffs = m_motor.getFeedforwardCoefficients();
 double kS = ffCoeffs[0];
 double kV = ffCoeffs[1];
 
-// set the inversion factor of the motor
-m_motor.setInverted(true);
-boolean isInverted = m_motor.getInverted();
-
 // set the output of the motor
 m_motor.set(-0.54);
 ```
+
+### Setting Behaviors
+
+FTCLib, like the SDK, has wrapper methods for setting the ZeroPowerBehavior and the direction of the motors. ZeroPowerBehavior is often used for mechanisms other than the drivetrain; for example, like how you would use the BRAKE behavior for a lift.
+
+```java
+// set the inversion factor
+m_motor.setInverted(true);
+
+// get the inversion factor
+boolean isInverted = m_motor.getInverted();
+
+// set the zero power behavior to BRAKE
+m_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+```
+
+### The Built-In Encoder
+
+A lot of motors have built-in encoders. FTCLib offers a nested class `Motor.Encoder` that utilizes advanced mechanics and corrects for [velocity overflow](https://github.com/FIRST-Tech-Challenge/SkyStone/issues/241). One of the other great things is that resetting the encoder does not require stopping the motor. It calculates an offset and subtracts that from the current position. This offset is set to the current position of the encoder each time the `reset()` method is called. The Motor object also has methods that manipulate the encoder so that you don't have to grab the internal encoder instance from the object.
+
+```java
+// reset the encoder
+m_motor.resetEncoder();
+
+// the current position of the motor
+int pos = m_motor.getCurrentPosition();
+
+// get the current velocity
+double velocity = m_motor.getVelocity();
+double corrected = m_motor.getCorrectedVelocity();
+
+// grab the encoder instance
+Motor.Encoder encoder = m_motor.encoder;
+
+// get number of revolutions
+double revolutions = encoder.getRevolutions();
+```
+
+## The MotorEx Object
+
+MotorEx is an implementation of the Motor class with better integrated velocity control. Unlike the Motor object, it uses the corrected velocity by default instead of the raw velocity. It also uses the `DcMotorEx` object instead of the `DcMotor`. Calling `getVelocity()` will return the corrected velocity value.
 
