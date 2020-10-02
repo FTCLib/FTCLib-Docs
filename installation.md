@@ -23,7 +23,7 @@ Next, `minSdkVersion` to `24` and `multiDexEnabled` to `true`:
 defaultConfig {
     applicationId 'com.qualcomm.ftcrobotcontroller'
     minSdkVersion 24
-    targetSdkVersion 26
+    targetSdkVersion 28
     multiDexEnabled true
 ```
 {% endcode %}
@@ -56,8 +56,6 @@ abiFilters "armeabi-v7a"
 }
 ```
 
-
-
 ## build.gradle \(TeamCode\)
 
 Add this dependency block for the base library:
@@ -82,8 +80,6 @@ dependencies {
 }
 ```
 {% endcode %}
-
-
 
 ## Install EasyOpenCV Dependency on the Phone
 

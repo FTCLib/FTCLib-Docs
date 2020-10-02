@@ -5,12 +5,12 @@
 
 ## Features
 
-* [Controllers](features/controllers.md)
-* [Drivebases](features/drivebases.md)
-* [Gamepad](features/gamepad-extensions.md)
-* [Geometry](features/geometry.md)
 * [Hardware](features/hardware/README.md)
   * [Motors](features/hardware/motors.md)
+* [Gamepad](features/gamepad-extensions.md)
+* [Drivebases](features/drivebases.md)
+* [Geometry](features/geometry.md)
+* [Controllers](features/controllers.md)
 * [Computer Vision](features/computer-vision.md)
 * [Utility Functions](features/util.md)
 

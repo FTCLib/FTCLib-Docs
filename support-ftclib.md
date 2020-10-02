@@ -8,24 +8,28 @@ You can use our logo to put a sticker on your robot as seen here:
 
 ![CAD courtesy of Jeremiah from FTC Team 10641](.gitbook/assets/gobilda-bot.png)
 
-We would also greatly appreciate it if you would contribute to FTCLib. Make sure to read our [contributing page](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md) on the GitHub for information on how to contribute. We are always willing to accept new pull requests. In fact, FTCLib is built on community contributions and would not have been possible if not for our contributors:
+We would also greatly appreciate it if you would contribute to FTCLib. Make sure to read our [contributing page](https://github.com/FTCLib/FTCLib/blob/dev/.github/CONTRIBUTING.md) on the GitHub for information on how to contribute. We are always willing to accept new pull requests. In fact, FTCLib is built on community contributions and would not have been possible if not for our contributors:
 
-## Core Developers
+## Developers
 
-* Jackson - FTC 9686 alum
+* Jackson - FRC 6905 alum
 * Pranav - FTC 5387 alum
 * Peter - FTC 5890
 * Ryan - FTC 1002
 
-## Other Contributors
+## Collaborators
 
 * Jiaming - FTC 6964
+* Purav - FTC 14614
+* Jaran - FTC 6133
+
+## Contributors
+
 * Xing - FTC 15303
 * Sam - FTC 4314
 * Colin - FRC 3457
 * Shengming - FTC 4781 alum
 * Noah - FTC 16626 alum
-* Purav - FTC 14614
 * Dan - FTC 7026
 * Michael - FTC 14470
 * Jeremiah - FTC 10641

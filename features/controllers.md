@@ -18,21 +18,21 @@ In order to use FTCLib's PIDF control functionality, users must first construct 
 
 ```java
 // Creates a PIDFController with gains kP, kI, kD, and kF
-PIDFController pidf = new PIDFController(new double[]{kP, kI, kD, kF});
+PIDFController pidf = new PIDFController(kP, kI, kD, kF);
 ```
 
-Note how the gains are passed into the constructor as a double array. Alternatively, you can also pass in an additional three parameters: the setpoint, previous value, and period. The default values for these are 0, 0, and 0.02. The default period being 0.02 represents 20 milliseconds for synchronous use in the periodic loop. If needed, set a timer to see what your loop time is and adjust accordingly.
+You can also pass in an additional two parameters: the setpoint and previous value. The default values for these are 0.
 
 #### Using the Feedback Loop Output
 
-The `PIDFController` assumes that the `calculate()` method is being called regularly at an interval consistent with the configured period. Failure to do this will result in unintended loop behavior. **This means you should tune your period value**.
+The `calculate()` method should be called each iteration of the control loop. The controller uses timestamps to calculate the difference in time between each call of the method, which means it adjusts based on the loop time.
 
 Using the constructed `PIDFController` is simple: call the `calculate()` method from the main loop.
 
 ```java
 // Calculates the output of the PIDF algorithm based on the sensor reading
 // and sends it to a motor
-motor.set(pidf.calculate(encoder.getCurrentTicks(), setpoint));
+motor.set(pidf.calculate(motor.getCurrentPosition(), setpoint));
 ```
 
 #### Using the Motor Control Feature
@@ -41,7 +41,7 @@ The `control()` method Implements a control calculation onto the affected motor.
 
 ```java
 pidf.setSetPoint(setpoint);
-pidf.control(motor, encoder.getCurrentTicks());
+pidf.control(motor, motor.getCurrentPosition());
 ```
 
 #### Checking Errors
