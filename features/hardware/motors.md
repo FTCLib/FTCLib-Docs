@@ -131,3 +131,32 @@ double revolutions = encoder.getRevolutions();
 
 MotorEx is an implementation of the Motor class with better integrated velocity control. Unlike the Motor object, it uses the corrected velocity by default instead of the raw velocity. It also uses the `DcMotorEx` object instead of the `DcMotor`. Calling `getVelocity()` will return the corrected velocity value.
 
+### Bulk Reading
+
+A bulk read reads all of the sensor data \(except i2c\) on a lynx module to save cycle times. Bulk reads were introduced in SDK version 5.4. Since FTCLib uses wrappers, we can treat them the same way as other sensors.
+
+Here's a sample implementation of auto-caching.
+
+```java
+// obtain a list of hubs
+List<LynxModule> hubs = hardwareMap.getAll(LynxModule.class);
+
+MotorEx m1 = new MotorEx(hardwareMap, "one");
+MotorEx m2 = new MotorEx(hardwareMap, "two");
+
+for (LynxModule hub : hubs) {
+     hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+}
+
+// control loop
+int cycles = 0;
+while (cycles++ < 500) {
+    double v1 = m1.getVelocity();
+    double v2 = m2.getVelocity();
+    
+    /* implementation */
+}
+```
+
+You can also take a look at [this sample](https://github.com/FIRST-Tech-Challenge/FtcRobotController/blob/master/FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/external/samples/ConceptMotorBulkRead.java) in the SDK.
+
