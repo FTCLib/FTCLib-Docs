@@ -33,10 +33,16 @@ Provides enum representations of the buttons, D-Pad, bumpers, and triggers. Butt
 | RIGHT\_TRIGGER |
 
 ```java
-private GamepadButton grabButton = new GamepadButton(gamepad1, GamepadKeys.Button.A);
-private GamepadButton releaseButton = new GamepadButton(gamepad2, GamepadKeys.Button.B);
+// these are from the GamepadButton class that is used
+// for command-based frameworks
+GamepadButton grabButton = new GamepadButton(
+    gamepad1, GamepadKeys.Button.A
+);
+GamepadButton releaseButton = new GamepadButton(
+    gamepad2, GamepadKeys.Button.B
+);
 
-private GamepadEx gamepadEx = new GamepadEx(gamepad1);
+GamepadEx gamepadEx = new GamepadEx(gamepad1);
 ```
 
 ## GamepadEx
@@ -55,7 +61,7 @@ gamepadEx.getButton(GamepadKeys.Button.A);
 gamepadEx.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
 ```
 
-* `getLeftY()`: Returns the value of the y-axis of the left joystick
+* `getLeftY()`: Returns the value of the y-axis of the left joystick \(note that the value returned is the opposite of what would be returned from the standard gamepad object\).
 
 ```java
 gamepadEx.getLeftY();
@@ -68,10 +74,6 @@ gamepadEx.getRightY();
 ```
 
 * `getLeftX()`: Returns the value of the x-axis of the left joystick
-
-```java
-
-```
 
 ```java
 gamepadEx.getLeftX();
@@ -95,13 +97,18 @@ The `KeyReader` interface is the base for objects that monitor an individual but
 
 ## TriggerReader
 
-```java
-private TriggerReader triggerReader= new TriggerReader(gamepadEx, GamepadKeys.Trigger.RIGHT_TRIGGER);
-```
-
 The `TriggerReader` class implements the `KeyReader` interface. Because `GamepadEx` Triggers return a `double` , the `TriggerReader` class interprets a value of greater than `0.5` as a trigger press.
 
-* `TriggerReader(GamepadEx gamepad, GamepadKeys.Trigger trigger, [String triggerName, Telemetry telemetry])` : Constructs a new Trigger Reader with a `GamepadEx` gamepad and `GamepadKeys.Trigger` trigger. `triggerName` and `telemetry` are optional parameters that display the boolean value of the trigger on the Driver Station phone's telemetry.
+The following constructs a new Trigger Reader with a `GamepadEx` gamepad and `GamepadKeys.Trigger` trigger. `triggerName` and `telemetry` are optional parameters that display the boolean value of the trigger on the Driver Station phone's telemetry.
+
+```java
+TriggerReader triggerReader = new TriggerReader(
+    gamepadEx, GamepadKeys.Trigger.RIGHT_TRIGGER,
+    triggerName, telemetry    // these two are optional
+);
+```
+
+Below are the different methods you can use with the trigger reader.
 
 ```java
 triggerReader.isDown();
@@ -116,7 +123,9 @@ triggerReader.wasJustReleased();
 The `ButtonReader`class implements the `KeyReader` interface. It checks if a button is pressed, released, or is down.
 
 ```java
-private ButtonReader reader = new ButtonReader(gamepadEx, GamepadKeys.Button.A);
+ButtonReader reader = new ButtonReader(
+    gamepadEx, GamepadKeys.Button.A
+);
 ```
 
 * `ButtonReader(GamepadEx gamepad, GamepadKeys.Button button)`: Constructs a new Button Reader with a `GamepadEx` gamepad and a `GamepadKeys.Button` button. 
@@ -134,7 +143,9 @@ reader.wasJustReleased();
 ## ToggleButtonReader
 
 ```java
-private ToggleButtonReader toggleButtonReader = new ToggleButtonReader(gamepadEx, GamepadKeys.Button.A);
+ToggleButtonReader toggleButtonReader = new ToggleButtonReader(
+    gamepadEx, GamepadKeys.Button.A
+);
 ```
 
 The `ToggleButtonReader` class extends `ButtonReader` and adds the ability to get the status of a toggle. `readValue()` needs to be run in a loop to get the state of the toggle.
