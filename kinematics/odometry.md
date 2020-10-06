@@ -24,6 +24,8 @@ To tune these values, make a rough estimate with a measured value and then use s
 
 ## Creating the Odometry
 
+A sample usage of FTCLib odometry can be found in this [sample folder](https://github.com/FTCLib/FTCLib/tree/dev/examples/src/main/java/com/example/ftclibexamples/SharedOdometry).
+
 ### Using the Odometry Class
 
 To use the odometry class, there are three different constructors depending on how you want to run your odometry. One method of running the odometry is using suppliers to have the class update your positions for you. The other is to manually input the sensor data into the `update()` method. If you use suppliers, you can just call the `updatePose()` method which uses the suppliers to call the `update()` method.
