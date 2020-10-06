@@ -20,6 +20,8 @@ The trackwidth is the distance between parallel encoders. This value should be t
 
 The center wheel offset accounts for the distance between the center of rotation of the robot and the position of the horizontal encoder. This is only necessary for the holonomic odometry.
 
+To tune these values, make a rough estimate with a measured value and then use some sort of method for testing and updating the values until the outputs become reliable.
+
 ## Creating the Odometry
 
 ### Using the Odometry Class
