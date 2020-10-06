@@ -313,5 +313,5 @@ m_robot.stop();
 
 ## Using the Pure Pursuit Command
 
-If you're using your odometry for multiple subsystems, you're likely going to want to make use of the [PurePursuitCommand](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/command/PurePursuitCommand.java) due to the shared odometry \(as we only want to update it once per cycle\). This is actually the recommended method of using odometry, especially if you want to use it with the command-based paradigm that FTCLib has to offer.
+If you're using your odometry for multiple subsystems, you're likely going to want to make use of the [PurePursuitCommand](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/command/PurePursuitCommand.java) due to the shared odometry \(as we only want to update it once per cycle\). This is actually the recommended method of using pure pursuit, especially if you want to use it with the command-based paradigm that FTCLib has to offer.
 

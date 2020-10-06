@@ -10,9 +10,9 @@ When using these classes, it is important to keep angles in radians. Distances s
 
 ## Pose Exponential
 
-Pose Exponential is a general FRC term for the constant velocity method of odometry utilized in FTC.
+Pose Exponential is a general FRC term for the constant velocity method of odometry utilized in FTC. We use pose exponentials because the cycle times of control loops in FTC can vary significantly.
 
-This method uses differential equations to solve the nonlinear position of the robot given constant curvature. As such, we will not explain the math here.
+This method uses differential equations to solve the nonlinear position of the robot given constant curvature. As such, we will not explain the math here. If you are interested in the math behind it, we suggest you read up on [Tyler's book](https://tavsys.net/controls-in-frc).
 
 ### Offsets and Trackwidth
 
@@ -20,9 +20,73 @@ The trackwidth is the distance between parallel encoders. This value should be t
 
 The center wheel offset accounts for the distance between the center of rotation of the robot and the position of the horizontal encoder. This is only necessary for the holonomic odometry.
 
-## Updating the Position
+## Creating the Odometry
 
-If you are using the [suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html) constructor, you're going to want to call `updatePose()` repeatedly after every iteration. A useful way to do this would be to plug it into the `periodic` method of a [subsystem](../command-base/command-system/subsystems.md), which is actually already available for you with the [odometry subsystem](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/command/OdometrySubsystem.java).
+### Using the Odometry Class
 
-Alternatively, use the `update` method to iterate the position. To use it, you will need to pass the left encoder position, right encoder position, and horizontal encoder position \(if holonomic\) as parameters into the `update` method. Like with `updatePose()`, you're going to want to call this method after every successive iteration.
+To use the odometry class, there are three different constructors depending on how you want to run your odometry. One method of running the odometry is using suppliers to have the class update your positions for you. The other is to manually input the sensor data into the `update()` method. If you use suppliers, you can just call the `updatePose()` method which uses the suppliers to call the `update()` method.
+
+```java
+// define our trackwidth
+static final double TRACKWIDTH = 13.7;
+
+// convert ticks to inches
+static final double TICKS_TO_INCHES = 15.3;
+
+// create our encoders
+MotorEx encoderLeft, encoderRight;
+encoderLeft = new MotorEx(hardwareMap, "left_encoder");
+encoderRight = new MotorEx(hardwareMap, "right_encoder");
+
+// create our odometry
+DifferentialOdometry diffOdom = new DifferentialOdometry(
+    () -> encoderLeft.getCurrentPosition() * TICKS_TO_INCHES,
+    () -> encoderRight.getCurrentPosition() * TICKS_TO_INCHES,
+    TRACKWIDTH
+);
+
+// update the initial position
+diffOdom.updatePose(new Pose2d(1, 2, 0));
+
+// control loop
+while (!isStopRequested()) {
+    /* implementation */
+    
+    // update the position
+    diffOdom.updatePose();
+}
+```
+
+You should call the respective update method once every cycle of the control loop.
+
+### Using the Odometry Subsystem
+
+The [OdometrySubsystem](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/command/OdometrySubsystem.java) class is a template subsystem meant to make command-based programming around odometry much simpler and functional. Using the odometry subsystem makes it more accurate because the position will update itself through the scheduler's call to its `periodic()` method, which updates the position. The subsystem makes use of the suppliers, so you will **need** to use that constructor instead of the other for the FTCLib subsystem. Alternatively, you can create your own odometry subsystem.
+
+```java
+// define our constants
+static final double TRACKWIDTH = 13.7;
+static final double TICKS_TO_INCHES = 15.3;
+static final double CENTER_WHEEL_OFFSET = 2.4;
+
+
+// create our encoders
+MotorEx encoderLeft, encoderRight, encoderPerp;
+encoderLeft = new MotorEx(hardwareMap, "left_encoder");
+encoderRight = new MotorEx(hardwareMap, "right_encoder");
+encoderPerp = new MotorEx(hardwareMap, "center_encoder");
+
+// create the odometry object
+HolonomicOdometry holOdom = new HolonomicOdometry(
+    () -> encoderLeft.getCurrentPosition() * TICKS_TO_INCHES,
+    () -> encoderRight.getCurrentPosition() * TICKS_TO_INCHES,
+    () -> encoderPerp.getCurrentPosition() * TICKS_TO_INCHES,
+    TRACKWIDTH, CENTER_WHEEL_OFFSET
+);
+
+// create the odometry subsystem
+OdometrySubsystem odometry = new OdometrySubsystem(holOdom);
+```
+
+The [PurePursuitCommand](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/command/PurePursuitCommand.java) makes use of the OdometrySubsystem class.
 
