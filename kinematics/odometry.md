@@ -69,7 +69,6 @@ static final double TRACKWIDTH = 13.7;
 static final double TICKS_TO_INCHES = 15.3;
 static final double CENTER_WHEEL_OFFSET = 2.4;
 
-
 // create our encoders
 MotorEx encoderLeft, encoderRight, encoderPerp;
 encoderLeft = new MotorEx(hardwareMap, "left_encoder");
