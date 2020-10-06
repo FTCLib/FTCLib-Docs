@@ -4,7 +4,7 @@ description: package com.arcrobotics.ftclib.kinematics
 
 # Odometry
 
-FTCLib offers its own odometry classes for the use of differential and holonomic drives. The odometry classes track the robot position as a `Pose2d`, which means it is represented using the vector $$\begin{pmatrix} x\\ y\\ \theta \end{pmatrix}$$ .
+FTCLib offers its own odometry classes for the use of differential and holonomic drives. The odometry classes track the robot position as a `Pose2d`, which means it is represented using the vector $$\begin{pmatrix} x\\ y\\ \theta \end{pmatrix}$$ . $$x$$ is the distance in the forward direction of the robot, $$y$$ is the horizontal distance, and $$\theta$$ is the heading of the robot.
 
 When using these classes, it is important to keep angles in radians. Distances should be consistent.
 
