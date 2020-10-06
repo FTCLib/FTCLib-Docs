@@ -109,6 +109,8 @@ m_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 A lot of motors have built-in encoders. FTCLib offers a nested class `Motor.Encoder` that utilizes advanced mechanics and corrects for [velocity overflow](https://github.com/FIRST-Tech-Challenge/SkyStone/issues/241). One of the other great things is that resetting the encoder does not require stopping the motor. It calculates an offset and subtracts that from the current position. This offset is set to the current position of the encoder each time the `reset()` method is called. The Motor object also has methods that manipulate the encoder so that you don't have to grab the internal encoder instance from the object.
 
+You can also use the built-in encoder as an encoder itself when using an external encoder.
+
 ```java
 // reset the encoder
 m_motor.resetEncoder();

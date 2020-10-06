@@ -252,7 +252,7 @@ An issue this method has is that we cannot directly access the hardware of the r
 
 ### Creating Your Odometry
 
-As a way of working around this issue, the odometry needs to be setup in a particular way with [Suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html). A supplier is a functional interface that uses lambdas to reference a certain value. Let's work with the [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java) class for these examples.
+As a way of working around this issue, the odometry needs to be setup in a particular way with [Suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html). A supplier is a functional interface that uses lambdas to reference a certain value. Let's work with the [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java) class for these examples.
 
 You're going to want to instantiate your odometry using this constructor:
 
@@ -286,7 +286,7 @@ The use of suppliers can be avoided using this method since it can be called in 
 
 ### Odometry Options
 
-The odometry is much more open for this. You can use whatever constructor you desire for it. Note that you are not limited to use only [ConstantVeloMecanumOdometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/ConstantVeloMecanumOdometry.java) or [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java). Since the method parameters only take x, y, and heading values, you can use whatever odometry system you desire as long as it produces such values. This is one of the more appealing aspects of the `loop()` method.
+The odometry is much more open for this. You can use whatever constructor you desire for it. Since the method parameters only take x, y, and heading values, you can use whatever odometry system you desire as long as it produces such values. This is one of the more appealing aspects of the `loop()` method.
 
 The important thing for odometry is to remember to update the position of the robot after each iteration after manually inputting the motor speeds.
 
@@ -310,4 +310,8 @@ while (!m_path.isFinished()) {
 }
 m_robot.stop();
 ```
+
+## Using the Pure Pursuit Command
+
+If you're using your odometry for multiple subsystems, you're likely going to want to make use of the [PurePursuitCommand](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/command/PurePursuitCommand.java) due to the shared odometry \(as we only want to update it once per cycle\). This is actually the recommended method of using odometry, especially if you want to use it with the command-based paradigm that FTCLib has to offer.
 
