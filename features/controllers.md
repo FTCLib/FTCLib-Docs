@@ -35,15 +35,6 @@ Using the constructed `PIDFController` is simple: call the `calculate()` method 
 motor.set(pidf.calculate(motor.getCurrentPosition(), setpoint));
 ```
 
-#### Using the Motor Control Feature
-
-The `control()` method Implements a control calculation onto the affected motor. Please note that what this does is move the motor until it reaches the setpoint. Once the motor reaches the target, the motor will continue moving with a speed of `kF * setpoint`. If you set `kF` to 0, the motor will stop. Alternatively to setting the kF value to 0, you can use a `PIDController` if you do not want to use the feedforward feature of the controller. Alternatively to the code seen in the previous example, you can:
-
-```java
-pidf.setSetPoint(setpoint);
-pidf.control(motor, motor.getCurrentPosition());
-```
-
 #### Checking Errors
 
 The methods `getPositionError()` and `getVelocityError()` are named assuming that the loop is controlling a position - for a loop that is controlling a velocity, these return the velocity error and the acceleration error, respectively.

@@ -133,6 +133,8 @@ double revolutions = encoder.getRevolutions();
 
 MotorEx is an implementation of the Motor class with better integrated velocity control. Unlike the Motor object, it uses the corrected velocity by default instead of the raw velocity. It also uses the `DcMotorEx` object instead of the `DcMotor`. Calling `getVelocity()` will return the corrected velocity value.
 
+You can also set the velocity directly using `setVelocity()`. You can pass the angular rate and the angle unit \(optional\). Passing just the angular rate will set the velocity in ticks per second. Passing an angle unit will set the velocity to units per second, depending on the unit that is passed into the method.
+
 ### Bulk Reading
 
 A bulk read reads all of the sensor data \(except i2c\) on a lynx module to save cycle times. Bulk reads were introduced in SDK version 5.4. Since FTCLib uses wrappers, we can treat them the same way as other sensors.
