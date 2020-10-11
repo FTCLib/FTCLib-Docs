@@ -99,6 +99,8 @@ while (!pController.atSetPoint()) {
   m_motor.setVelocity(output);
 }
 m_motor.stop(); // stop the motor
+
+// NOTE: motors have internal PID control
 ```
 
 #### Checking Errors
