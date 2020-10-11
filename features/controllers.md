@@ -4,7 +4,7 @@ description: package com.arcrobotics.ftclib.controller
 
 # Controllers
 
-In FTCLib, there are controllers that can improve the motion of mechanisms in FTC. This includes PID control and feedforward control.
+In FTCLib, there are controllers that can improve the motion of mechanisms in FTC. This includes PID control and feedforward control. For information on the theory behind PID control, we recommend reading [this page](https://gm0.org/en/stable/docs/software/control-loops.html) in gm0.
 
 ## PID Control 
 
@@ -61,6 +61,8 @@ kI = coeffs[1];
 kD = coeffs[2];
 kF = coeffs[3];
 ```
+
+These gains must be tuned. An example of tuning PID can be found on [this page](https://www.learnroadrunner.com/drive-velocity-pid-tuning.html) of Learn Road Runner.
 
 #### Using the Feedback Loop Output
 
