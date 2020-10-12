@@ -173,7 +173,8 @@ Waypoint p4 = new InterruptWaypoint(
 **EndWaypoint**
 
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p5 = new EndWaypoint();
 
 /**
@@ -192,7 +193,8 @@ Waypoint p5 = new PointTurnWaypoint(
     turnSpeed, followRadius,
     positionBuffer, rotationBuffer
 );
-// With X and Y coordinates and preferred angle (A preferred angle is needed for an EndWaypoint).
+// With X and Y coordinates and preferred angle
+// (A preferred angle is needed for an EndWaypoint).
 Waypoint p5 = new PointTurnWaypoint(
     x, y, rotationRadians, movementSpeed,
     turnSpeed, followRadius,
