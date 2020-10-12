@@ -43,6 +43,8 @@ Waypoint p1 = new StartWaypoint(translation2d);
 
 **GeneralWaypoint**
 
+Each general waypoint inherits from the previous general waypoint in the path. The only parameters that will need to be specified are the x and y coordinates of the point. Each point has the option to update the different parameters across the path \(which is meant for user-end customization of the path\). Point-turn waypoints, interrupted waypoints, and end waypoints are all subclasses of a general waypoint, so they will also have this feature. This inheritance is performed in the `init()` method of the path.
+
 ```java
 // Empty constructor. Note: Only use this constructor
 // if you plan on setting the values later.
