@@ -4,3 +4,5 @@ FTCLib is a library designed to be the only library you'll need for FTC programm
 
 We support the transition of teams from programming systems like Blocks and OnBot Java to Android Studio. One of our goals is to make this transition easier for you if you have not already.
 
+Please read the [installation](installation.md) instructions before getting started with anything!
+
