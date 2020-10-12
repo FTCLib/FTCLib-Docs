@@ -29,8 +29,10 @@ You can create a waypoint by calling the various constructors.
 **StartWaypoint**
 
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p1 = new StartWaypoint();
+
 // With Pose2d.
 Waypoint p1 = new StartWaypoint(pose2d);
 // With X and Y coordinates.
@@ -42,9 +44,15 @@ Waypoint p1 = new StartWaypoint(translation2d);
 **GeneralWaypoint**
 
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p2 = new GeneralWaypoint();
-// With X and Y coordinates. This waypoint will inherit it's settings from the previous waypoint. Useful for long strings of waypoints. Note: Will not work if the waypoint preceding this is not an instance of GeneralWaypoint. 
+
+// With X and Y coordinates. This waypoint will inherit
+// its settings from the previous waypoint.
+// Useful for long strings of waypoints.
+// Note: Will not work if the waypoint preceding
+// this is not an instance of GeneralWaypoint. 
 Waypoint p2 = new GeneralWaypoint(x, y);
 
 /**
@@ -79,7 +87,8 @@ Waypoint p2 = new GeneralWaypoint(
 As you will see here, a "buffer" is a sort of expected error. This sets up a tolerance given that the robot might be a bit offset from the desired position or rotation.
 
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p3 = new PointTurnWaypoint();
 
 /**
@@ -117,7 +126,8 @@ Waypoint p3 = new PointTurnWaypoint(
 The `action` here is an [InterruptAction](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/purepursuit/actions/InterruptAction.java), which is an interface that the user can implement to create a custom action to occur at this point. A recommendation is to pair this with the [command paradigm](../command-base/command-system/) that FTCLib provides.
 
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p4 = new InterruptWaypoint();
 
 /**
@@ -151,8 +161,13 @@ Waypoint p4 = new InterruptWaypoint(
     action
 );
 
-// With java 8 you can use a lambda expression to easily add an action. For example:
-Waypoint p4 = new InterruptWaypoint(x, y, movementSpeed, turnSpeed, followRadius, positionBuffer, rotationBuffer, () -> grabBlock());
+// With java 8 you can use a lambda expression to easily
+// add an action. For example:
+Waypoint p4 = new InterruptWaypoint(
+    x, y, movementSpeed, turnSpeed,
+    followRadius, positionBuffer,
+    rotationBuffer, grabSubsystem::grabBlock
+);
 ```
 
 **EndWaypoint**
@@ -229,7 +244,7 @@ m_path.setWaypointTimeouts(p1_timeout, p2_timeout, p3_timeout, ...);
 m_path.resetTimeouts();
 ```
 
-### Reseting the Path
+### Resetting the Path
 
 If you want to use a path more than once in the same opmode, make sure to reset between uses. You can do this as follows:
 
@@ -258,7 +273,8 @@ You're going to want to instantiate your odometry using this constructor:
 
 ```java
 HolonomicOdometry m_robotOdometry = new HolonomicOdometry(
-    leftValue, rightValue, horizontalValue, trackWidth
+    leftValue, rightValue, horizontalValue, trackWidth,
+    centerWheelOffset
 );
 ```
 
@@ -269,14 +285,10 @@ Before we can create the object, we need to make our suppliers. We will do this 
 ```java
 DoubleSupplier leftValue, rightValue, horizontalValue;
 
-leftValue = () -> ticksToInches(m_lOdom.getCounts());
-rightValue = () -> ticksToInches(m_rOdom.getCounts());
-horizontalValue = () -> ticksToInches(m_hOdom.getCounts());
+leftValue = () -> ticksToInches(m_lOdom.getCurrentPosition());
+rightValue = () -> ticksToInches(m_rOdom.getCurrentPosition());
+horizontalValue = () -> ticksToInches(m_hOdom.getCurrentPosition());
 ```
-
-### Making it a Command
-
-We can follow the command paradigm to make this a command. For each path, you can create a command and then put it into a command group. This is the recommended practice you should follow when utilizing FTCLib's pure pursuit implementation.
 
 ## Using `loop()`
 
@@ -314,4 +326,63 @@ m_robot.stop();
 ## Using the Pure Pursuit Command
 
 If you're using your odometry for multiple subsystems, you're likely going to want to make use of the [PurePursuitCommand](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/command/PurePursuitCommand.java) due to the shared odometry \(as we only want to update it once per cycle\). This is actually the recommended method of using pure pursuit, especially if you want to use it with the command-based paradigm that FTCLib has to offer.
+
+### Creating an Odometry Subsystem
+
+The pre-built PurePursuitCommand requires the use of FTCLib's [OdometrySubsystem](https://docs.ftclib.org/ftclib/v/v1.1.0/kinematics/odometry#using-the-odometry-subsystem). It is fairly easy to set up. All that is needed is for the user to pass in their odometry class into the constructor of the subsystem.
+
+```java
+// create the odometry object
+HolonomicOdometry m_robotOdometry = new HolonomicOdometry(
+    leftValue, rightValue, horizontalValue, TRACKWIDTH,
+    CENTER_WHEEL_OFFSET
+);
+
+// pass the odometry object into the subsystem constructor
+OdometrySubsystem m_odometry = new OdometrySubsystem(
+    m_robotOdometry
+);
+```
+
+#### Using the Odometry Subsystem
+
+Users can make use of the odometry subsystem in the exact same way as the Odometry class.
+
+```java
+// retrieve the current saved pose of the robot
+Pose2d robotPose = m_odometry.getPose();
+
+// update the pose manually
+m_odometry.update();
+```
+
+The odometry subsystem updates the position of the robot in its `periodic()` method, so it will update every time the CommandScheduler is run. This effectively means that the position does not need to be updated manually unless desired by the user.
+
+### Creating a PurePursuitCommand
+
+Creating the command is simple. Note that this implementation of the command does not utilize every feature of the Path and is relatively simplistic. It is designed to be a simple template for the user and not an end-all-be-all for every possible desired activity.
+
+To create the object, pass in the drivebase object, the odometry subsystem, and the desired waypoints.
+
+```java
+PurePursuitCommand ppCommand = new PurePursuitCommand(
+    m_robotDrive, m_odometry,
+    p1, p2, p3, p4, p5
+);
+
+// remove waypoint at specified index
+ppCommand.removeWayPointAtIndex(4);
+ppCommand.removeWayPointAtIndex(3);
+ppCommand.removeWayPointAtIndex(2);
+
+// add waypoints to the path
+ppCommand.addWaypoint(p3);
+ppCommand.addWaypoints(p4, p5);
+```
+
+The rest of the class does everything for you through the command-based paradigm. Using the `execute()`, `end(interrupted)`, and `isFinished()` methods allows for the command to be run simply by running the scheduler in a loop.
+
+### Running the Command
+
+It is run the exact same way everything else is run in the paradigm: by running the scheduler. Take a look at [this sample](https://github.com/FTCLib/FTCLib/blob/dev/examples/src/main/java/com/example/ftclibexamples/PurePursuitSample.java) to see how everything works together.
 

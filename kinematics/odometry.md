@@ -91,5 +91,5 @@ HolonomicOdometry holOdom = new HolonomicOdometry(
 OdometrySubsystem odometry = new OdometrySubsystem(holOdom);
 ```
 
-The [PurePursuitCommand](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/command/PurePursuitCommand.java) makes use of the OdometrySubsystem class.
+The [PurePursuitCommand](https://docs.ftclib.org/ftclib/v/v1.1.0/pathing/pure-pursuit#using-the-pure-pursuit-command) makes use of the OdometrySubsystem class.
 
