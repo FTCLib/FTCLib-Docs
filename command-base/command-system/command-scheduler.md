@@ -30,7 +30,7 @@ First, the scheduler runs the `periodic()` method of each registered `Subsystem`
 
 ### Step 2: Poll Command Scheduling Triggers
 
-Secondly, the scheduler polls the state of all registered triggers to see if any new commands that have been bound to those triggers should be scheduled. If the conditions for scheduling a bound command are met, the command is scheduled and its `Initialize()` method is run.
+Secondly, the scheduler polls the state of all registered triggers to see if any new commands that have been bound to those triggers should be scheduled. If the conditions for scheduling a bound command are met, the command is scheduled and its `initialize()` method is run.
 
 ### Step 3: Run/Finish Scheduled Commands
 
@@ -47,6 +47,8 @@ Finally, any registered `Subsystem` has its default command scheduled \(if it ha
 The scheduler can be disabled by calling `CommandScheduler.getInstance().disable()`. When disabled, the scheduler’s `schedule()` and `run()` commands will not do anything.
 
 The scheduler may be re-enabled by calling `CommandScheduler.getInstance().enable()`.
+
+If you want to reset the scheduler \(clear the instance\), call `CommandScheduler.getInstance().reset()`.
 
 ## Command Event Methods
 

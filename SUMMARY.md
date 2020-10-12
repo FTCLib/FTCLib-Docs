@@ -43,6 +43,7 @@
   * [Command Groups](command-base/command-system/command-groups.md)
   * [Command Scheduler](command-base/command-system/command-scheduler.md)
   * [Binding Commands to Triggers](command-base/command-system/binding-commands-to-triggers.md)
+  * [Robot and CommandOpMode](command-base/command-system/robot-and-commandopmode.md)
 * [Old Commands](command-base/old-commands.md)
 
 ---
