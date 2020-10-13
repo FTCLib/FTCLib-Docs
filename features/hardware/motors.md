@@ -30,37 +30,37 @@ public class YellowJacket435 implements Motor {
     }
     
     @Override
-    void set(double speed) {
+    public void set(double speed) {
       m_motor.setPower(speed);
     }
 
     @Override
-    double get() {
+    public double get() {
       return m_motor.getPower();
     }
 
     @Override
-    void setInverted(boolean isInverted) {
+    public void setInverted(boolean isInverted) {
       m_motor.setDirection(!isInverted ? DcMotor.Direction.FORWARD : DcMotor.Direction.REVERSE);
     }
 
     @Override
-    boolean getInverted() {
+    public boolean getInverted() {
       return m_motor.getDirection() == DcMotor.Direction.REVERSE;
     }
 
     @Override
-    void disable() {
+    public void disable() {
        m_motor.close();
     }
 
     @Override
-    void pidWrite(double output) {
+    public void pidWrite(double output) {
       set(output);
     }
     
     @Override
-    void stopMotor() {
+    public void stopMotor() {
       set(0);
     }
     
