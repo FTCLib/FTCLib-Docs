@@ -374,6 +374,9 @@ PurePursuitCommand ppCommand = new PurePursuitCommand(
     p1, p2, p3, p4, p5
 );
 
+// schedule the command
+ppCommand.schedule();
+
 // remove waypoint at specified index
 ppCommand.removeWayPointAtIndex(4);
 ppCommand.removeWayPointAtIndex(3);

@@ -15,7 +15,7 @@ FTCLib comes with many different Utility Functions:
 
 A look up table or LUT for short is used to store values and be able to quickly recall them.
 
-The FTClib provides 2 different variations of look up tables. In this year's game they can be used to store different set and tested velocities or angles. You can either retrieve the closest reference or you can interpolate through them.
+The FTCLib provides 2 different variations of look up tables. In this year's game they can be used to store different set and tested velocities or angles. You can either retrieve the closest reference or you can interpolate through them.
 
 ## LUT \(Look Up Table\)
 
