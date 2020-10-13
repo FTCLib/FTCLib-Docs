@@ -103,5 +103,5 @@ public void initialize() {
 }
 ```
 
-That is functionally all that needs to be done, everything else is done for the user internally. You can find a sample project utilizing CommandOpMode [here](https://github.com/FTCLib/FTCLib/tree/v1.1.0/examples/src/main/java/com/example/ftclibexamples/CommandSample).
+That is functionally all that needs to be done, everything else is done for the user internally. You can find a sample project utilizing CommandOpMode [here](https://github.com/FTCLib/FTCLib/blob/master/examples/src/main/java/com/example/ftclibexamples/PurePursuitSample.java).
 
