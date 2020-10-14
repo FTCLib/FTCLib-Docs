@@ -24,7 +24,7 @@ To tune these values, make a rough estimate with a measured value and then use s
 
 ## Creating the Odometry
 
-A sample usage of FTCLib odometry can be found in this [sample folder](https://github.com/FTCLib/FTCLib/tree/dev/examples/src/main/java/com/example/ftclibexamples/SharedOdometry).
+A sample usage of FTCLib odometry can be found in this [sample folder](https://github.com/FTCLib/FTCLib/tree/v1.1.0/examples/src/main/java/com/example/ftclibexamples/SharedOdometry).
 
 ### Using the Odometry Class
 
@@ -65,7 +65,7 @@ You should call the respective update method once every cycle of the control loo
 
 ### Using the Odometry Subsystem
 
-The [OdometrySubsystem](https://github.com/FTCLib/FTCLib/blob/dev/core/src/main/java/com/arcrobotics/ftclib/command/OdometrySubsystem.java) class is a template subsystem meant to make command-based programming around odometry much simpler and functional. Using the odometry subsystem makes it more accurate because the position will update itself through the scheduler's call to its `periodic()` method, which updates the position. The subsystem makes use of the suppliers, so you will **need** to use that constructor instead of the other for the FTCLib subsystem. Alternatively, you can create your own odometry subsystem.
+The [OdometrySubsystem](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/command/OdometrySubsystem.java) class is a template subsystem meant to make command-based programming around odometry much simpler and functional. Using the odometry subsystem makes it more accurate because the position will update itself through the scheduler's call to its `periodic()` method, which updates the position. The subsystem makes use of the suppliers, so you will **need** to use that constructor instead of the other for the FTCLib subsystem. Alternatively, you can create your own odometry subsystem.
 
 ```java
 // define our constants

@@ -37,6 +37,12 @@ As before, this contains several convenience features. It automatically override
 
 Also as before, advanced users seeking more flexibility are free to simply create their own class implementing the `Command` interface.
 
+To schedule a command to the scheduler, you will need to call the `schedule()` method of the command instance.
+
+```java
+m_command.schedule();
+```
+
 ## The Structure of  a Command
 
 While subsystems are fairly freeform, and may generally look like whatever the user wishes them to, commands are quite a bit more constrained. Command code must specify what the command will do in each of its possible states. This is done by overriding the `initialize()`, `execute()`, and `end()` methods. Additionally, a command must be able to tell the scheduler when \(if ever\) it has finished execution - this is done by overriding the `isFinished()` method. All of these methods are defaulted to reduce clutter in user code: `initialize()`, `execute()`, and `end()` are defaulted to simply do nothing, while `isFinished()` is defaulted to return false \(resulting in a command that never ends\).
