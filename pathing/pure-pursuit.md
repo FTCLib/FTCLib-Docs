@@ -4,7 +4,7 @@ description: package com.arcrobotics.ftclib.purepursuit
 
 # Pure Pursuit
 
-The pure pursuit algorithm in FTCLib is developed so that the user only needs to add the desired waypoints and call the `followPath()` method in the [Path](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/purepursuit/Path.java) class. To use this, you need to pass the [mecanum](https://docs.ftclib.org/ftclib/features/drivebases#mecanum) drivetrain as well as the odometry for the robot. Once the method is finished, it will return true or false depending on if it was successful or not.
+The pure pursuit algorithm in FTCLib is developed so that the user only needs to add the desired waypoints and call the `followPath()` method in the [Path](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/purepursuit/Path.java) class. To use this, you need to pass the [mecanum](https://docs.ftclib.org/ftclib/features/drivebases#mecanum) drivetrain as well as the odometry for the robot. Once the method is finished, it will return true or false depending on if it was successful or not.
 
 As an alternative, you can call the `loop()` method and directly input your odometry positions there. Make sure you update the odometry positions with each iteration of the loop.
 
@@ -114,7 +114,7 @@ Waypoint p3 = new PointTurnWaypoint(
 
 **InterruptWaypoint**
 
-The `action` here is an [InterruptAction](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/purepursuit/actions/InterruptAction.java), which is an interface that the user can implement to create a custom action to occur at this point. A recommendation is to pair this with the [command paradigm](../command-base/command-system/) that FTCLib provides.
+The `action` here is an [InterruptAction](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/purepursuit/actions/InterruptAction.java), which is an interface that the user can implement to create a custom action to occur at this point. A recommendation is to pair this with the [command paradigm](../command-base/command-system/) that FTCLib provides.
 
 ```java
 // Empty constructor. Note: Only use this constructor if you plan on setting the values later.
@@ -241,7 +241,7 @@ m_path.reset();
 
 The `followPath()` method is the automatic implementation of pure pursuit for FTCLib. For teams that want to use all of FTCLib's features to the fullest, this is the recommended process.
 
-An important note for the pure pursuit algorithm is that it only works well with odometry. You can use the various odometry systems provided by FTCLib. An important thing to note is that `followPath()` makes use of the [Odometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/Odometry.java) abstract class and the [mecanum drivebase](https://docs.ftclib.org/ftclib/features/drivebases#mecanum). Then, the method will call the loop method and do everything for you.
+An important note for the pure pursuit algorithm is that it only works well with odometry. You can use the various odometry systems provided by FTCLib. An important thing to note is that `followPath()` makes use of the [Odometry](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/Odometry.java) abstract class and the [mecanum drivebase](../features/drivebases.md#mecanum). Then, the method will call the loop method and do everything for you.
 
 ```java
 // follow path
@@ -252,7 +252,7 @@ An issue this method has is that we cannot directly access the hardware of the r
 
 ### Creating Your Odometry
 
-As a way of working around this issue, the odometry needs to be setup in a particular way with [Suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html). A supplier is a functional interface that uses lambdas to reference a certain value. Let's work with the [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java) class for these examples.
+As a way of working around this issue, the odometry needs to be setup in a particular way with [Suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html). A supplier is a functional interface that uses lambdas to reference a certain value. Let's work with the [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java) class for these examples.
 
 You're going to want to instantiate your odometry using this constructor:
 
@@ -286,7 +286,7 @@ The use of suppliers can be avoided using this method since it can be called in 
 
 ### Odometry Options
 
-The odometry is much more open for this. You can use whatever constructor you desire for it. Note that you are not limited to use only [ConstantVeloMecanumOdometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/ConstantVeloMecanumOdometry.java) or [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/master/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java). Since the method parameters only take x, y, and heading values, you can use whatever odometry system you desire as long as it produces such values. This is one of the more appealing aspects of the `loop()` method.
+The odometry is much more open for this. You can use whatever constructor you desire for it. Note that you are not limited to use only [ConstantVeloMecanumOdometry](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/ConstantVeloMecanumOdometry.java) or [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java). Since the method parameters only take x, y, and heading values, you can use whatever odometry system you desire as long as it produces such values. This is one of the more appealing aspects of the `loop()` method.
 
 The important thing for odometry is to remember to update the position of the robot after each iteration after manually inputting the motor speeds.
 

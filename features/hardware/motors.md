@@ -8,7 +8,7 @@ FTCLib brings you the best abstraction and additions to your programmed motors. 
 
 ## The Motor Interface
 
-Fortunately, however, we have provided plenty of motors for your customization and optimization needs. Instead of `SpeedController`, the base abstraction for your motors is the `Motor` interface that can be found [here](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/Motor.java).
+Fortunately, however, we have provided plenty of motors for your customization and optimization needs. Instead of `SpeedController`, the base abstraction for your motors is the `Motor` interface that can be found [here](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/Motor.java).
 
 The javadocs on the interface explains how each method is to be used when creating a custom motor object.
 
@@ -83,27 +83,27 @@ Alternatively to multiplying the power by some multiplier, we can just set the d
 
 ### MotorGroup
 
-The [MotorGroup](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/MotorGroup.java) class takes a set of motors and controls them like one set of objects. This is extremely useful for a differential drive.
+The [MotorGroup](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/MotorGroup.java) class takes a set of motors and controls them like one set of objects. This is extremely useful for a differential drive.
 
 ### SimpleMotor
 
-The implementation sample in FTCLib is the [SimpleMotor](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/SimpleMotor.java) class. If you do not want to use custom motors, you can still use the FTCLib-compatible motor that has already been written for you.
+The implementation sample in FTCLib is the [SimpleMotor](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/SimpleMotor.java) class. If you do not want to use custom motors, you can still use the FTCLib-compatible motor that has already been written for you.
 
 ## MotorEx
 
-The [MotorEx](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/MotorEx.java) class is an extension of the motor interface that allows for more customization and control. It adds in the `ZeroPowerBehavior` functionality of the `DcMotor` class in the SDK and implements a proportional control loop to control the deceleration.
+The [MotorEx](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/MotorEx.java) class is an extension of the motor interface that allows for more customization and control. It adds in the `ZeroPowerBehavior` functionality of the `DcMotor` class in the SDK and implements a proportional control loop to control the deceleration.
 
 For the `pidWrite(double output)` method, we introduce the `SimpleMotorFeedForward` that we discussed in [controllers](../controllers.md) along with PID control.
 
 ### SimpleMotorEx
 
-Just like the motor interface, `MotorEx` has an implementation seen in [SimpleMotorEx](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/SimpleMotorEx.java). All it does is define the abstract methods for you in case you do not want to create your own custom hardware.
+Just like the motor interface, `MotorEx` has an implementation seen in [SimpleMotorEx](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/SimpleMotorEx.java). All it does is define the abstract methods for you in case you do not want to create your own custom hardware.
 
 ### EncoderEx
 
-The [EncoderEx](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/SimpleMotorEx.java) class takes a `MotorEx` object into the constructor and makes use of custom and optimized methods for tracking position and encoder counts. This is where you can have the motor object run to a position as well, in an attempt to avoid utilizing the `RUN_TO_POSITION` run mode for the `DcMotor`.
+The [EncoderEx](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/EncoderEx.java) class takes a `MotorEx` object into the constructor and makes use of custom and optimized methods for tracking position and encoder counts. This is where you can have the motor object run to a position as well, in an attempt to avoid utilizing the `RUN_TO_POSITION` run mode for the `DcMotor`.
 
 ## CRServo
 
-Th [CRServo](https://github.com/FTCLib/FTCLib/blob/dev/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/CRServo.java) class is just a motor object intended to be used for a continuous rotation servo. To use it, you create a custom implementation of the `Motor` interface where you pass a `CRServo` object from the SDK into the constructor. Then, using the `CRServo` class in FTCLib, you can extend its functionality and capabilities.
+Th [CRServo](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/CRServo.java) class is just a motor object intended to be used for a continuous rotation servo. To use it, you create a custom implementation of the `Motor` interface where you pass a `CRServo` object from the SDK into the constructor. Then, using the `CRServo` class in FTCLib, you can extend its functionality and capabilities.
 
