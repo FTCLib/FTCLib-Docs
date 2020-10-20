@@ -127,6 +127,14 @@ Motor.Encoder encoder = m_motor.encoder;
 
 // get number of revolutions
 double revolutions = encoder.getRevolutions();
+
+// set the distance per pulse to 18 inches / tick
+encoder.setDistancePerPulse(18.0);
+m_motor.setDistancePerPulse(18.0); // also an option
+
+// get the distance traveled
+double distance = encoder.getDistance();
+distance = m_motor.getDistance(); // also an option
 ```
 
 ## The MotorEx Object

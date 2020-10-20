@@ -24,7 +24,7 @@ To tune these values, make a rough estimate with a measured value and then use s
 
 ## Creating the Odometry
 
-A sample usage of FTCLib odometry can be found in this [sample folder](https://github.com/FTCLib/FTCLib/tree/v1.1.0/examples/src/main/java/com/example/ftclibexamples/SharedOdometry).
+A sample usage of FTCLib odometry can be found in this [sample folder](https://github.com/FTCLib/FTCLib/tree/v1.1.2/examples/src/main/java/com/example/ftclibexamples/SharedOdometry). A sample for dead wheels can be found [here](https://github.com/FTCLib/FTCLib/blob/v1.1.2/examples/src/main/java/com/example/ftclibexamples/DeadWheelsSample.java).
 
 ### Using the Odometry Class
 
@@ -79,11 +79,15 @@ encoderLeft = new MotorEx(hardwareMap, "left_encoder");
 encoderRight = new MotorEx(hardwareMap, "right_encoder");
 encoderPerp = new MotorEx(hardwareMap, "center_encoder");
 
+encoderLeft.setDistancePerPulse(TICKS_TO_INCHES);
+encoderRight.setDistancePerPulse(TICKS_TO_INCHES);
+encoderPerp.setDistancePerPulse(TICKS_TO_INCHES);
+
 // create the odometry object
 HolonomicOdometry holOdom = new HolonomicOdometry(
-    () -> encoderLeft.getCurrentPosition() * TICKS_TO_INCHES,
-    () -> encoderRight.getCurrentPosition() * TICKS_TO_INCHES,
-    () -> encoderPerp.getCurrentPosition() * TICKS_TO_INCHES,
+    encoderLeft::getDistance,
+    encoderRight::getDistance,
+    encoderPerp::getDistance,
     TRACKWIDTH, CENTER_WHEEL_OFFSET
 );
 
