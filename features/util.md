@@ -140,3 +140,5 @@ FTCLib comes with multiple directional enums for all your directional needs! You
 | FORWARD | 4 |
 | BACKWARDS | 5 |
 
+You can find some examples in the [sample folder](https://github.com/FTCLib/FTCLib/tree/v1.1.2/examples/src/main/java/com/example/ftclibexamples).
+
