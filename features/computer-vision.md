@@ -4,15 +4,18 @@ description: package com.arcrobotics.ftclib.vision
 
 # Computer Vision
 
-Computer Vision is the process of helping computers to understand the digital images such as photographs and videos provided to them. FTCLib provides examples on the object detection needed for the current season \(right now being Skystone detection\) using the [EasyOpenCV library](https://github.com/OpenFTC/EasyOpenCV).
+Computer Vision is the process of helping computers to understand the digital images such as photographs and videos provided to them. FTCLib provides examples on the object detection needed for the current season \(right now being Ultimate Goal detection\) using the [EasyOpenCV library](https://github.com/OpenFTC/EasyOpenCV).
 
 ## Install Dependency on the Phone
 
 Since FTCLib depends on EasyOpenCV for vision, and because EasyOpenCV depends on [OpenCV-Repackaged](https://github.com/OpenFTC/OpenCV-Repackaged), you will need to copy [`libOpenCvNative.so`](https://github.com/OpenFTC/OpenCV-Repackaged/blob/master/doc/libOpenCvNative.so) from the `/doc` folder of that repo into the `FIRST` folder on the USB storage of the Robot Controller \(i.e. connect the Robot Controller to your computer with a USB cable, put it into MTP mode, and drag 'n drop the file\)
 
-## SkystoneDetectorPipeline
+## Install Dependency on Control Hub
+The installation on the control hub is the exact same as the phone with one extra step. Due to 64 bits vs 32 bits conflicts, after moving the so file, please remove any instance of **arm64-v8a** in build.common.gradle. 
 
-The heart of the skystone detector is the pipeline. A pipeline is just a fancy way describing the sequence of instructions given to continuously manipulate the image\(in this case, what the camera sees\). Ignoring the fancy code, the pipeline boils down to these following instructions:
+## UGRectRingPipeline
+
+The heart of the Ultimate Goal detector is the pipeline. A pipeline is just a fancy way describing the sequence of instructions given to continuously manipulate the image\(in this case, what the camera sees\). Ignoring the fancy code, the pipeline boils down to these following instructions:
 
 ### Receiving the Input
 
@@ -26,78 +29,83 @@ In this line, what the camera sees is being passed in and represented as a matri
 
 ```java
 Imgproc.cvtColor(input, matYCrCb, Imgproc.COLOR_RGB2YCrCb);
-setValues(input.width(), input.height());
 
-for (Rect stone : blocks) {
-    Mat currentMat = new Mat();
-    Core.extractChannel(drawRectangle(matYCrCb, stone, new Scalar(255, 0, 255), 2), currentMat, 2);
-    means.add(Core.mean(currentMat));
-    currentMat.release();
-}
+Rect topRect = new Rect(
+    (int) (matYCrCb.width() * topRectWidthPercentage),
+    (int) (matYCrCb.height() * topRectHeightPercentage),
+    rectangleWidth,
+    rectangleHeight
+);
+
+Rect bottomRect = new Rect(
+    (int) (matYCrCb.width() * bottomRectWidthPercentage),
+    (int) (matYCrCb.height() * bottomRectHeightPercentage),
+    rectangleWidth,
+    rectangleHeight
+);
+
+//The rectangle is drawn into the mat
+drawRectOnToMat(input, topRect, new Scalar(255, 0, 0));
+drawRectOnToMat(input, bottomRect, new Scalar(0, 255, 0));
 ```
 
-The first line will convert the input matrix color space from RGB to YCrCb. Because the way YCrCb represents color by luminance\(Y\), chroma of red\(CR\), chroma of blue\(Cb\), it keeps values consistent under different lighting. Next we draw 3 rectangles on screen with predetermined position. Each rectangle should contain part of a stone. Then we extract the Cb value of each predetermined area of the stones to compare. We use Cb because the color blue is futher away from yellow than red on the color wheel. This gives us more room for error. Note it is also important to release the mats when finished using them to help with memory management.
+The first line will convert the input matrix color space from RGB to YCrCb. Because the way YCrCb represents color by luminance\(Y\), chroma of red\(CR\), chroma of blue\(Cb\), it keeps values consistent under different lighting. Next we draw 2 rectangles on screen with predetermined position. The top rectangle should be where the 4th ring will be, and the bottom one should be where the first one will be. Then we extract the Cb value of each predetermined area of the ring to compare.
 
-### Determining the Position
+### Finding CB Values
 
 ```java
-Scalar max = means.get(0);
-int biggestIndex = 0;
+topBlock = matYCrCb.submat(topRect);
+bottomBlock = matYCrCb.submat(bottomRect);
 
-for (Scalar k : means) {
-    if (k.val[0] > max.val[0]) {
-        max = k;
-        biggestIndex = means.indexOf(k);
-    }
-}
+Core.extractChannel(bottomBlock, matCbBottom, 2);
+Core.extractChannel(topBlock, matCbTop, 2);
+
+Scalar bottomMean = Core.mean(matCbBottom);
+Scalar topMean = Core.mean(matCbTop);
+
+bottomAverage = bottomMean.val[0];
+topAverage = topMean.val[0];
 ```
 
-Here is just a simple for loop to iterate through the 3 rectangles to find the highest value, which would be the skystone. It is also technically possible to do this with 2 rectangles where you compare the difference between the 2. If they are within a range, they are both just normal stones and the other one will be the skystone. If they are not within a range, the highest value would be the skystone.
+Here we crop the mat to just everything inside the two rectangles. Then we find the average of the values and store them in bottomAverage and topAverage. 
 
-## Using the Pipeline
+## Creating An Instance of UGRectDetector
 
-The SkystoneDetector is a LinearOpMode that will show how you would use pipeline. For more indepth explanation of what everything does or more functionalities, please visit [here](https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples).
-
-### Setting Up the Camera
+The UGRectDetector is a class that will show how you would use pipeline. For more indepth explanation of what everything does or more functionalities, please visit [here](https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples).
+To start, create an instance of UGRectDetector. The detector's constructor is overloaded. You can choose between:
 
 ```java
-int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-phoneCam.openCameraDevice();
+public UGRectDetector(HardwareMap hMap)
+```
+```java
+public UGRectDetector(HardwareMap hMap, String webcamName) 
 ```
 
-These 3 lines will initialize the camera and open a connection to the camera
+* `hMap`: An instance of the hardware map
+* `webcamName`: The webcam name
 
-### Setting up the Pipeline
+If you use the first constructor, the detector will set the camera to the phone's camera. If the second is used, the webcam will be used. 
 
-```text
-visionPipeLine = new SkystoneDetectorPipeline();
-phoneCam.setPipeline(visionPipeLine);
+## Setting Rectangle Positions
+```java
+public void setTopRectangle(double topRectHeightPercentage, double topRectWidthPercentage)
 ```
 
-SkystoneDetectorPipeline's constructor is overloaded. You can choose between:
+* `topRectHeightPercentage`: topRectHeightPercentage is the percentage of the height of the user's input and should be a decimal under 1. It is used to calculate the first y value for the top rectangle. 
+* `topRectWidthPercentage`: topRectWidthPercentage is the percentage of the width of the user's input and should be a decimal under 1. It is used to calculate the first x value for the top rectangle.
 
 ```java
-public SkystoneDetectorPipeline(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight)
+public void setBottomRectangle(double bottomRectHeightPercentage, double bottomRectWidthPercentage)
 ```
+
+* `bottomRectHeightPercentage`: bottomRectHeightPercentage is the percentage of the height of the user's input and should be a decimal under 1. It is used to calculate the first y value for the bottom rectangle. 
+* `bottomRectWidthPercentage`: bottomRectWidthPercentage is the percentage of the width of the user's input and should be a decimal under 1. It is used to calculate the first x value for the bottom rectangle.
 
 ```java
-public SkystoneDetectorPipeline(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight, Telemetry tl){
+public void setRectangleSize(int rectangleWidth, int rectangleHeight)
 ```
 
-```java
-public SkystoneDetectorPipeline()
-```
+* `rectangleWidth` : rectangleWidth is the width of the rectangles in terms of pixels
+* `rectangleHeight` : rectangleHeight is the height of the rectangles in terms of pixels
 
-```java
-public SkystoneDetectorPipeline(Telemetry tl)
-```
-
-* `firstSkystonePositionPercentage`: The location of the first rectangle, the percentage of the width of the user's input
-* `percentSpacing`: The spacing between the stones, the percentage times width added to the position of each stone
-* `stoneWidth`: The width of the rectangle drawn
-* `stoneHeight`: The height of the rectangle drawn
-* `tl`: Your instance of telemetry
-
-After creating an instance of the pipeline, set it to the phone's camera. Then continuously run `visionPipeLine.getSkystonePosition()` to get the position.
-
+After creating an instance of the detector and setting the rectangle positions,continuously run `DetectorInstance.getStack()` to get the number in the stack.
