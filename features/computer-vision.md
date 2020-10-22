@@ -11,7 +11,8 @@ Computer Vision is the process of helping computers to understand the digital im
 Since FTCLib depends on EasyOpenCV for vision, and because EasyOpenCV depends on [OpenCV-Repackaged](https://github.com/OpenFTC/OpenCV-Repackaged), you will need to copy [`libOpenCvNative.so`](https://github.com/OpenFTC/OpenCV-Repackaged/blob/master/doc/libOpenCvNative.so) from the `/doc` folder of that repo into the `FIRST` folder on the USB storage of the Robot Controller \(i.e. connect the Robot Controller to your computer with a USB cable, put it into MTP mode, and drag 'n drop the file\)
 
 ## Install Dependency on Control Hub
-The installation on the control hub is the exact same as the phone with one extra step. Due to 64 bits vs 32 bits conflicts, after moving the so file, please remove any instance of **arm64-v8a** in build.common.gradle. 
+
+The installation on the control hub is the exact same as the phone with one extra step. Due to 64 bits vs 32 bits conflicts, after moving the so file, please remove any instance of **arm64-v8a** in build.common.gradle.
 
 ## UGRectRingPipeline
 
@@ -67,26 +68,27 @@ bottomAverage = bottomMean.val[0];
 topAverage = topMean.val[0];
 ```
 
-Here we crop the mat to just everything inside the two rectangles. Then we find the average of the values and store them in bottomAverage and topAverage. 
+Here we crop the mat to just everything inside the two rectangles. Then we find the average of the values and store them in bottomAverage and topAverage.
 
 ## Creating An Instance of UGRectDetector
 
-The UGRectDetector is a class that will show how you would use pipeline. For more indepth explanation of what everything does or more functionalities, please visit [here](https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples).
-To start, create an instance of UGRectDetector. The detector's constructor is overloaded. You can choose between:
+The UGRectDetector is a class that will show how you would use pipeline. For more indepth explanation of what everything does or more functionalities, please visit [here](https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples). To start, create an instance of UGRectDetector. The detector's constructor is overloaded. You can choose between:
 
 ```java
 public UGRectDetector(HardwareMap hMap)
 ```
+
 ```java
-public UGRectDetector(HardwareMap hMap, String webcamName) 
+public UGRectDetector(HardwareMap hMap, String webcamName)
 ```
 
 * `hMap`: An instance of the hardware map
 * `webcamName`: The webcam name
 
-If you use the first constructor, the detector will set the camera to the phone's camera. If the second is used, the webcam will be used. 
+If you use the first constructor, the detector will set the camera to the phone's camera. If the second is used, the webcam will be used.
 
 ## Setting Rectangle Positions
+
 ```java
 public void setTopRectangle(double topRectHeightPercentage, double topRectWidthPercentage)
 ```
@@ -109,3 +111,4 @@ public void setRectangleSize(int rectangleWidth, int rectangleHeight)
 * `rectangleHeight` : rectangleHeight is the height of the rectangles in terms of pixels
 
 After creating an instance of the detector and setting the rectangle positions,continuously run `DetectorInstance.getStack()` to get the number in the stack.
+

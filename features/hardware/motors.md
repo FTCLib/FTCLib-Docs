@@ -102,7 +102,7 @@ m_motor.setInverted(true);
 boolean isInverted = m_motor.getInverted();
 
 // set the zero power behavior to BRAKE
-m_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+m_motor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 ```
 
 ### The Built-In Encoder
