@@ -6,9 +6,9 @@ description: How to import FTCLib into your Android Studio FTC Project
 
 ## build.common.gradle
 
-First, you need to add the `jcenter` library repository to your `build.common.gradle` file:
+First, you need to add the `jcenter` library repository to your `build.gradle` file at the project root:
 
-{% code title="build.common.gradle" %}
+{% code title="build.gradle" %}
 ```groovy
     repositories {
         jcenter()
@@ -43,18 +43,17 @@ compileOptions {
 
 Remove all instances of `"arm64-v8a"`
 
+{% code title="build.common.gradle" %}
 ```groovy
-build.common.gradle
-
 ndk {
-abiFilters "armeabi-v7a"
+    abiFilters "armeabi-v7a"
 }
 
-
 ndk {
-abiFilters "armeabi-v7a"
+    abiFilters "armeabi-v7a"
 }
 ```
+{% endcode %}
 
 ## build.gradle \(TeamCode\)
 
