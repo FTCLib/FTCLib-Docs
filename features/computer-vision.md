@@ -397,7 +397,7 @@ constructor(
 
 There are many values that the pipeline uses that can be changed/tuned to increase or decrease accuracy. 
 
-All configuration values are stored in a `companion object` called Config \(see [here](https://github.com/FTCLib/FTCLib/blob/master/core/vision/src/main/java/com/arcrobotics/ftclib/vision/UGContourRingPipeline.kt#L90)\). In this, `companion object` there are six variables, two of which are constants and cannot be changed.
+All configuration values are stored in a `companion object` called Config \(see [here](https://github.com/FTCLib/FTCLib/blob/master/core/vision/src/main/java/com/arcrobotics/ftclib/vision/UGContourRingPipeline.kt#L90-L110)\). In this, `companion object` there are six variables, two of which are constants and cannot be changed.
 
 * `lowerOrange`: the value of the lower orange used in finding the mask
 * `upperOrange`: the value of the upper orange used in finding the mask
