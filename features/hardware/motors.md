@@ -10,9 +10,12 @@ FTCLib offers fully-featured motor wrappers for the ease of the user. Behind the
 
 Creating a motor is as simple as passing in the hardware map, the name of the device in the robot controller config, and an optional third parameter of a GoBILDA motor type. This is necessary because the goBILDA motors in the configuration don't specify the different max RPM \(rotations per minute\) and CPR \(counts per revolution\).
 
+There is also an option of using a custom CPR and RPM value.
+
 ```java
 Motor m_motor_1 = new Motor(hardwareMap, "motorOne");
 Motor m_motor_2 = new Motor(hardwareMap, "motorTwo", GoBILDA.RPM_312);
+Motor m_motor_3 = new Motor(hardwareMap, "motorThree", CPR, RPM);
 
 // grab the internal DcMotor object
 DcMotor motorOne = m_motor_1.motor;
