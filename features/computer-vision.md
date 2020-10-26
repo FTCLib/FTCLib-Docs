@@ -72,7 +72,7 @@ Here we crop the mat to just everything inside the two rectangles. Then we find 
 
 ## Creating An Instance of UGRectDetector
 
-The UGRectDetector is a class that will show how you would use pipeline. For more indepth explanation of what everything does or more functionalities, please visit [here](https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples). To start, create an instance of UGRectDetector. The detector's constructor is overloaded. You can choose between:
+The UGRectDetector is a class that will show how you would use the pipeline. For more in-depth explanation of what everything does or more functionalities, please visit [here](https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples). To start, create an instance of UGRectDetector. The detector's constructor is overloaded. You can choose between:
 
 ```java
 public UGRectDetector(HardwareMap hMap)
@@ -110,5 +110,5 @@ public void setRectangleSize(int rectangleWidth, int rectangleHeight)
 * `rectangleWidth` : rectangleWidth is the width of the rectangles in terms of pixels
 * `rectangleHeight` : rectangleHeight is the height of the rectangles in terms of pixels
 
-After creating an instance of the detector and setting the rectangle positions,continuously run `DetectorInstance.getStack()` to get the number in the stack.
+After creating an instance of the detector and setting the rectangle positions, continuously run `DetectorInstance.getStack()` to get the number in the stack.
 
