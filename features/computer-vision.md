@@ -393,7 +393,7 @@ constructor(
 {% endtab %}
 {% endtabs %}
 
-## Tuning
+### Tuning
 
 There are many values that the pipeline uses that can be changed/tuned to increase or decrease accuracy. 
 
