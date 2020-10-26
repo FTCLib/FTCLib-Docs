@@ -176,3 +176,7 @@ You can also take a look at [this sample](https://github.com/FIRST-Tech-Challeng
 
 Th [CRServo](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/motors/CRServo.java) class is just a motor object intended to be used for a continuous rotation servo. To use it, you create a custom implementation of the `Motor` interface where you pass a `CRServo` object from the SDK into the constructor. Then, using the `CRServo` class in FTCLib, you can extend its functionality and capabilities.
 
+## MotorGroup
+
+A motor group takes a group of motors and acts like a single motor. It utilizes an array of motors and takes in a varargs to produce simple actions like moving in a group.
+
