@@ -59,6 +59,8 @@ double kP = m_motor.getPositionCoefficient();
 // set the target position
 m_motor.setTargetPosition(1200);      // an integer representing
                                       // desired tick count
+                                      
+m_motor.set(0);
 
 // set the tolerance
 m_motor.setPositionTolerance(13.6);   // allowed maximum error
