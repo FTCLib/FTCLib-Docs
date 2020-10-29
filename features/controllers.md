@@ -94,13 +94,13 @@ pController.setSetPoint(1200);
  * the desired setpoint within a specified tolerance
  * range
  */
-while (!pController.atSetPoint()) {
+do {
   double output = pController.calculate(
     m_motor.getCurrentPosition()  // the measured value
   );
   m_motor.setVelocity(output);
-}
-m_motor.stop(); // stop the motor
+} while (!pController.atSetPoint());
+m_motor.stopMotor(); // stop the motor
 
 // NOTE: motors have internal PID control
 ```
