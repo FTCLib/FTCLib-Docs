@@ -67,7 +67,7 @@ m_motor.setPositionTolerance(13.6);   // allowed maximum error
 while (!m_motor.atTargetPosition()) {
   m_motor.set(0.75);
 }
-m_motor.stop(); // stop the motor
+m_motor.stopMotor(); // stop the motor
 ```
 
 Velocity control has the motor run using velocity in ticks per second with both a feedback and feedforward controller rather than simply setting the speed to a percentage of the maximum output speed. This can lead to smoother control for your motors, and is highly recommended for autonomous programs.
