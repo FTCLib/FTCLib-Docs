@@ -146,9 +146,9 @@ GamepadEx myGamepad = new Gamepad(gamepad1);
 
 /** The methods for using the ButtonReaders **/
 myGamepad.wasJustPressed(GamepadKeys.Button.A);
-reader.stateJustChanged(GamepadKeys.Button.A);
-reader.isDown(GamepadKeys.Button.A);
-reader.wasJustReleased(GamepadKeys.Button.A);
+myGamepad.stateJustChanged(GamepadKeys.Button.A);
+myGamepad.isDown(GamepadKeys.Button.A);
+myGamepad.wasJustReleased(GamepadKeys.Button.A);
 
 // pass the GamepadKeys.Button that you want to read
 // into the method argument
