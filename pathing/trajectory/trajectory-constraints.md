@@ -14,13 +14,13 @@ FTCLib includes a set of predefined constraints that users can utilize when gene
 * `MecanumDriveKinematicsConstraint`: Limits the velocity of the robot around turns such that no wheel of a [mecanum](../../features/drivebases.md#mecanum)-drive robot goes over a specified maximum velocity.
 * `SwerveDriveKinematicsConstraint`: Limits the velocity of the robot around turns such that no wheel of a swerve-drive robot goes over a specified maximum velocity.
 
-#### Note
+### Note
 
 The `DifferentialDriveVoltageConstraint` only ensures that theoretical voltage commands do not go over the specified maximum using a [feedforward model](../../features/controllers.md#feedforward-control). If the robot were to deviate from the reference while tracking, the commanded voltage may be higher than the specified maximum.
 
 ## Creating a Custom Constraint
 
-Users can create their own constraint by implementing the `TrajectoryConstraint` [interface](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/trajectory/constraint/TrajectoryConstraint.java).
+Users can create their own constraint by implementing the `TrajectoryConstraint` [interface](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/trajectory/constraint/TrajectoryConstraint.java).
 
 ```java
 @Override

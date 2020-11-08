@@ -8,24 +8,88 @@ The FTCLib provides enhanced Gamepad features. These classes are essentially ext
 
 ## GamepadKeys
 
-Provides enum represenations of the buttons, D-Pad, bumpers, and triggers. Buttons, D-Pad, and bumpers are stored in `GamepadKeys.Button` and triggers are stored in `GamepadKeys.Trigger`.
+Provides enum representations of the buttons, D-Pad, bumpers, and triggers. Buttons, D-Pad, and bumpers are stored in `GamepadKeys.Button` and triggers are stored in `GamepadKeys.Trigger`.
+
+| Buttons |
+| :--- |
+| Y |
+| X |
+| A |
+| B |
+| LEFT\_BUMPER |
+| RIGHT\_BUMPER |
+| BACK |
+| START |
+| DPAD\_UP |
+| DPAD\_DOWN |
+| DPAD\_LEFT |
+| DPAD\_RIGHT |
+| LEFT\_STICK\_BUTTON |
+| RIGHT\_STICK\_BUTTON |
+
+| Trigger |
+| :--- |
+| LEFT\_TRIGGER |
+| RIGHT\_TRIGGER |
+
+```java
+// these are from the GamepadButton class that is used
+// for command-based frameworks
+GamepadButton grabButton = new GamepadButton(
+    gamepad1, GamepadKeys.Button.A
+);
+GamepadButton releaseButton = new GamepadButton(
+    gamepad2, GamepadKeys.Button.B
+);
+
+GamepadEx gamepadEx = new GamepadEx(gamepad1);
+```
 
 ## GamepadEx
 
 An extension of the stock FTC SDK `Gamepad` class. Constructed simply from a Gamepad. Provides six intuitive value-getting methods:
 
 * `getButton()`: Given a `GamepadKeys.Button`, this method will check if that Button is pressed, returning a boolean of whether that Button is pressed.
+
+```java
+gamepadEx.getButton(GamepadKeys.Button.A);
+```
+
 * `getTrigger()`: Given a `GamepadKeys.Trigger`, this method will return the value of the Trigger \(0 if unpressed, 1 if fully depressed\).
-* `getLeftY()`: Returns the value of the y-axis of the left joystick
+
+```java
+gamepadEx.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+```
+
+* `getLeftY()`: Returns the value of the y-axis of the left joystick \(note that the value returned is the opposite of what would be returned from the standard gamepad object\).
+
+```java
+gamepadEx.getLeftY();
+```
+
 * `getRightY()`: Returns the value of the y-axis of the right joystick
+
+```java
+gamepadEx.getRightY();
+```
+
 * `getLeftX()`: Returns the value of the x-axis of the left joystick
+
+```java
+gamepadEx.getLeftX();
+```
+
 * `getRightX()`: Returns the value of the x-axis of the right joystick
+
+```text
+gamepadEx.getRightX();
+```
 
 ## KeyReader
 
 The `KeyReader` interface is the base for objects that monitor an individual button or trigger on a gamepad. All `Reader` classes must implement these functions:
 
-* `readValue()`: Reads the current value of the key, true or false. This must be called in a loop in order to use functions that depend on the previous value of the key such as `wasJustPressed()` , `wasJustReleased()` , `stateJustChanged()` , or `getState` with `ToggleButtonReader` class. 
+* `readValue()`: Reads the current value of the key, true or false, and updates the values used by the reader. Returns nothing.
 * `isDown()` : Checks if key is currently down. Will return a boolean of whether that key is pressed.
 * `wasJustPressed()` : Returns boolean whether the key is pressed, but only if it was previously not pressed. 
 * `wasJustReleased()` : Returns boolean indicating whether the key is not pressed, but only if it was previously pressed. 
@@ -35,18 +99,74 @@ The `KeyReader` interface is the base for objects that monitor an individual but
 
 The `TriggerReader` class implements the `KeyReader` interface. Because `GamepadEx` Triggers return a `double` , the `TriggerReader` class interprets a value of greater than `0.5` as a trigger press.
 
-* `TriggerReader(GamepadEx gamepad, GamepadKeys.Trigger trigger, [String triggerName, Telemetry telemetry])` : Constructs a new Trigger Reader with a `GamepadEx` gamepad and `GamepadKeys.Trigger` trigger. `triggerName` and `telemetry` are optional parameters that display the boolean value of the trigger on the Driver Station phone's telemetry.
+The following constructs a new Trigger Reader with a `GamepadEx` gamepad and `GamepadKeys.Trigger` trigger.
+
+```java
+TriggerReader triggerReader = new TriggerReader(
+    gamepadEx, GamepadKeys.Trigger.RIGHT_TRIGGER
+);
+```
+
+Below are the different methods you can use with the trigger reader.
+
+```java
+triggerReader.isDown();
+triggerReader.readValue();
+triggerReader.stateJustChanged();
+triggerReader.wasJustPressed();
+triggerReader.wasJustReleased();
+```
 
 ## ButtonReader
 
 The `ButtonReader`class implements the `KeyReader` interface. It checks if a button is pressed, released, or is down.
 
+```java
+ButtonReader reader = new ButtonReader(
+    gamepadEx, GamepadKeys.Button.A
+);
+```
+
 * `ButtonReader(GamepadEx gamepad, GamepadKeys.Button button)`: Constructs a new Button Reader with a `GamepadEx` gamepad and a `GamepadKeys.Button` button. 
 * `ButtonReader(BooleanSupplier supplier)`: Constructs a new Button Reader using the value of a boolean supplier instead of a gamepad, which allows reading value states easily without a gamepad.
 
+```java
+reader.readValue();
+reader.wasJustPressed();
+reader.stateJustChanged();
+reader.isDown();
+reader.wasJustReleased();
+```
+
+The `GamepadEx` objects actually contain `ButtonReader`s. For every `GamepadKeys.Button`, there is a matching `ButtonReader` entry in the map. It is stored internally as a `Map<GamepadKeys.Button, ButtonReader>`. This allows you to use these features just with the `GamepadEx` class.
+
+```java
+// create the gamepad
+GamepadEx myGamepad = new Gamepad(gamepad1);
+
+/** The methods for using the ButtonReaders **/
+myGamepad.wasJustPressed(GamepadKeys.Button.A);
+reader.stateJustChanged(GamepadKeys.Button.A);
+reader.isDown(GamepadKeys.Button.A);
+reader.wasJustReleased(GamepadKeys.Button.A);
+
+// pass the GamepadKeys.Button that you want to read
+// into the method argument
+```
+
 ## ToggleButtonReader
+
+```java
+ToggleButtonReader toggleButtonReader = new ToggleButtonReader(
+    gamepadEx, GamepadKeys.Button.A
+);
+```
 
 The `ToggleButtonReader` class extends `ButtonReader` and adds the ability to get the status of a toggle. `readValue()` needs to be run in a loop to get the state of the toggle.
 
 `getState()` : Gets the toggle value of a button or boolean supplier.
+
+```java
+toggleButtonReader.getState();
+```
 

@@ -4,7 +4,7 @@ description: package com.arcrobotics.ftclib.purepursuit
 
 # Pure Pursuit
 
-The pure pursuit algorithm in FTCLib is developed so that the user only needs to add the desired waypoints and call the `followPath()` method in the [Path](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/purepursuit/Path.java) class. To use this, you need to pass the [mecanum](https://docs.ftclib.org/ftclib/features/drivebases#mecanum) drivetrain as well as the odometry for the robot. Once the method is finished, it will return true or false depending on if it was successful or not.
+The pure pursuit algorithm in FTCLib is developed so that the user only needs to add the desired waypoints and call the `followPath()` method in the [Path](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/purepursuit/Path.java) class. To use this, you need to pass the [mecanum](https://docs.ftclib.org/ftclib/features/drivebases#mecanum) drivetrain as well as the odometry for the robot. Once the method is finished, it will return true or false depending on if it was successful or not.
 
 As an alternative, you can call the `loop()` method and directly input your odometry positions there. Make sure you update the odometry positions with each iteration of the loop.
 
@@ -29,8 +29,10 @@ You can create a waypoint by calling the various constructors.
 **StartWaypoint**
 
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p1 = new StartWaypoint();
+
 // With Pose2d.
 Waypoint p1 = new StartWaypoint(pose2d);
 // With X and Y coordinates.
@@ -41,10 +43,18 @@ Waypoint p1 = new StartWaypoint(translation2d);
 
 **GeneralWaypoint**
 
+Each general waypoint inherits from the previous general waypoint in the path. The only parameters that will need to be specified are the x and y coordinates of the point. Each point has the option to update the different parameters across the path \(which is meant for user-end customization of the path\). Point-turn waypoints, interrupted waypoints, and end waypoints are all subclasses of a general waypoint, so they will also have this feature. This inheritance is performed in the `init()` method of the path.
+
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p2 = new GeneralWaypoint();
-// With X and Y coordinates. This waypoint will inherit it's settings from the previous waypoint. Useful for long strings of waypoints. Note: Will not work if the waypoint preceding this is not an instance of GeneralWaypoint. 
+
+// With X and Y coordinates. This waypoint will inherit
+// its settings from the previous waypoint.
+// Useful for long strings of waypoints.
+// Note: Will not work if the waypoint preceding
+// this is not an instance of GeneralWaypoint. 
 Waypoint p2 = new GeneralWaypoint(x, y);
 
 /**
@@ -79,7 +89,8 @@ Waypoint p2 = new GeneralWaypoint(
 As you will see here, a "buffer" is a sort of expected error. This sets up a tolerance given that the robot might be a bit offset from the desired position or rotation.
 
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p3 = new PointTurnWaypoint();
 
 /**
@@ -114,10 +125,11 @@ Waypoint p3 = new PointTurnWaypoint(
 
 **InterruptWaypoint**
 
-The `action` here is an [InterruptAction](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/purepursuit/actions/InterruptAction.java), which is an interface that the user can implement to create a custom action to occur at this point. A recommendation is to pair this with the [command paradigm](../command-base/command-system/) that FTCLib provides.
+The `action` here is an [InterruptAction](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/purepursuit/actions/InterruptAction.java), which is an interface that the user can implement to create a custom action to occur at this point. A recommendation is to pair this with the [command paradigm](../command-base/command-system/) that FTCLib provides.
 
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p4 = new InterruptWaypoint();
 
 /**
@@ -151,14 +163,20 @@ Waypoint p4 = new InterruptWaypoint(
     action
 );
 
-// With java 8 you can use a lambda expression to easily add an action. For example:
-Waypoint p4 = new InterruptWaypoint(x, y, movementSpeed, turnSpeed, followRadius, positionBuffer, rotationBuffer, () -> grabBlock());
+// With java 8 you can use a lambda expression to easily
+// add an action. For example:
+Waypoint p4 = new InterruptWaypoint(
+    x, y, movementSpeed, turnSpeed,
+    followRadius, positionBuffer,
+    rotationBuffer, grabSubsystem::grabBlock
+);
 ```
 
 **EndWaypoint**
 
 ```java
-// Empty constructor. Note: Only use this constructor if you plan on setting the values later.
+// Empty constructor. Note: Only use this constructor
+// if you plan on setting the values later.
 Waypoint p5 = new EndWaypoint();
 
 /**
@@ -177,7 +195,8 @@ Waypoint p5 = new PointTurnWaypoint(
     turnSpeed, followRadius,
     positionBuffer, rotationBuffer
 );
-// With X and Y coordinates and preferred angle (A preferred angle is needed for an EndWaypoint).
+// With X and Y coordinates and preferred angle
+// (A preferred angle is needed for an EndWaypoint).
 Waypoint p5 = new PointTurnWaypoint(
     x, y, rotationRadians, movementSpeed,
     turnSpeed, followRadius,
@@ -229,7 +248,7 @@ m_path.setWaypointTimeouts(p1_timeout, p2_timeout, p3_timeout, ...);
 m_path.resetTimeouts();
 ```
 
-### Reseting the Path
+### Resetting the Path
 
 If you want to use a path more than once in the same opmode, make sure to reset between uses. You can do this as follows:
 
@@ -241,7 +260,7 @@ m_path.reset();
 
 The `followPath()` method is the automatic implementation of pure pursuit for FTCLib. For teams that want to use all of FTCLib's features to the fullest, this is the recommended process.
 
-An important note for the pure pursuit algorithm is that it only works well with odometry. You can use the various odometry systems provided by FTCLib. An important thing to note is that `followPath()` makes use of the [Odometry](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/Odometry.java) abstract class and the [mecanum drivebase](../features/drivebases.md#mecanum). Then, the method will call the loop method and do everything for you.
+An important note for the pure pursuit algorithm is that it only works well with odometry. You can use the various odometry systems provided by FTCLib. An important thing to note is that `followPath()` makes use of the [Odometry](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/kinematics/Odometry.java) abstract class and the [mecanum drivebase](https://docs.ftclib.org/ftclib/features/drivebases#mecanum). Then, the method will call the loop method and do everything for you.
 
 ```java
 // follow path
@@ -252,13 +271,14 @@ An issue this method has is that we cannot directly access the hardware of the r
 
 ### Creating Your Odometry
 
-As a way of working around this issue, the odometry needs to be setup in a particular way with [Suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html). A supplier is a functional interface that uses lambdas to reference a certain value. Let's work with the [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java) class for these examples.
+As a way of working around this issue, the odometry needs to be setup in a particular way with [Suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html). A supplier is a functional interface that uses lambdas to reference a certain value. Let's work with the [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java) class for these examples.
 
 You're going to want to instantiate your odometry using this constructor:
 
 ```java
 HolonomicOdometry m_robotOdometry = new HolonomicOdometry(
-    leftValue, rightValue, horizontalValue, trackWidth
+    leftValue, rightValue, horizontalValue, trackWidth,
+    centerWheelOffset
 );
 ```
 
@@ -269,14 +289,10 @@ Before we can create the object, we need to make our suppliers. We will do this 
 ```java
 DoubleSupplier leftValue, rightValue, horizontalValue;
 
-leftValue = () -> ticksToInches(m_lOdom.getCounts());
-rightValue = () -> ticksToInches(m_rOdom.getCounts());
-horizontalValue = () -> ticksToInches(m_hOdom.getCounts());
+leftValue = () -> ticksToInches(m_lOdom.getCurrentPosition());
+rightValue = () -> ticksToInches(m_rOdom.getCurrentPosition());
+horizontalValue = () -> ticksToInches(m_hOdom.getCurrentPosition());
 ```
-
-### Making it a Command
-
-We can follow the command paradigm to make this a command. For each path, you can create a command and then put it into a command group. This is the recommended practice you should follow when utilizing FTCLib's pure pursuit implementation.
 
 ## Using `loop()`
 
@@ -286,7 +302,7 @@ The use of suppliers can be avoided using this method since it can be called in 
 
 ### Odometry Options
 
-The odometry is much more open for this. You can use whatever constructor you desire for it. Note that you are not limited to use only [ConstantVeloMecanumOdometry](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/ConstantVeloMecanumOdometry.java) or [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java). Since the method parameters only take x, y, and heading values, you can use whatever odometry system you desire as long as it produces such values. This is one of the more appealing aspects of the `loop()` method.
+The odometry is much more open for this. You can use whatever constructor you desire for it. Since the method parameters only take x, y, and heading values, you can use whatever odometry system you desire as long as it produces such values. This is one of the more appealing aspects of the `loop()` method.
 
 The important thing for odometry is to remember to update the position of the robot after each iteration after manually inputting the motor speeds.
 
@@ -310,4 +326,70 @@ while (!m_path.isFinished()) {
 }
 m_robot.stop();
 ```
+
+## Using the Pure Pursuit Command
+
+If you're using your odometry for multiple subsystems, you're likely going to want to make use of the [PurePursuitCommand](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/command/PurePursuitCommand.java) due to the shared odometry \(as we only want to update it once per cycle\). This is actually the recommended method of using pure pursuit, especially if you want to use it with the command-based paradigm that FTCLib has to offer.
+
+### Creating an Odometry Subsystem
+
+The pre-built PurePursuitCommand requires the use of FTCLib's [OdometrySubsystem](https://docs.ftclib.org/ftclib/v/v1.1.0/kinematics/odometry#using-the-odometry-subsystem). It is fairly easy to set up. All that is needed is for the user to pass in their odometry class into the constructor of the subsystem.
+
+```java
+// create the odometry object
+HolonomicOdometry m_robotOdometry = new HolonomicOdometry(
+    leftValue, rightValue, horizontalValue, TRACKWIDTH,
+    CENTER_WHEEL_OFFSET
+);
+
+// pass the odometry object into the subsystem constructor
+OdometrySubsystem m_odometry = new OdometrySubsystem(
+    m_robotOdometry
+);
+```
+
+#### Using the Odometry Subsystem
+
+Users can make use of the odometry subsystem in the exact same way as the Odometry class.
+
+```java
+// retrieve the current saved pose of the robot
+Pose2d robotPose = m_odometry.getPose();
+
+// update the pose manually
+m_odometry.update();
+```
+
+The odometry subsystem updates the position of the robot in its `periodic()` method, so it will update every time the CommandScheduler is run. This effectively means that the position does not need to be updated manually unless desired by the user.
+
+### Creating a PurePursuitCommand
+
+Creating the command is simple. Note that this implementation of the command does not utilize every feature of the Path and is relatively simplistic. It is designed to be a simple template for the user and not an end-all-be-all for every possible desired activity.
+
+To create the object, pass in the drivebase object, the odometry subsystem, and the desired waypoints.
+
+```java
+PurePursuitCommand ppCommand = new PurePursuitCommand(
+    m_robotDrive, m_odometry,
+    p1, p2, p3, p4, p5
+);
+
+// schedule the command
+ppCommand.schedule();
+
+// remove waypoint at specified index
+ppCommand.removeWayPointAtIndex(4);
+ppCommand.removeWayPointAtIndex(3);
+ppCommand.removeWayPointAtIndex(2);
+
+// add waypoints to the path
+ppCommand.addWaypoint(p3);
+ppCommand.addWaypoints(p4, p5);
+```
+
+The rest of the class does everything for you through the command-based paradigm. Using the `execute()`, `end(interrupted)`, and `isFinished()` methods allows for the command to be run simply by running the scheduler in a loop.
+
+### Running the Command
+
+It is run the exact same way everything else is run in the paradigm: by running the scheduler. Take a look at [this sample](https://github.com/FTCLib/FTCLib/blob/dev/examples/src/main/java/com/example/ftclibexamples/PurePursuitSample.java) to see how everything works together.
 

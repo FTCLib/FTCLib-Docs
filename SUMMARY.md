@@ -5,13 +5,14 @@
 
 ## Features
 
-* [Controllers](features/controllers.md)
-* [Drivebases](features/drivebases.md)
-* [Gamepad](features/gamepad-extensions.md)
-* [Geometry](features/geometry.md)
 * [Hardware](features/hardware/README.md)
   * [Motors](features/hardware/motors.md)
+* [Gamepad](features/gamepad-extensions.md)
+* [Drivebases](features/drivebases.md)
+* [Geometry](features/geometry.md)
+* [Controllers](features/controllers.md)
 * [Computer Vision](features/computer-vision.md)
+* [Utility Functions](features/util.md)
 
 ## Kinematics
 
@@ -42,6 +43,7 @@
   * [Command Groups](command-base/command-system/command-groups.md)
   * [Command Scheduler](command-base/command-system/command-scheduler.md)
   * [Binding Commands to Triggers](command-base/command-system/binding-commands-to-triggers.md)
+  * [Robot and CommandOpMode](command-base/command-system/robot-and-commandopmode.md)
 * [Old Commands](command-base/old-commands.md)
 
 ---

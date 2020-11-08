@@ -4,49 +4,96 @@ description: package com.arcrobotics.ftclib.kinematics
 
 # Odometry
 
-FTCLib offers its own odometry classes for the use of differential and holonomic drives. The odometry classes track the robot position as a `Pose2d`, which means it is represented using the vector $$\begin{pmatrix} x\\ y\\ \theta \end{pmatrix}$$ .
+FTCLib offers its own odometry classes for the use of differential and holonomic drives. The odometry classes track the robot position as a `Pose2d`, which means it is represented using the vector $$\begin{pmatrix} x\\ y\\ \theta \end{pmatrix}$$ . $$x$$ is the distance in the forward direction of the robot, $$y$$ is the horizontal distance, and $$\theta$$ is the heading of the robot.
 
-When using these classes, it is important to keep your distance in inches and angles in radians.
+When using these classes, it is important to keep angles in radians. Distances should be consistent.
 
-## Euler Integration
+## Pose Exponential
 
-The first method of odometry, seen in the `HolonomicOdometry` and `DifferentialOdometry` classes, is Euler integration. Euler integration makes use of the half angle method for updating the pose of the robot. Instead of relying on calculus, this method uses solely basic linear algebraic principles.
+Pose Exponential is a general FRC term for the constant velocity method of odometry utilized in FTC. We use pose exponentials because the cycle times of control loops in FTC can vary significantly.
 
-{% embed url="https://www.youtube.com/watch?v=UcUuPVjpEqs" %}
-
-The contents of this video can be simplified to the following formula:
-
-$$
-\begin{pmatrix} x\\ y\\ \theta \end{pmatrix} = 
-\begin{pmatrix} x_{i}\\ y_{i}\\ \theta_{i} \end{pmatrix} +
-\begin{pmatrix}
-\Delta{x_{c}\cos{(\theta_{i} + \frac{\varphi}{2})}}-\Delta{x_{\perp}\sin{(\theta_{i} + \frac{\varphi}{2})}}\\
-\Delta{x_{c}\sin{(\theta_{i} + \frac{\varphi}{2})}}+\Delta{x_{\perp}\cos{(\theta_{i} + \frac{\varphi}{2})}}\\
-\varphi \end{pmatrix}
-$$
-
-If you have a differential drivetrain, $$\Delta{x_{\perp}}=0$$ because the drivebase cannot move horizontally \(in the sideways direction\).
-
-## Pose Integration
-
-Pose integration is a general FRC term for the constant velocity method of odometry utilized in FTC. The [ConstantVeloMecanumOdometry](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/kinematics/ConstantVeloMecanumOdometry.java) class uses these calculations for a general holonomic base despite the name of the classfile.
-
-This method uses differential equations to solve the nonlinear position of the robot given constant curvature. As such, we will not explain the math here. Instead, we will only go over how the classfile can be used.
+This method uses differential equations to solve the nonlinear position of the robot given constant curvature. As such, we will not explain the math here. If you are interested in the math behind it, we suggest you read up on [Tyler's book](https://tavsys.net/controls-in-frc).
 
 ### Offsets and Trackwidth
 
-The `ConstantVeloMecanumOdometry` classfile utilizes a three odometer system paired with some gyroscope. The reason why a gyroscope is used here is because, although the angular rate can be calculated using encoder velocities, this method is NOT recommended because of wheel scrubbing. Consequently, the gyro is used instead for the mathematical process of heading interpolation.
-
 The trackwidth is the distance between parallel encoders. This value should be tuned so that a precise calculation can be made. This value is a required pass into the constructor.
 
-The offsets are values that correspond to a difference in actual vs relative positions. The center wheel offset is the distance between the horizontal odometer and the center of rotation of the robot to account for the proper angular rate as it affects the odometer's position. The gyro offset describes the difference between the initial position of the robot for the odometry and the initial value heading returned by the gyroscope. This is only accounted for if an initial `Pose2d` object is passed into the constructor.
+The center wheel offset accounts for the distance between the center of rotation of the robot and the position of the horizontal encoder. This is only necessary for the holonomic odometry.
 
-## Updating the Position
+To tune these values, make a rough estimate with a measured value and then use some sort of method for testing and updating the values until the outputs become reliable. Alternatively to beginning with a measured value, you can start at 18. Your value should then converge to some smaller distance.
 
-If you are using the [suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html) constructor, you're going to want to call `updatePose()` repeatedly after every iteration. A useful way to do this would be to plug it into the `periodic` method of a [subsystem](../command-base/command-system/subsystems.md). You can learn more about how to do this in the [pure pursuit](../pathing/pure-pursuit.md#creating-your-odometry) tutorial.
+## Creating the Odometry
 
-Alternatively, the other methods use the `update` method to iterate the position. To use it, you will need to pass the current gyro angle, left encoder position, right encoder position, and horizontal encoder position \(if holonomic\) as parameters into the `update` method. Like with `updatePose()`, you're going to want to call this method after every successive iteration.
+A sample usage of FTCLib odometry can be found in this [sample folder](https://github.com/FTCLib/FTCLib/tree/v1.1.2/examples/src/main/java/com/example/ftclibexamples/SharedOdometry). A sample for dead wheels can be found [here](https://github.com/FTCLib/FTCLib/blob/v1.1.2/examples/src/main/java/com/example/ftclibexamples/DeadWheelsSample.java).
 
-**Note**:  
-If you're using the Euler integration classes and would like to not use the gyroscope, you will need to pass in a value of 0 for the current heading and it will use the encoder readings instead to calculate the current angle of the robot.
+### Using the Odometry Class
+
+To use the odometry class, there are three different constructors depending on how you want to run your odometry. One method of running the odometry is using suppliers to have the class update your positions for you. The other is to manually input the sensor data into the `update()` method, which has parameters of the left encoder value, right encoder value, and horizontal encoder value \(which is only used for holonomic\). If you use suppliers, you can just call the `updatePose()` method which uses the suppliers to call the `update()` method.
+
+```java
+// define our trackwidth
+static final double TRACKWIDTH = 13.7;
+
+// convert ticks to inches
+static final double TICKS_TO_INCHES = 15.3;
+
+// create our encoders
+MotorEx encoderLeft, encoderRight;
+encoderLeft = new MotorEx(hardwareMap, "left_encoder");
+encoderRight = new MotorEx(hardwareMap, "right_encoder");
+
+// create our odometry
+DifferentialOdometry diffOdom = new DifferentialOdometry(
+    () -> encoderLeft.getCurrentPosition() * TICKS_TO_INCHES,
+    () -> encoderRight.getCurrentPosition() * TICKS_TO_INCHES,
+    TRACKWIDTH
+);
+
+// update the initial position
+diffOdom.updatePose(new Pose2d(1, 2, 0));
+
+// control loop
+while (!isStopRequested()) {
+    /* implementation */
+    
+    // update the position
+    diffOdom.updatePose();
+}
+```
+
+You should call the respective update method once every cycle of the control loop.
+
+### Using the Odometry Subsystem
+
+The [OdometrySubsystem](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/command/OdometrySubsystem.java) class is a template subsystem meant to make command-based programming around odometry much simpler and functional. Using the odometry subsystem makes it more accurate because the position will update itself through the scheduler's call to its `periodic()` method, which updates the position. The subsystem makes use of the suppliers, so you will **need** to use that constructor instead of the other for the FTCLib subsystem. Alternatively, you can create your own odometry subsystem.
+
+```java
+// define our constants
+static final double TRACKWIDTH = 13.7;
+static final double TICKS_TO_INCHES = 15.3;
+static final double CENTER_WHEEL_OFFSET = 2.4;
+
+// create our encoders
+MotorEx encoderLeft, encoderRight, encoderPerp;
+encoderLeft = new MotorEx(hardwareMap, "left_encoder");
+encoderRight = new MotorEx(hardwareMap, "right_encoder");
+encoderPerp = new MotorEx(hardwareMap, "center_encoder");
+
+encoderLeft.setDistancePerPulse(TICKS_TO_INCHES);
+encoderRight.setDistancePerPulse(TICKS_TO_INCHES);
+encoderPerp.setDistancePerPulse(TICKS_TO_INCHES);
+
+// create the odometry object
+HolonomicOdometry holOdom = new HolonomicOdometry(
+    encoderLeft::getDistance,
+    encoderRight::getDistance,
+    encoderPerp::getDistance,
+    TRACKWIDTH, CENTER_WHEEL_OFFSET
+);
+
+// create the odometry subsystem
+OdometrySubsystem odometry = new OdometrySubsystem(holOdom);
+```
+
+The [PurePursuitCommand](https://docs.ftclib.org/ftclib/v/v1.1.0/pathing/pure-pursuit#using-the-pure-pursuit-command) makes use of the OdometrySubsystem class.
 

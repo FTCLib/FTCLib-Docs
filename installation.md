@@ -6,9 +6,9 @@ description: How to import FTCLib into your Android Studio FTC Project
 
 ## build.common.gradle
 
-First, you need to add the `jcenter` library repository to your `build.common.gradle` file:
+First, you need to add the `jcenter` library repository to your `build.gradle` file at the project root:
 
-{% code title="build.common.gradle" %}
+{% code title="build.gradle" %}
 ```groovy
     repositories {
         jcenter()
@@ -23,7 +23,7 @@ Next, `minSdkVersion` to `24` and `multiDexEnabled` to `true`:
 defaultConfig {
     applicationId 'com.qualcomm.ftcrobotcontroller'
     minSdkVersion 24
-    targetSdkVersion 26
+    targetSdkVersion 28
     multiDexEnabled true
 ```
 {% endcode %}
@@ -39,32 +39,47 @@ compileOptions {
 ```
 {% endcode %}
 
-Then remove all instances of `"arm64-v8a"`
+## Only If Using CV:
 
+Remove all instances of `"arm64-v8a"`
+
+{% code title="build.common.gradle" %}
 ```groovy
-build.common.gradle
-
 ndk {
-abiFilters "armeabi-v7a"
+    abiFilters "armeabi-v7a"
 }
 
-
 ndk {
-abiFilters "armeabi-v7a"
+    abiFilters "armeabi-v7a"
 }
 ```
+{% endcode %}
 
 ## build.gradle \(TeamCode\)
 
-Add this dependency block:
+Add this dependency block for the base library:
 
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.0.1' // current version
+    implementation 'com.arcrobotics:ftclib:1.2.0' // core
+```
+{% endcode %}
+
+## OR
+
+Add this dependency block for the vision library:
+
+{% code title="build.gradle \(Module: TeamCode\)" %}
+```groovy
+dependencies {
+    implementation 'com.arcrobotics.ftclib:vision:1.2.0' // vision
+    implementation 'com.arcrobotics:ftclib:1.2.0' // core
 }
 ```
 {% endcode %}
+
+Please ignore any warning regarding version 2.0.11--that is a beta version and should not be used.
 
 ## Install EasyOpenCV Dependency on the Phone
 

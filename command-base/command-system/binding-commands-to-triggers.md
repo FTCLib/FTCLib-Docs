@@ -44,7 +44,7 @@ The most-common way to trigger a command is to bind a command to a button on the
 
 ### Creating a GamepadButton
 
-In order to create a `GamepadButton`, we first need a `GamapadEx`. 
+In order to create a `GamepadButton`, we first need a `GamapadEx`.
 
 ```java
 GamepadEx driverOp = new GamepadEx(gamepad1);
@@ -54,35 +54,63 @@ GamepadEx toolOp = new GamepadEx(gamepad2);
 When the object is instantiated, users can then pass it into the `GamepadButton` class.
 
 ```java
-GamepadButton exampleButton = new GamepadButton(driverOp, GamepadKeys.Button.A);
+Button exampleButton = new GamepadButton(
+    driverOp, GamepadKeys.Button.A
+);
+
+// alternatively, you can use the mapped GamepadButtons
+// built in to the GamepadEx class
+driverOp.getGamepadButton(GamepadKeys.Button.A);
 ```
 
-### Binding a Command to a GamepadButton
+### Binding a Command to a Button
 
-Putting it all together, it is very simple to bind a command to a GamepadButton.
+Putting it all together, it is very simple to bind a command to a Button.
 
 ```java
 exampleButton.whenPressed(new ExampleCommand());
+
+/* It is super useful to also use instant commands */
+exampleButton.whenPressed(new InstantCommand(() -> {
+    // your implementation of Runnable.run() here
+}));
 ```
 
 It is useful to note that the command binding methods all return the trigger/button that they were initially called on, and thus can be chained to bind multiple commands to different states of the same button. For example:
 
 ```java
 exampleButton
-    // Binds a FooCommand to be scheduled when the `X` button of the driver gamepad is pressed
+    // Binds a FooCommand to be scheduled when the `X` button
+    // of the driver gamepad is pressed
     .whenPressed(new FooCommand())
-    // Binds a BarCommand to be scheduled when that same button is released
+    // Binds a BarCommand to be scheduled when that same button
+    // is released
+    .whenReleased(new BarCommand());
+    
+// instantiation + binding
+    
+/* You can also do this when you create a button object */
+Button exampleButton = new GamepadButton(
+    driverOp, GamepadKeys.Button.A
+    // then bind commands
+).whenPressed(new FooCommand())
+    .whenReleased(new BarCommand());
+    
+/* You can also do this with the GamepadEx button mapping */
+driverOp.getGamepadButton(GamepadKeys.Button.A)
+    .whenPressed(new FooCommand())
     .whenReleased(new BarCommand());
 ```
 
-Remember that button binding is _declarative_: bindings only need to be declared once, ideally some time during robot initialization. The library handles everything else.
+Remember that button binding is _declarative._ Bindings only need to be declared once, ideally some time during robot initialization. The library handles everything else.
 
 ## Composing Triggers
 
 The `Trigger` class \(including its `Button` subclasses\) can be composed to create composite triggers through the `and()`, `or()`, and `negate()` methods. For example:
 
 ```java
-// Binds an ExampleCommand to be scheduled when both the 'X' and 'Y' buttons of the driver gamepad are pressed
+// Binds an ExampleCommand to be scheduled when both the 'X' and
+// 'Y' buttons of the driver gamepad are pressed
 new GamepadButton(driverOp, GamepadKeys.Button.X)
     .and(new GamepadButton(exampleController, GamepadKeys.Button.Y))
     .whenActive(new ExampleCommand());
@@ -106,7 +134,8 @@ public class ExampleTrigger extends Trigger {
 Alternatively, this can also be done inline by passing a lambda to the constructor of `Trigger` or `Button`:
 
 ```java
-// Here it is assumed that "condition" is an object with a method "get" that returns whether the trigger should be active
+// Here it is assumed that "condition" is an object with a
+// method "get" that returns whether the trigger should be active
 Trigger exampleTrigger = new Trigger(condition::get);
 ```
 

@@ -4,7 +4,7 @@ description: package com.arcrobotics.ftclib.drivebase
 
 # Drivebases
 
-All of the FTCLib drivebase classes are based on the `RobotBase` abstract class. This is functionally similar to the [RobotDriveBase ](https://github.com/wpilibsuite/allwpilib/blob/50db653f8d864c594c6a9ab7dd5a0f45b4483a03/wpilibj/src/main/java/edu/wpi/first/wpilibj/drive/RobotDriveBase.java)class in WPILib. It contains:
+All of the [FTCLib drivebase classes](https://github.com/FTCLib/FTCLib/tree/dev/core/src/main/java/com/arcrobotics/ftclib/drivebase) are based on the `RobotBase` abstract class. This is functionally similar to the [RobotDriveBase ](https://github.com/wpilibsuite/allwpilib/blob/50db653f8d864c594c6a9ab7dd5a0f45b4483a03/wpilibj/src/main/java/edu/wpi/first/wpilibj/drive/RobotDriveBase.java)class in WPILib. It contains:
 
 * An enumerator for the different motor types \(i.e. the indices of the motors in the array\)
 * Maximum possible speed for the drivebase to approach
@@ -17,17 +17,35 @@ All of the following drive types are available for use in FTCLib. All that's nee
 
 ## Differential
 
-A differential drive is one that has two motors or motor groups on either side of the robot. Each side acts as a connected set or motor group. There are two types of drive systems here. You can use the tank and arcade control schemes with a differential drive.
+A differential drive is one that has two motors or motor groups on either side of the robot. Each side acts as a connected set or motor group. There are two types of drive systems here. You can use the tank and arcade control schemes with a differential drive.
 
 ![CAD by Hrithik and Sanjay from FTC Team 16439](../.gitbook/assets/tank.jpg)
 
+Creating the drivetrain object is simple:
+
+```java
+DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+```
+
+The constructor has two parameters: left and right. For a differential drive, it considers each side as a single motor. As a result, you need to pass in a motor group object.
+
 ### Arcade
 
-Arcade drive use a y-value input from the controller and a value from the turn stick. We know that when the turn stick is pushed left, the right side should move forward and the left side should move backwards. Therefore, since pushing the turn stick to the left returns a negative value, it should be added to the left speed and subtracted from the right speed.
+Arcade drive use a y-value input from the controller and a value from the turn stick. We know that when the turn stick is pushed left, the right side should move forward and the left side should move backwards. Therefore, since pushing the turn stick to the left returns a negative value, it should be added to the left speed and subtracted from the right speed.
+
+Here is how to call the method for arcade drive. An additional boolean parameter is optional, which is `squareInputs`. By default, this value is false.
+
+```java
+m_drive.arcadeDrive(forwardSpeed, turnSpeed);
+```
 
 ### Tank
 
-Tank drive uses a y-value input from the left and right sticks. The sticks control their respective side of the robot.
+Tank drive uses a y-value input from the left and right sticks. The sticks control their respective side of the robot.
+
+```java
+m_drive.tankDrive(leftSpeed, rightSpeed);
+```
 
 ## Holonomic
 
@@ -61,8 +79,6 @@ An X-drive is a holonomic base that has four omniwheels positioned into an "X" s
 
 ![An X-Drive concept from VEX](../.gitbook/assets/x-drive.jpg)
 
-
-
 You can create the x-drive drive as such:
 
 ```java
@@ -79,7 +95,7 @@ A mecanum drivebase is a type of holonomic drive that utilizes [mecanum wheels](
 
 For more information on mecanum drives, please watch this video:
 
-{% embed url="https://www.youtube.com/watch?v=8rhAkjViHEQ" %}
+{% embed url="https://www.youtube.com/watch?v=8rhAkjViHEQ" caption="" %}
 
 You can create the mecanum drive as such:
 
@@ -99,9 +115,17 @@ Robot-centric assumes that each push of the joystick is in relation to the local
 
 For all types of holonomic drive you do this by calling the .`driveRobotCentric()` method that takes the gamepad inputs and converts them into directional values.
 
+```java
+m_drive.driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed)
+```
+
 #### Field-Centric
 
 Field-centric assumes that each push of the joystick is in relation to the global position of the robot—this means that whenever the user pushes the drive stick forward, the robot will move away from the driver no matter its orientation. This is done by rotating the direction of the joystick clockwise by an angle measurement equivalent to the global heading of the robot.
 
 For all types of holonomic drive you do this by calling the .`driveFieldCentric()` method that takes the gamepad inputs and converts them into directional values. Additionally, you include the gyro value for the heading of the robot so that it can account for that in its movement.
+
+```java
+m_drive.driveFieldCentric(strafeSpeed, forwardSpeed, turn, heading);
+```
 

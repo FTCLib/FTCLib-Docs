@@ -4,106 +4,184 @@ description: package com.arcrobotics.ftclib.hardware.motors
 
 # Motors
 
-FTCLib brings you the best abstraction and additions to your programmed motors. Unfortunately, unlike FRC, FTC motors are restricted heavily when it comes to software. Consequently, we decided not to directly port the `SpeedController` features from WPILib.
+FTCLib offers fully-featured motor wrappers for the ease of the user. Behind the scenes, it utilizes the advanced features of FTCLib to produce a more powerful implementation of the DcMotor objects offered in the SDK. Similarly, FTCLib has a `Motor` and `MotorEx` object, each of which allow for the user to directly access the instance object from the hardware map in the case of wanting to work with it directly.
 
-## The Motor Interface
+## Creating a Motor Object
 
-Fortunately, however, we have provided plenty of motors for your customization and optimization needs. Instead of `SpeedController`, the base abstraction for your motors is the `Motor` interface that can be found [here](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/Motor.java).
+Creating a motor is as simple as passing in the hardware map, the name of the device in the robot controller config, and an optional third parameter of a GoBILDA motor type. This is necessary because the goBILDA motors in the configuration don't specify the different max RPM \(rotations per minute\) and CPR \(counts per revolution\).
 
-The javadocs on the interface explains how each method is to be used when creating a custom motor object.
-
-Below is an example of a custom motor:
+There is also an option of using a custom CPR and RPM value.
 
 ```java
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+Motor m_motor_1 = new Motor(hardwareMap, "motorOne");
+Motor m_motor_2 = new Motor(hardwareMap, "motorTwo", GoBILDA.RPM_312);
+Motor m_motor_3 = new Motor(hardwareMap, "motorThree", CPR, RPM);
 
-public class YellowJacket435 implements Motor {
-  
-    private DcMotor m_motor;
-    private double resetVal;
-    
-    public static final double TICKS_PER_REV = 383.6;
+// grab the internal DcMotor object
+DcMotor motorOne = m_motor_1.motor;
+```
 
-    public YellowJacket435(HardwareMap hMap, String name) {
-      m_motor = hMap.get(DcMotor.class, name);
-    }
-    
-    @Override
-    public void set(double speed) {
-      m_motor.setPower(speed);
-    }
+### Using a RunMode
 
-    @Override
-    public double get() {
-      return m_motor.getPower();
-    }
+A RunMode is a method of running the motor when power is supplied. There are three modes: `VelocityControl`, `PositionControl`, and `RawPower`.
 
-    @Override
-    public void setInverted(boolean isInverted) {
-      m_motor.setDirection(!isInverted ? DcMotor.Direction.FORWARD : DcMotor.Direction.REVERSE);
-    }
+```java
+// in Motor.java
 
-    @Override
-    public boolean getInverted() {
-      return m_motor.getDirection() == DcMotor.Direction.REVERSE;
-    }
-
-    @Override
-    public void disable() {
-       m_motor.close();
-    }
-
-    @Override
-    public void pidWrite(double output) {
-      set(output);
-    }
-    
-    @Override
-    public void stopMotor() {
-      set(0);
-    }
-    
-    public double getEncoderCount() {
-      return m_motor.getCurrentPosition() - resetVal;
-    }
-
-    public void resetEncoder() {
-      resetVal += getEncoderCount();
-    }
-
-    public void getNumRevolutions() {
-      return getEncoderCount() / TICKS_PER_REV;
-    }
-
+/**
+ * The RunMode of the motor.
+ */
+public enum RunMode {
+    VelocityControl, PositionControl, RawPower
 }
 ```
 
-Alternatively to multiplying the power by some multiplier, we can just set the direction of the `DcMotor` object with `setDirection(DcMotor.Direction direction)`.
+Raw power sets the motor power directly through a value of $$[-1, 1]$$ where the value represents the percentage of its maximum speed. This is also open loop control, which means there is no feedback control. This is the default mode of the motor.
 
-### MotorGroup
+```java
+// set the run mode
+m_motor.setRunMode(Motor.RunMode.RawPower);
 
-The [MotorGroup](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/MotorGroup.java) class takes a set of motors and controls them like one set of objects. This is extremely useful for a differential drive.
+// set the proportional output power of the motor
+m_motor.set(0.37);    // 37% of maximum speed in current direction
+```
 
-### SimpleMotor
+Position control has the motor run to a desired position based on the input speed and the distance between current motor position and target position \(in counts\). This utilizes a P controller whose coefficient can be changed using `setPositionCoefficient(double)`. This is a tuned value. For tuning, we currently recommend using [FTC Dashboard](https://acmerobotics.github.io/ftc-dashboard/basics).
 
-The implementation sample in FTCLib is the [SimpleMotor](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/SimpleMotor.java) class. If you do not want to use custom motors, you can still use the FTCLib-compatible motor that has already been written for you.
+```java
+// set the run mode
+m_motor.setRunMode(Motor.RunMode.PositionControl);
 
-## MotorEx
+// set and get the position coefficient
+m_motor.setPositionCoefficient(0.05);
+double kP = m_motor.getPositionCoefficient();
 
-The [MotorEx](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/MotorEx.java) class is an extension of the motor interface that allows for more customization and control. It adds in the `ZeroPowerBehavior` functionality of the `DcMotor` class in the SDK and implements a proportional control loop to control the deceleration.
+// set the target position
+m_motor.setTargetPosition(1200);      // an integer representing
+                                      // desired tick count
+                                      
+m_motor.set(0);
 
-For the `pidWrite(double output)` method, we introduce the `SimpleMotorFeedForward` that we discussed in [controllers](../controllers.md) along with PID control.
+// set the tolerance
+m_motor.setPositionTolerance(13.6);   // allowed maximum error
 
-### SimpleMotorEx
+// perform the control loop
+while (!m_motor.atTargetPosition()) {
+  m_motor.set(0.75);
+}
+m_motor.stopMotor(); // stop the motor
+```
 
-Just like the motor interface, `MotorEx` has an implementation seen in [SimpleMotorEx](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/SimpleMotorEx.java). All it does is define the abstract methods for you in case you do not want to create your own custom hardware.
+Velocity control has the motor run using velocity in ticks per second with both a feedback and feedforward controller rather than simply setting the speed to a percentage of the maximum output speed. This can lead to smoother control for your motors, and is highly recommended for autonomous programs.
 
-### EncoderEx
+```java
+// set the run mode
+m_motor.setRunMode(Motor.RunMode.VelocityControl);
 
-The [EncoderEx](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/EncoderEx.java) class takes a `MotorEx` object into the constructor and makes use of custom and optimized methods for tracking position and encoder counts. This is where you can have the motor object run to a position as well, in an attempt to avoid utilizing the `RUN_TO_POSITION` run mode for the `DcMotor`.
+// set and get the coefficients
+m_motor.setVeloCoefficients(0.05, 0.01, 0.31);
+double[] coeffs = m_motor.getVeloCoefficients();
+double kP = coeffs[0];
+double kI = coeffs[1];
+double kD = coeffs[2];
+
+// set and get the feedforward coefficients
+m_motor.setFeedforwardCoefficients(0.92, 0.47);
+double[] ffCoeffs = m_motor.getFeedforwardCoefficients();
+double kS = ffCoeffs[0];
+double kV = ffCoeffs[1];
+
+// set the output of the motor
+m_motor.set(-0.54);
+```
+
+### Setting Behaviors
+
+FTCLib, like the SDK, has wrapper methods for setting the ZeroPowerBehavior and the direction of the motors. ZeroPowerBehavior is often used for mechanisms other than the drivetrain; for example, like how you would use the BRAKE behavior for a lift.
+
+```java
+// set the inversion factor
+m_motor.setInverted(true);
+
+// get the inversion factor
+boolean isInverted = m_motor.getInverted();
+
+// set the zero power behavior to BRAKE
+m_motor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+```
+
+### The Built-In Encoder
+
+A lot of motors have built-in encoders. FTCLib offers a nested class `Motor.Encoder` that utilizes advanced mechanics and corrects for [velocity overflow](https://github.com/FIRST-Tech-Challenge/SkyStone/issues/241). One of the other great things is that resetting the encoder does not require stopping the motor. It calculates an offset and subtracts that from the current position. This offset is set to the current position of the encoder each time the `reset()` method is called. The Motor object also has methods that manipulate the encoder so that you don't have to grab the internal encoder instance from the object.
+
+You can also use the built-in encoder as an encoder itself when using an external encoder.
+
+```java
+// reset the encoder
+m_motor.resetEncoder();
+
+// the current position of the motor
+int pos = m_motor.getCurrentPosition();
+
+// get the current velocity
+double velocity = m_motor.getVelocity();
+double corrected = m_motor.getCorrectedVelocity();
+
+// grab the encoder instance
+Motor.Encoder encoder = m_motor.encoder;
+
+// get number of revolutions
+double revolutions = encoder.getRevolutions();
+
+// set the distance per pulse to 18 inches / tick
+encoder.setDistancePerPulse(18.0);
+m_motor.setDistancePerPulse(18.0); // also an option
+
+// get the distance traveled
+double distance = encoder.getDistance();
+distance = m_motor.getDistance(); // also an option
+```
+
+## The MotorEx Object
+
+MotorEx is an implementation of the Motor class with better integrated velocity control. Unlike the Motor object, it uses the corrected velocity by default instead of the raw velocity. It also uses the `DcMotorEx` object instead of the `DcMotor`. Calling `getVelocity()` will return the corrected velocity value.
+
+You can also set the velocity directly using `setVelocity()`. You can pass the angular rate and the angle unit \(optional\). Passing just the angular rate will set the velocity in ticks per second. Passing an angle unit will set the velocity to units per second, depending on the unit that is passed into the method.
+
+### Bulk Reading
+
+A bulk read reads all of the sensor data \(except i2c\) on a lynx module to save cycle times. Bulk reads were introduced in SDK version 5.4. Since FTCLib uses wrappers, we can treat them the same way as other sensors.
+
+Here's a sample implementation of auto-caching.
+
+```java
+// obtain a list of hubs
+List<LynxModule> hubs = hardwareMap.getAll(LynxModule.class);
+
+MotorEx m1 = new MotorEx(hardwareMap, "one");
+MotorEx m2 = new MotorEx(hardwareMap, "two");
+
+for (LynxModule hub : hubs) {
+     hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+}
+
+// control loop
+int cycles = 0;
+while (cycles++ < 500) {
+    double v1 = m1.getVelocity();
+    double v2 = m2.getVelocity();
+    
+    /* implementation */
+}
+```
+
+You can also take a look at [this sample](https://github.com/FIRST-Tech-Challenge/FtcRobotController/blob/master/FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/external/samples/ConceptMotorBulkRead.java) in the SDK.
 
 ## CRServo
 
-Th [CRServo](https://github.com/FTCLib/FTCLib/blob/v1.0.0/FtcLib/src/main/java/com/arcrobotics/ftclib/hardware/motors/CRServo.java) class is just a motor object intended to be used for a continuous rotation servo. To use it, you create a custom implementation of the `Motor` interface where you pass a `CRServo` object from the SDK into the constructor. Then, using the `CRServo` class in FTCLib, you can extend its functionality and capabilities.
+Th [CRServo](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/motors/CRServo.java) class is just a motor object intended to be used for a continuous rotation servo. To use it, you create a custom implementation of the `Motor` interface where you pass a `CRServo` object from the SDK into the constructor. Then, using the `CRServo` class in FTCLib, you can extend its functionality and capabilities.
+
+## MotorGroup
+
+A motor group takes a group of motors and acts like a single motor. It utilizes an array of motors and takes in a varargs to produce simple actions like moving in a group.
 

@@ -33,9 +33,15 @@ public class ExampleCommand extends CommandBase {
 }
 ```
 
- As before, this contains several convenience features. It automatically overrides the `getRequirements()` method for users, returning a list of requirements that is empty by default, but can be added to with the `addRequirements()` method.
+As before, this contains several convenience features. It automatically overrides the `getRequirements()` method for users, returning a list of requirements that is empty by default, but can be added to with the `addRequirements()` method.
 
 Also as before, advanced users seeking more flexibility are free to simply create their own class implementing the `Command` interface.
+
+To schedule a command to the scheduler, you will need to call the `schedule()` method of the command instance.
+
+```java
+m_command.schedule();
+```
 
 ## The Structure of  a Command
 
@@ -62,13 +68,13 @@ The `isFinished()` method is called repeatedly while the command is scheduled, w
 Taking the gripper example from the [Subsystem](subsystems.md) page, we can develop the following action to grab a stone from the quarry:
 
 ```java
-package org.firstinspires.ftc.robotcontroller.external.samples.CommandSample;
-
 import com.arcrobotics.ftclib.command.CommandBase;
 
 /**
- * A simple command that grabs a stone with the {@link GripperSubsystem}.  Written explicitly for
- * pedagogical purposes. Actual code should inline a command this simple with {@link
+ * A simple command that grabs a stone with the
+ * {@link GripperSubsystem}.  Written explicitly for
+ * pedagogical purposes. Actual code should inline a
+ * command this simple with {@link
  * com.arcrobotics.ftclib.command.InstantCommand}.
  */
 public class GrabStone extends CommandBase {
@@ -101,14 +107,13 @@ Notice also that the above command calls the subsystem method once from initiali
 Below is a more complex example of a custom command.
 
 ```java
-package org.firstinspires.ftc.robotcontroller.external.samples.CommandSample;
-
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import java.util.function.DoubleSupplier;
 
 /**
- * A command to drive the robot with joystick input (passed in as {@link DoubleSupplier}s). Written
+ * A command to drive the robot with joystick input
+ * (passed in as {@link DoubleSupplier}s). Written
  * explicitly for pedagogical purposes.
  */
 public class DefaultDrive extends CommandBase {
@@ -124,7 +129,8 @@ public class DefaultDrive extends CommandBase {
      * @param forward The control input for driving forwards/backwards
      * @param rotation The control input for turning
      */
-    public DefaultDrive(DriveSubsystem subsystem, DoubleSupplier forward, DoubleSupplier rotation) {
+    public DefaultDrive(DriveSubsystem subsystem,
+        DoubleSupplier forward, DoubleSupplier rotation) {
         m_drive = subsystem;
         m_forward = forward;
         m_rotation = rotation;
@@ -133,11 +139,14 @@ public class DefaultDrive extends CommandBase {
 
     @Override
     public void execute() {
-        m_drive.drive(m_forward.getAsDouble(), m_rotation.getAsDouble());
+        m_drive.drive(
+            m_forward.getAsDouble(),
+            m_rotation.getAsDouble()
+        );
     }
 
 }
 ```
 
- Notice that this command does not override `isFinished()`, and thus will never end.
+Notice that this command does not override `isFinished()`, and thus will never end.
 

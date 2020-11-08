@@ -4,7 +4,7 @@ description: package com.arcrobotics.ftclib.command.old
 
 # Old Commands
 
-**Please note that the following is out-dated. Refer to the new commands if you want to make use of the new paradigm.**
+**Please note that the following is deprecated. Refer to the new commands if you want to make use of the new paradigm.**
 
 The FTCLib provides a Command-based OpMode to define your robot's `OpMode` routine. Instead of hard-coding instructions in your OpMode, you can leverage the reusability of the `CommandOpMode` structure to predefined `Command` routines and run them sequentially. You can also set timeouts for a `Command` to automatically terminate a running command.
 
