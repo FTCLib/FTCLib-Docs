@@ -12,7 +12,7 @@ Framework commands exist to decrease the amount of program needed for simplistic
 
 ### InstantCommand
 
-InstantCommand is a versatile framework command that on initialization runs some task and then ends on that same iteration of the CommandScheduler's `run()` method. This is especially useful for button-triggered events.
+`InstantCommand` is a versatile framework command that on initialization runs some task and then ends on that same iteration of the CommandScheduler's `run()` method. This is especially useful for button-triggered events.
 
 ```java
 GamepadEx toolOp = new GamepadEx(gamepad2);
@@ -33,7 +33,7 @@ toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
     .whenReleased(new InstantCommand(intakeMotor::stopMotor));
 ```
 
-You should actually use subsystems here instead of the motor object. That way we can add the subsystem's requirements to the InstantCommand. Below is a proper example.
+You should actually use subsystems here instead of the motor object. That way we can add the subsystem's requirements to the `InstantCommand`. Below is a proper example.
 
 {% code title="Intake.java" %}
 ```java
@@ -75,4 +75,6 @@ toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
     .whileHeld(new InstantCommand(intake::run, intake))
     .whenReleased(new InstantCommand(intake::stop, intake));
 ```
+
+This removes a lot of unnecessary clutter of commands since in a custom implementation the user would have to define a command for both running the intake and stopping it. With `InstantCommand`, the amount of code on the user-side is dramatically reduced.
 
