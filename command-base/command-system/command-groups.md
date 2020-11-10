@@ -35,12 +35,11 @@ A `ParallelDeadlineGroup`also runs a set of commands concurrently. However, the 
 Users have several options for creating command groups. One way - similar to the previous implementation of the command-based library - is to subclass one of the command group classes. Below is an example of a command group:
 
 ```java
-package org.firstinspires.ftc.robotcontroller.external.samples.CommandSample;
-
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 /**
- * A complex auto command that drives forward, releases a stone, and then drives backward.
+ * A complex auto command that drives forward,
+ * releases a stone, and then drives backward.
  */
 public class ReleaseAndBack extends SequentialCommandGroup {
 
@@ -53,12 +52,14 @@ public class ReleaseAndBack extends SequentialCommandGroup {
      * @param drive The drive subsystem this command will run on
      * @param grip The gripper subsystem this command will run on
      */
-    public ReleaseAndBack(DriveSubsystem drive, GripperSubsystem grip) {
+    public ReleaseAndBack(DriveSubsystem drive, GripperSubsystem grip)
+    {
         addCommands(
                 new DriveDistance(INCHES, SPEED, drive),
                 new ReleaseStone(grip),
                 new DriveDistance(INCHES, SPEED, drive)
         );
+        addRequirements(drive, grip);
     }
 
 }
