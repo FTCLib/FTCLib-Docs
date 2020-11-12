@@ -80,7 +80,7 @@ This removes a lot of unnecessary clutter of commands since in a custom implemen
 
 ### ConditionalCommand
 
-ConditionalCommand has a wide variety of uses. ConditionalCommand takes two commands and runs one when supplied a value of true, and another when supplied a value of false. Two very effective utilizations are toggling and state machines.
+`ConditionalCommand` has a wide variety of uses. `ConditionalCommand` takes two commands and runs one when supplied a value of true, and another when supplied a value of false. Two very effective utilizations are toggling and state machines.
 
 Let's take a look at our previous example of an intake and add an active state:
 
