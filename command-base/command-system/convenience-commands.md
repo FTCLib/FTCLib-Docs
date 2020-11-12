@@ -140,3 +140,16 @@ toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
 
 Another example of usage could be in Velocity Vortex, where the beacons were either red or blue. Using a color sensor, we can detect the color and then perform some action based on whether it was red or blue.
 
+```java
+// pseudocode for instantiating the command
+ConditionalCommand pressBeacon = new ConditionalCommand(
+    pushBeaconRedCommand,
+    pushBeaconBlueCommand,
+    () -> vision.output() == BeaconColor.RED
+);
+
+pressBeacon.schedule();    // schedule the command
+
+/* This is also useful in sequential command groups */
+```
+
