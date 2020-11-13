@@ -120,10 +120,6 @@ This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine th
 
 ### Creating a Detector
 
-Java example: [here](https://github.com/FTCLib/FTCLib/blob/feature-kotlin-samples/examples/src/main/java/com/example/ftclibexamples/VisionSample/UGContourRingPipelineJavaExample.java)
-
-Kotlin example: [here](https://github.com/FTCLib/FTCLib/blob/feature-kotlin-samples/examples/src/main/java/com/example/ftclibexamples/VisionSample/UGContourRingPipelineKtExample.kt)
-
 {% tabs %}
 {% tab title="Java" %}
 ```java
@@ -150,7 +146,9 @@ public class UGContourRingPipelineJavaExample extends LinearOpMode {
     private UGContourRingPipeline pipeline;
     private OpenCvCamera camera;
 
-    private final int cameraMonitorViewId = this
+    @Override
+    public void runOpMode() throws InterruptedException {
+        int cameraMonitorViewId = this
             .hardwareMap
             .appContext
             .getResources().getIdentifier(
@@ -158,8 +156,6 @@ public class UGContourRingPipelineJavaExample extends LinearOpMode {
                     "id",
                     hardwareMap.appContext.getPackageName()
             );
-    @Override
-    public void runOpMode() throws InterruptedException {
         if (USING_WEBCAM) {
             camera = OpenCvCameraFactory
                     .getInstance()
@@ -211,19 +207,10 @@ class UGContourRingPipelineKtExample: LinearOpMode() {
     }
 
     private lateinit var pipeline: UGContourRingPipeline
-    private var camera: OpenCvCamera = if (USING_WEBCAM)
-        configureWebCam()
-    else
-        configurePhoneCamera()
+    private lateinit var camera: OpenCvCamera
+    private var camera: OpenCvCamera
 
-    private val cameraMonitorViewId: Int = hardwareMap
-            .appContext
-            .resources
-            .getIdentifier(
-                    "cameraMonitorViewId",
-                    "id",
-                    hardwareMap.appContext.packageName,
-            )
+    private lateinit var cameraMonitorViewId: Int
 
     private fun configurePhoneCamera(): OpenCvInternalCamera = OpenCvCameraFactory.getInstance()
                 .createInternalCamera(
@@ -239,6 +226,16 @@ class UGContourRingPipelineKtExample: LinearOpMode() {
                 )
 
     override fun runOpMode() {
+        cameraMonitorViewId = = hardwareMap
+            .appContext
+            .resources
+            .getIdentifier(
+                    "cameraMonitorViewId",
+                    "id",
+                    hardwareMap.appContext.packageName,
+            )
+        camera = if (USING_WEBCAM) configureWebCam() else configurePhoneCamera()
+        
         camera.setPipeline(UGContourRingPipeline(telemetry, DEBUG).apply { pipeline = this })
 
         UGContourRingPipeline.Config.CAMERA_WIDTH = CAMERA_WIDTH
