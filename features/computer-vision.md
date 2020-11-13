@@ -208,7 +208,6 @@ class UGContourRingPipelineKtExample: LinearOpMode() {
 
     private lateinit var pipeline: UGContourRingPipeline
     private lateinit var camera: OpenCvCamera
-    private var camera: OpenCvCamera
 
     private lateinit var cameraMonitorViewId: Int
 
