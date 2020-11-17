@@ -90,8 +90,7 @@ If you use the first constructor, the detector will set the camera to the phone'
 ## Setting Rectangle Positions
 
 ```java
-public void setTopRectangle(
-    double topRectHeightPercentage, double topRectWidthPercentage)
+public void setTopRectangle(double topRectHeightPercentage, double topRectWidthPercentage)
 ```
 
 * `topRectHeightPercentage`: topRectHeightPercentage is the percentage of the height of the user's input and should be a decimal under 1. It is used to calculate the first y value for the top rectangle. 
@@ -117,7 +116,181 @@ After creating an instance of the detector and setting the rectangle positions, 
 
 Vision Pipelines, the heart of any Ultimate Goal Detector. A pipeline is just a fancy way of saying a certain set of instructions that are applied to every inputted frame we see from the camera. 
 
-This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine the number of rings currently in the ring stack.
+This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine the number of rings
+ currently in the ring stack.
+
+### Creating a Detector
+
+{% tabs %}
+{% tab title="Java" %}
+```java
+import com.arcrobotics.ftclib.vision.UGContourRingPipeline;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+
+public class UGContourRingPipelineJavaExample extends LinearOpMode {
+    private static final int CAMERA_WIDTH = 320; // width  of wanted camera resolution
+    private static final int CAMERA_HEIGHT = 240; // height of wanted camera resolution
+
+    private static final int HORIZON = 100; // horizon value to tune
+
+    private static final boolean DEBUG = false; // if debug is wanted, change to true
+
+    private static final boolean USING_WEBCAM = false; // change to true if using webcam
+    private static final String WEBCAM_NAME = ""; // insert webcam name from configuration if using webcam
+
+    private UGContourRingPipeline pipeline;
+    private OpenCvCamera camera;
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+        int cameraMonitorViewId = this
+            .hardwareMap
+            .appContext
+            .getResources().getIdentifier(
+                    "cameraMonitorViewId",
+                    "id",
+                    hardwareMap.appContext.getPackageName()
+            );
+        if (USING_WEBCAM) {
+            camera = OpenCvCameraFactory
+                    .getInstance()
+                    .createWebcam(hardwareMap.get(WebcamName.class, WEBCAM_NAME), cameraMonitorViewId);
+        } else {
+            camera = OpenCvCameraFactory
+                    .getInstance()
+                    .createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        }
+
+        camera.setPipeline(pipeline = new UGContourRingPipeline(telemetry, DEBUG));
+
+        UGContourRingPipeline.Config.setCAMERA_WIDTH(CAMERA_WIDTH);
+
+        UGContourRingPipeline.Config.setHORIZON(HORIZON);
+
+        camera.openCameraDeviceAsync(() -> camera.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, OpenCvCameraRotation.UPRIGHT));
+
+        waitForStart();
+
+        while (opModeIsActive()) {
+            String height = "[HEIGHT]" + " " + pipeline.getHeight();
+            telemetry.addData("[Ring Stack] >>", height);
+            telemetry.update();
+        }
+    }
+}
+```
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```kotlin
+import com.arcrobotics.ftclib.vision.UGContourRingPipeline
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
+import org.openftc.easyopencv.*
+
+class UGContourRingPipelineKtExample: LinearOpMode() {
+    companion object {
+        val CAMERA_WIDTH = 320 // width  of wanted camera resolution
+        val CAMERA_HEIGHT = 240 // height of wanted camera resolution
+
+        val HORIZON = 100 // horizon value to tune
+
+        val DEBUG = false // if debug is wanted, change to true
+
+        val USING_WEBCAM = false // change to true if using webcam
+        val WEBCAM_NAME = "" // insert webcam name from configuration if using webcam
+    }
+
+    private lateinit var pipeline: UGContourRingPipeline
+    private lateinit var camera: OpenCvCamera
+
+    private lateinit var cameraMonitorViewId: Int
+
+    private fun configurePhoneCamera(): OpenCvInternalCamera = OpenCvCameraFactory.getInstance()
+                .createInternalCamera(
+                        OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId,
+                )
+
+    private fun configureWebCam(): OpenCvWebcam = OpenCvCameraFactory.getInstance().createWebcam(
+                        hardwareMap.get(
+                                WebcamName::class.java,
+                                WEBCAM_NAME
+                        ),
+                        cameraMonitorViewId,
+                )
+
+    override fun runOpMode() {
+        cameraMonitorViewId = = hardwareMap
+            .appContext
+            .resources
+            .getIdentifier(
+                    "cameraMonitorViewId",
+                    "id",
+                    hardwareMap.appContext.packageName,
+            )
+        camera = if (USING_WEBCAM) configureWebCam() else configurePhoneCamera()
+        
+        camera.setPipeline(UGContourRingPipeline(telemetry, DEBUG).apply { pipeline = this })
+
+        UGContourRingPipeline.Config.CAMERA_WIDTH = CAMERA_WIDTH
+
+        UGContourRingPipeline.Config.HORIZON = HORIZON
+
+        camera.openCameraDeviceAsync {
+            camera.startStreaming(
+                    CAMERA_WIDTH,
+                    CAMERA_HEIGHT,
+                    OpenCvCameraRotation.UPRIGHT,
+            )
+        }
+
+        waitForStart()
+
+        while (opModeIsActive()) {
+            telemetry.addData("[Ring Stack] >>", "[HEIGHT] ${pipeline.height}")
+            telemetry.update()
+        }
+    }
+
+}
+```
+{% endtab %}
+{% endtabs %}
+
+### Tuning
+
+There are many values that the pipeline uses that can be changed/tuned to increase or decrease accuracy. 
+
+All configuration values are stored in a `companion object` called Config \(see [here](https://github.com/FTCLib/FTCLib/blob/master/core/vision/src/main/java/com/arcrobotics/ftclib/vision/UGContourRingPipeline.kt#L90-L110)\). In this, `companion object` there are six variables, two of which are constants and cannot be changed.
+
+* `lowerOrange`: the value of the lower orange used in finding the mask
+* `upperOrange`: the value of the upper orange used in finding the mask
+* `CAMERA_WIDTH`: the width of the resolution of the camera
+* `HORIZON`: the value representing the horizon, on the y-axis. used in the horizon check
+* `MIN_WIDTH`: the algorithmically generated value used in the minimum width check
+* `BOUND_RATIO`: the value that the aspect ratio checks to determine whether the ring stack is one and four.
+
+{% hint style="info" %}
+`HORIZON` will most likely be the value you will have to tune. Its default value may be too restrictive or it may not. This value will show up on the image as a red line. Anything above this red line will be ignored in the pipeline's calculations. Make sure that the bottom line of the ring stack's contour box is below the horizon line.
+
+NOTE: the returned image from the pipeline will be majority black, this is to show the logic behind what the pipeline is ignoring. All contours will be drawn in green. The binding rectangle of the largest contour below the horizon will be drawn in blue.
+{% endhint %}
+
+{% hint style="warning" %}
+Config is stored in a companion object, this means that every instance of the UGContourRingPipeline will share the same configuration.
+
+These values and variables may change with future releases.
+{% endhint %}
+
+{% hint style="info" %}
+Below is the explanation of the algorithm the Pipeline uses
+{% endhint %}
 
 ### Receiving the Input
 
@@ -170,8 +343,7 @@ Core.inRange(mat, lowerOrange, upperOrange, mask);
 
 {% tab title="Kotlin" %}
 ```kotlin
-// variable to store mask in
-val mask = Mat(mat.rows(), mat.cols(), CvType.CV_8UC1)
+val mask = Mat(mat.rows(), mat.cols(), CvType.CV_8UC1) // variable to store mask in
 Core.inRange(mat, lowerOrange, upperOrange, mask)
 ```
 {% endtab %}
@@ -214,10 +386,7 @@ example of contours: [here](https://docs.opencv.org/3.4/df/d0d/tutorial_find_con
 ```java
 List<MatOfPoint> contours = new ArrayList<>();
 Mat hierarchy = new Mat();
-Imgproc.findContours(
-    mask, contours, hierarchy, Imgproc.RETR_TREE,
-    Imgproc.CHAIN_APPROX_NONE
-);
+Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_NONE);
 ```
 {% endtab %}
 
@@ -225,8 +394,7 @@ Imgproc.findContours(
 ```kotlin
 val contours: List<MatOfPoint> = ArrayList()
 val hierarchy = Mat()
-Imgproc.findContours(mask, contours, hierarchy,
-    Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_NONE)
+Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_NONE)
 ```
 {% endtab %}
 {% endtabs %}
@@ -268,10 +436,8 @@ for (c: MatOfPoint in contours) {
         maxWidth = w
         maxRect = rect
     }
-    c.release() // releasing the buffer of the contour
-                // since after use, it is no longer needed
-    copy.release()  // releasing the buffer of the copy of the contour,
-                    // since after use, it is no longer needed
+    c.release() // releasing the buffer of the contour, since after use, it is no longer needed
+    copy.release() // releasing the buffer of the copy of the contour, since after use, it is no longer needed
 }
 ```
 {% endtab %}
@@ -329,100 +495,5 @@ Possible Questions:
   * It is because of camera resolution. Since depending on the resolution of the camera, the height of the stack in pixels would be different despite them both being 4 \(let's say for example\).
 * Didn't you just say that you used a width check on the contour though? Isn't that also pixels? 
   * Yes. we did, however, unlike the height of the stack, the width of the stack is consistent. It is always one ring wide, this way we are able to algorithmically generate a minimum bounding width.
-{% endhint %}
-
-## Creating an Instance of UGContourRingDetector
-
-The UGContourRingDetector is a class that utilizes the pipeline as an example. For a more in-depth explanation of what everything does or more functionalities, please visit [here](https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples). 
-
-There are three different constructors, one primary and two secondary. You can choose between:
-
-{% tabs %}
-{% tab title="Java" %}
-```java
-public UGContourRingDetector(HardwareMap hardwareMap)
-
-public UGContourRingDetector(HardwareMap hardwareMap, Telemetry telemetry)
-
-public UGContourRingDetector(
-    HardwareMap hardwareMap,
-    Telemetry telemetry,
-    boolean debug
-)
-```
-{% endtab %}
-
-{% tab title="Kotlin" %}
-```kotlin
-UGContourRingDetector(
-        private var hardwareMap: HardwareMap,
-        private val telemetry: Telemetry? = null,
-        private var debug: Boolean = false,
-) // primary constructor
-```
-{% endtab %}
-{% endtabs %}
-
-{% tabs %}
-{% tab title="Java" %}
-```java
-public UGContourRingDetector(HardwareMap hMap, String webcamName)
-```
-{% endtab %}
-
-{% tab title="Kotlin" %}
-```kotlin
-constructor(hMap: HardwareMap, webcamName: String) // secondary constructor
-```
-{% endtab %}
-{% endtabs %}
-
-{% tabs %}
-{% tab title="Java" %}
-```java
-public UGContourRingDetector(
-    HardwareMap hMap, 
-    String webcamName, 
-    Telemetry telemetry, 
-    boolean debug
-)
-```
-{% endtab %}
-
-{% tab title="Kotlin" %}
-```kotlin
-constructor(
-    hMap: HardwareMap, 
-    webcamName: String, 
-    telemetry: Telemetry, 
-    debug: Boolean
-) // secondary constructor
-```
-{% endtab %}
-{% endtabs %}
-
-### Tuning
-
-There are many values that the pipeline uses that can be changed/tuned to increase or decrease accuracy. 
-
-All configuration values are stored in a `companion object` called Config \(see [here](https://github.com/FTCLib/FTCLib/blob/master/core/vision/src/main/java/com/arcrobotics/ftclib/vision/UGContourRingPipeline.kt#L90-L110)\). In this, `companion object` there are six variables, two of which are constants and cannot be changed.
-
-* `lowerOrange`: the value of the lower orange used in finding the mask
-* `upperOrange`: the value of the upper orange used in finding the mask
-* `CAMERA_WIDTH`: the width of the resolution of the camera
-* `HORIZON`: the value representing the horizon, on the y-axis. used in the horizon check
-* `MIN_WIDTH`: the algorithmically generated value used in the minimum width check
-* `BOUND_RATIO`: the value that the aspect ratio checks to determine whether the ring stack is one and four.
-
-{% hint style="info" %}
-`HORIZON` will most likely be the value you will have to tune. Its default value may be too restrictive or it may not. This value will show up on the image as a red line. Anything above this red line will be ignored in the pipeline's calculations. Make sure that the bottom line of the ring stack's contour box is below the horizon line.
-
-NOTE: the returned image from the pipeline will be majority black, this is to show the logic behind what the pipeline is ignoring. All contours will be drawn in green. The binding rectangle of the largest contour below the horizon will be drawn in blue.
-{% endhint %}
-
-{% hint style="warning" %}
-Config is stored in a companion object, this means that every instance of the UGContourRingPipeline will share the same configuration.
-
-These values and variables may change with future releases.
 {% endhint %}
 
