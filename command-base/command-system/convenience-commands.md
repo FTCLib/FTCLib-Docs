@@ -131,7 +131,7 @@ Motor intakeMotor = new Motor(hardwareMap, "intake");
 Intake intake = new Intake(intakeMotor);
 
 toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-    .whenPressed(new ConditionalCommand(
+    .whenHeld(new ConditionalCommand(
         new InstantCommand(intake::run, intake),
         new InstantCommand(intake::stop, intake),
         intake::active))
