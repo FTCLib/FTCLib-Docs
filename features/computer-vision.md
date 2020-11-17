@@ -114,10 +114,9 @@ After creating an instance of the detector and setting the rectangle positions, 
 
 ## UGContourRingPipeline
 
-Vision Pipelines, the heart of any Ultimate Goal Detector. A pipeline is just a fancy way of saying a certain set of instructions that are applied to every inputted frame we see from the camera. 
+Vision Pipelines, the heart of any Ultimate Goal Detector. A pipeline is just a fancy way of saying a certain set of instructions that are applied to every inputted frame we see from the camera.
 
-This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine the number of rings
- currently in the ring stack.
+This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine the number of rings currently in the ring stack.
 
 ### Creating a Detector
 
@@ -235,7 +234,7 @@ class UGContourRingPipelineKtExample: LinearOpMode() {
                     hardwareMap.appContext.packageName,
             )
         camera = if (USING_WEBCAM) configureWebCam() else configurePhoneCamera()
-        
+
         camera.setPipeline(UGContourRingPipeline(telemetry, DEBUG).apply { pipeline = this })
 
         UGContourRingPipeline.Config.CAMERA_WIDTH = CAMERA_WIDTH
@@ -265,7 +264,7 @@ class UGContourRingPipelineKtExample: LinearOpMode() {
 
 ### Tuning
 
-There are many values that the pipeline uses that can be changed/tuned to increase or decrease accuracy. 
+There are many values that the pipeline uses that can be changed/tuned to increase or decrease accuracy.
 
 All configuration values are stored in a `companion object` called Config \(see [here](https://github.com/FTCLib/FTCLib/blob/master/core/vision/src/main/java/com/arcrobotics/ftclib/vision/UGContourRingPipeline.kt#L90-L110)\). In this, `companion object` there are six variables, two of which are constants and cannot be changed.
 
@@ -376,7 +375,7 @@ example of blurring in order to smooth images with Gaussian Blur: [here](https:/
 After the GaussianBlur, this noise is eliminated as the picture becomes "blurrier". We then find all contours on the image.
 
 {% hint style="info" %}
-What is a Contour? Contours can be explained simply as a curve joining all the continuous points \(along the boundary\), having the same color or intensity. The contours are a useful tool for shape analysis and object detection and recognition. 
+What is a Contour? Contours can be explained simply as a curve joining all the continuous points \(along the boundary\), having the same color or intensity. The contours are a useful tool for shape analysis and object detection and recognition.
 
 example of contours: [here](https://docs.opencv.org/3.4/df/d0d/tutorial_find_contours.html)
 {% endhint %}
@@ -399,7 +398,7 @@ Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN
 {% endtab %}
 {% endtabs %}
 
-After finding the contours on the black and white mask, we then perform a linear search algorithm on the resulting list of contours \(stored in as MatOfPoint\). We first find the bounding rectangle of each contour and use this bounding rectangle \(not rotated\) to find the rectangle with the biggest width. We do this in order to not confuse the ring stack with other objects that may have been thought to be orange by the mask. Since the ring stack will most likely be the largest blob of orange in the view of the camera. When then do a check on the width of the widest contour. To see if it is actually a ring stack since zero is a valid option we must account for it. This check also makes sure that we don't mistake other smaller objects on the field as the ring stack, even if they are rings. 
+After finding the contours on the black and white mask, we then perform a linear search algorithm on the resulting list of contours \(stored in as MatOfPoint\). We first find the bounding rectangle of each contour and use this bounding rectangle \(not rotated\) to find the rectangle with the biggest width. We do this in order to not confuse the ring stack with other objects that may have been thought to be orange by the mask. Since the ring stack will most likely be the largest blob of orange in the view of the camera. When then do a check on the width of the widest contour. To see if it is actually a ring stack since zero is a valid option we must account for it. This check also makes sure that we don't mistake other smaller objects on the field as the ring stack, even if they are rings.
 
 {% tabs %}
 {% tab title="Java" %}
@@ -443,7 +442,7 @@ for (c: MatOfPoint in contours) {
 {% endtab %}
 {% endtabs %}
 
-We also implemented a horizon check. Anything above the horizon is disregarded and not looked at even if it has the greatest width from all the other contours. This is to ensure that the algorithm down not detect the red goal as YCrCb color space is very unreliable when detecting the difference between red and orange. 
+We also implemented a horizon check. Anything above the horizon is disregarded and not looked at even if it has the greatest width from all the other contours. This is to ensure that the algorithm down not detect the red goal as YCrCb color space is very unreliable when detecting the difference between red and orange.
 
 ### Calculating the Aspect Ratio
 
@@ -471,7 +470,7 @@ if (maxWidth >= MIN_WIDTH) {
 ```kotlin
 height = if (maxWidth >= MIN_WIDTH) {
     val aspectRatio: Double = maxRect.height.toDouble() / maxRect.width.toDouble()
-    
+
     /** checks if aspectRatio is greater than BOUND_RATIO 
      * to determine whether stack is ONE or FOUR
      */
@@ -486,7 +485,7 @@ height = if (maxWidth >= MIN_WIDTH) {
 {% endtab %}
 {% endtabs %}
 
-After finding the widest contour, which is to be assumed the stack of rings, we perform an aspect ratio of the height over the width of the largest bounding rectangle. 
+After finding the widest contour, which is to be assumed the stack of rings, we perform an aspect ratio of the height over the width of the largest bounding rectangle.
 
 {% hint style="info" %}
 Possible Questions:

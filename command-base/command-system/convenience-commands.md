@@ -80,76 +80,73 @@ This removes a lot of unnecessary clutter of commands since in a custom implemen
 
 ### ConditionalCommand
 
-`ConditionalCommand` has a wide variety of uses. `ConditionalCommand` takes two commands and runs one when supplied a value of true, and another when supplied a value of false. Two very effective utilizations are toggling and state machines.
+`ConditionalCommand` has a wide variety of uses. `ConditionalCommand` takes two commands and runs one when supplied a value of true, and another when supplied a value of false.
 
-Let's take a look at our previous example of an intake and add an active state:
-
-{% code title="Intake.java" %}
-```java
-/**
- * This is a pedagogical intake subsystem for
- * a universal intake consisting of one motor
- * that drives a belt that connects to a pulley
- * that drives a PVC tube.
- */
-public class Intake extends SubsystemBase {
-    private Motor m_intakeMotor;
-    private boolean m_active;
-    
-    public Intake(Motor intakeMotor) {
-        m_intakeMotor = intakeMotor;
-        m_active = true;
-    }
-    
-    // return the current active state
-    public boolean active() {
-        return m_active;
-    }
-    
-    // toggle the active state
-    public void toggle() {
-        m_active = !m_active;
-    }
-    
-    public void run() {
-        m_intakeMotor.set(0.75);
-    }
-    
-    public void stop() {
-        m_intakeMotor.stopMotor();
-    }
-}
-```
-{% endcode %}
-
-Instead of only intaking when the right bumper is held, let's bind it to a single button press with a toggle. The first press activates the intake, the second button press will then stop the intake. This then repeats.
-
-```java
-/* in your opmode */
-
-Motor intakeMotor = new Motor(hardwareMap, "intake");
-Intake intake = new Intake(intakeMotor);
-
-toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-    .whenHeld(new ConditionalCommand(
-        new InstantCommand(intake::run, intake),
-        new InstantCommand(intake::stop, intake),
-        intake::active))
-    .whenReleased(new InstantCommand(intake::toggle, intake));
-```
-
-Another example of usage could be in Velocity Vortex, where the beacons were either red or blue. Using a color sensor, we can detect the color and then perform some action based on whether it was red or blue.
+An example of usage could be in Velocity Vortex, where the beacons were either red or blue. Using a color sensor, we can detect the color and then perform some action based on whether it was red or blue.
 
 ```java
 // pseudocode for instantiating the command
 ConditionalCommand pressBeacon = new ConditionalCommand(
-    pushBeaconRedCommand,
-    pushBeaconBlueCommand,
+    new InstantCommand(beaconPresser::pushRed, beaconPresser),
+    new InstantCommand(beaconPresser::pushBlue, beaconPresser),
     () -> vision.output() == BeaconColor.RED
 );
 
 pressBeacon.schedule();    // schedule the command
 
 /* This is also useful in sequential command groups */
+```
+
+As you can see, conditional commands are very useful for switching between states with a certain state. We will see later that we would want to use a `SelectCommand` when working with several states and not a simple command that switches between two.
+
+### ScheduleCommand
+
+Does exactly as the name suggests: schedules commands. You can input a variable number of command arguments to schedule, and the command will schedule them on initialization. After this, the command will finish. This is useful for forking off of command groups.
+
+So far we've been using the convenience commands we've learned in tandem and how they can be used together to produce more efficient paradigm utility. This is no exception for the `ScheduleCommand`. We can use a conditional command to schedule a desired command.
+
+```java
+SequentialCommandGroup auto = new SequentialCommandGroup(
+    ...,
+    new ConditionalCommand(
+        new ScheduleCommand(
+            // schedule commands
+        ),
+        new ScheduleCommand(
+            // schedule commands
+        ),
+        ...    // boolean supplier
+    ),
+    ...
+);
+```
+
+It is important to note that the schedule command will finish immediately. Which means any following commands in the sequential command group will be run. The point of the schedule command is to fork off from the command group so that it can be run separately by the scheduler.
+
+### SelectCommand
+
+The select command is similar to a conditional command but for several commands. This is especially useful for a state machine. Let's take a look at the ring stack from the 2020-2021 Ultimate Goal season.
+
+```java
+public enum Height {
+    ZERO, ONE, FOUR
+}
+
+public Height height() {
+    // some code to detect height of the starter stack
+}
+
+...
+
+SelectCommand wobbleCommand = new SelectCommand(
+    // the first parameter is a map of commands
+    new HashMap<Object, Command>() {{
+        put(Height.ZERO, new PurePursuitCommand(...));
+        put(Height.ONE, new PurePursuitCommand(...));
+        put(Height.FOUR, new PurePursuitCommand(...));
+    }},
+    // the selector
+    this::height
+);
 ```
 
