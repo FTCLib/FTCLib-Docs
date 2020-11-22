@@ -62,7 +62,7 @@ Add this dependency block for the base library:
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.1.4' // core
+    implementation 'com.arcrobotics:ftclib:1.1.5' // core
 ```
 {% endcode %}
 
@@ -74,7 +74,7 @@ Add this dependency block for the vision library:
 ```groovy
 dependencies {
     implementation 'com.arcrobotics.ftclib:vision:1.1.0' // vision
-    implementation 'com.arcrobotics:ftclib:1.1.4' // core
+    implementation 'com.arcrobotics:ftclib:1.1.5' // core
 }
 ```
 {% endcode %}
