@@ -79,8 +79,6 @@ dependencies {
 ```
 {% endcode %}
 
-Please ignore any warning regarding version 2.0.11--that is a beta version and should not be used.
-
 ## Install EasyOpenCV Dependency on the Phone
 
 Since FTCLib depends on EasyOpenCV for vision, and because EasyOpenCV depends on [OpenCV-Repackaged](https://github.com/OpenFTC/OpenCV-Repackaged), you will need to copy [`libOpenCvNative.so`](https://github.com/OpenFTC/OpenCV-Repackaged/blob/master/doc/libOpenCvNative.so) from the `/doc` folder of that repo into the `FIRST` folder on the USB storage of the Robot Controller \(i.e. connect the Robot Controller to your computer with a USB cable, put it into MTP mode, and drag 'n drop the file\)
