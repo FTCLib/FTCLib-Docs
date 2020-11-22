@@ -4,6 +4,8 @@ description: How to import FTCLib into your Android Studio FTC Project
 
 # Installation
 
+**THIS VERSION IS NOT OUT YET!**
+
 ## build.common.gradle
 
 First, you need to add the `jcenter` library repository to your `build.gradle` file at the project root:
