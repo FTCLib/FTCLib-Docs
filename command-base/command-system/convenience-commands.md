@@ -141,9 +141,12 @@ public Height height() {
 SelectCommand wobbleCommand = new SelectCommand(
     // the first parameter is a map of commands
     new HashMap<Object, Command>() {{
-        put(Height.ZERO, new PurePursuitCommand(...));
-        put(Height.ONE, new PurePursuitCommand(...));
-        put(Height.FOUR, new PurePursuitCommand(...));
+        put(Height.ZERO, new ScheduleCommand(
+            new PurePursuitCommand(...)));
+        put(Height.ONE, new ScheduleCommand(
+            new PurePursuitCommand(...)));
+        put(Height.FOUR, new ScheduleCommand(
+            new PurePursuitCommand(...)));
     }},
     // the selector
     this::height
