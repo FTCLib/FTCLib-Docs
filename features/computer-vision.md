@@ -209,7 +209,7 @@ class UGContourRingPipelineKtExample: LinearOpMode() {
     private lateinit var pipeline: UGContourRingPipeline
     private lateinit var camera: OpenCvCamera
 
-    private lateinit var cameraMonitorViewId: Int
+    private var cameraMonitorViewId: Int = -1
 
     private fun configurePhoneCamera(): OpenCvInternalCamera = OpenCvCameraFactory.getInstance()
                 .createInternalCamera(
