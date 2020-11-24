@@ -225,7 +225,7 @@ class UGContourRingPipelineKtExample: LinearOpMode() {
                 )
 
     override fun runOpMode() {
-        cameraMonitorViewId = = hardwareMap
+        cameraMonitorViewId = hardwareMap
             .appContext
             .resources
             .getIdentifier(
