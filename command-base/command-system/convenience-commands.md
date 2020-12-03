@@ -82,6 +82,65 @@ This removes a lot of unnecessary clutter of commands since in a custom implemen
 
 `ConditionalCommand` has a wide variety of uses. `ConditionalCommand` takes two commands and runs one when supplied a value of true, and another when supplied a value of false.
 
+One use is for making a toggle between commands without using the inactive or active states of the `toggleWhenPressed()` binding. Let's update our intake to have two more methods we can use for this toggling feature:
+
+{% code title="Intake.java" %}
+```java
+/**
+ * This is a pedagogical intake subsystem for
+ * a universal intake consisting of one motor
+ * that drives a belt that connects to a pulley
+ * that drives a PVC tube.
+ */
+public class Intake extends SubsystemBase {
+    private Motor m_intakeMotor;
+    private boolean m_active;
+    
+    public Intake(Motor intakeMotor) {
+        m_intakeMotor = intakeMotor;
+        m_active = true;
+    }
+    
+    // switch the toggle
+    public void toggle() {
+        m_active = !m_active;
+    }
+    
+    // return the active state
+    public boolean active() {
+        return m_active;
+    }
+    
+    public void run() {
+        m_intakeMotor.set(0.75);
+    }
+    
+    public void stop() {
+        m_intakeMotor.stopMotor();
+    }
+}
+```
+{% endcode %}
+
+We can then use a conditional command in a trigger binding to produce a toggling effect once pressed:
+
+```java
+/* in your opmode */
+
+Motor intakeMotor = new Motor(hardwareMap, "intake");
+Intake intake = new Intake(intakeMotor);
+
+toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+    .whenPressed(new ConditionalCommand(
+        new InstantCommand(intake::run, intake),
+        new InstantCommand(intake::stop, intake),
+        () -> {
+            intake.toggle();
+            return intake.active();
+        }
+    ));
+```
+
 An example of usage could be in Velocity Vortex, where the beacons were either red or blue. Using a color sensor, we can detect the color and then perform some action based on whether it was red or blue.
 
 ```java
@@ -150,6 +209,112 @@ SelectCommand wobbleCommand = new SelectCommand(
     }},
     // the selector
     this::height
+);
+```
+
+A select command is finished when the selected command also finishes. An alternative use of the select command is to run a command given a supplier instead of a map. Below is a comparable version to the one above:
+
+```java
+public enum Height {
+    ZERO, ONE, FOUR
+}
+
+public Height height() {
+    // some code to detect height of the starter stack
+}
+
+// returns a command for the wobble goal action
+public Command wobbleCommand() {
+    Height rings = this.height();
+    switch (rings) {
+        case Height.ZERO:
+            return ...;
+        case Height.ONE:
+            return ...;
+        case Height.FOUR:
+            return ...;
+    }
+}
+
+...
+
+SelectCommand wobbleCommand = new SelectCommand(
+    // pass in a command supplier
+    this::wobbleCommand
+);
+```
+
+### PerpetualCommand
+
+As opposed to an instant command, a perpetual command swallows a command and runs it perpetually i.e. it will continue to execute the command passed in as an as argument in the constructor and ignore that command's `isFinished` condition. It can only end if it is interrupted. This makes them useful for default commands, which are interrupted when another command requiring that subsystem is currently being run and is not scheduled again until that command ends.
+
+Let's take a look back at the command bindings for when we learned `InstantCommand`, Instead of doing `whileHeld` and `whenReleased` binding, a more idiomatic method is to use a default command to stop the intake when the button is released instead \(which cancels the command once the trigger/button is inactive, allowing the default command to be scheduled\).
+
+```java
+/* in your opmode */
+
+Motor intakeMotor = new Motor(hardwareMap, "intake");
+Intake intake = new Intake(intakeMotor);
+
+toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+    .whileHeld(new InstantCommand(intake::run, intake));
+
+intake.setDefaultCommand(new PerpetualCommand(
+    new InstantCommand(intake::stop, intake)
+));
+```
+
+Note that a perpetual command adds all the requirements of the swallowed command.
+
+### WaitUntilCommand
+
+A `WaitUntilCommand` is run until the boolean supplied returns true. This is useful for when you have forked off from a command group. Let's expand upon the example from the [`ScheduleCommand`](convenience-commands.md#schedulecommand) but with a single schedule command.
+
+```java
+SequentialCommandGroup auto = new SequentialCommandGroup(
+    ...,
+    // schedule the command that forks off from
+    // the command group
+    new ScheduleCommand(forkedCommand),
+    // wait until that command is finished
+    new WaitUntilCommand(forkedCommand::isFinished),
+    ...    // more commands
+);
+```
+
+The following commands in the auto command group are only run after that forked command is finished due to that `WaitUntilCommand`.
+
+### FunctionalCommand
+
+The last framework command we will discuss is the `FunctionalCommand`. It is useful for doing an inline definition of a complex command instead of creating a new command subclass. Generally, it is better to write a class for anything past a certain complexity.
+
+The `FunctionalCommand` takes four inputs and a variable amount of subsystems for adding requirements. The four inputs determine the initialization, execution, and end actions, followed by the boolean supplier that determines if it is finished.
+
+A good use of this is inside of a sequential command group. Let's use the previous command group and add a functional command.
+
+```java
+SequentialCommandGroup auto = new SequentialCommandGroup(
+    ...,
+    new FunctionalCommand(
+        // init actions
+        driveSubsystem::resetEncoders,
+        // execute actions
+        () -> {
+            /* list of actions */
+            // remember run() returns void
+        },
+        // end actions
+        driveSubsystem::stop,
+        // is finished supplier
+        () -> {
+            /* logic that returns a boolean */
+        },
+        driveSubsystem,
+        ...    // any other required subsystems
+    ),
+    new ScheduleCommand(forkedCommand),
+    new WaitUntilCommand(forkedCommand::isFinished),
+    ...
 );
 ```
 
