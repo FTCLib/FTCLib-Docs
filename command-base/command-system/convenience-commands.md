@@ -260,7 +260,9 @@ toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
     .whileHeld(new InstantCommand(intake::run, intake));
 
 intake.setDefaultCommand(new PerpetualCommand(
-    new InstantCommand(intake::stop, intake)
+    new ScheduleCommand(
+        new InstantCommand(intake::stop, intake)
+    )
 ));
 ```
 
