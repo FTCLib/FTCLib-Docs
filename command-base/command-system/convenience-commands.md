@@ -276,9 +276,10 @@ Intake intake = new Intake(intakeMotor);
 toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
     .whileHeld(new InstantCommand(intake::run, intake));
 
-intake.setDefaultCommand(new PerpetualCommand(
-    new RunCommand(intake::stop, intake)
-));
+intake.setDefaultCommand(new PerpetualCommand(stopIntakeCommand));
+
+// this isn't actually needed; really you'd do this:
+intake.setDefaultCommand(new RunCommand(intake::stop, intake));
 ```
 
 Note that a perpetual command adds all the requirements of the swallowed command.
