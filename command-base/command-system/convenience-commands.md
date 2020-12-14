@@ -78,6 +78,23 @@ toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
 
 This removes a lot of unnecessary clutter of commands since in a custom implementation the user would have to define a command for both running the intake and stopping it. With `InstantCommand`, the amount of code on the user-side is dramatically reduced.
 
+### RunCommand
+
+As opposed to an `InstantCommand`, a `RunCommand` runs a given method in its execute phase. This is useful for `PerpetualCommand`s, default commands, and simple commands like driving a robot.
+
+```java
+/* in your opmode */
+
+Motor intakeMotor = new Motor(hardwareMap, "intake");
+Intake intake = new Intake(intakeMotor);
+
+toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+    // the second parameter is a varargs of subsystems
+    // to require
+    .whileHeld(new RunCommand(intake::run, intake))
+    .whenReleased(new InstantCommand(intake::stop, intake));
+```
+
 ### ConditionalCommand
 
 `ConditionalCommand` has a wide variety of uses. `ConditionalCommand` takes two commands and runs one when supplied a value of true, and another when supplied a value of false.
@@ -260,9 +277,7 @@ toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
     .whileHeld(new InstantCommand(intake::run, intake));
 
 intake.setDefaultCommand(new PerpetualCommand(
-    new ScheduleCommand(
-        new InstantCommand(intake::stop, intake)
-    )
+    new RunCommand(intake::stop, intake)
 ));
 ```
 
