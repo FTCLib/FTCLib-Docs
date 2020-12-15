@@ -89,7 +89,7 @@ gamepadEx.getRightX();
 
 The `KeyReader` interface is the base for objects that monitor an individual button or trigger on a gamepad. All `Reader` classes must implement these functions:
 
-* `readValue()`: Reads the current value of the key, true or false, and updates the values used by the reader. Returns nothing.
+* `readValue()`: Reads the current value of the key, true or false, and updates the values used by the reader. Returns nothing. This must be called once every loop.
 * `isDown()` : Checks if key is currently down. Will return a boolean of whether that key is pressed.
 * `wasJustPressed()` : Returns boolean whether the key is pressed, but only if it was previously not pressed. 
 * `wasJustReleased()` : Returns boolean indicating whether the key is not pressed, but only if it was previously pressed. 
@@ -152,6 +152,11 @@ myGamepad.wasJustReleased(GamepadKeys.Button.A);
 
 // pass the GamepadKeys.Button that you want to read
 // into the method argument
+
+// to read all buttons at once, perform a single call
+myGamepad.readButtons();
+// this is the equivalent of calling readValue() once for all your
+// readers
 ```
 
 ## ToggleButtonReader

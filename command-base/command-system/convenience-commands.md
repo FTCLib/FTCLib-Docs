@@ -302,6 +302,10 @@ SequentialCommandGroup auto = new SequentialCommandGroup(
 
 The following commands in the auto command group are only run after that forked command is finished due to that `WaitUntilCommand`.
 
+### StartEndCommand
+
+The `StartEndCommand` is essentially an `InstantCommand` with a custom end function. It takes two `Runnable` parameters an optional varargs of subsystems to require. The first parameter is run on initialize and the second is run on end.
+
 ### FunctionalCommand
 
 The last framework command we will discuss is the `FunctionalCommand`. It is useful for doing an inline definition of a complex command instead of creating a new command subclass. Generally, it is better to write a class for anything past a certain complexity.
