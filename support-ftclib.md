@@ -22,6 +22,7 @@ We would also greatly appreciate it if you would contribute to FTCLib. Make sure
 * Jiaming - FTC 6964
 * Purav - FTC 14614
 * Jaran - FTC 6133
+* Ethan - FTC 12864
 
 ## Contributors
 
@@ -30,6 +31,8 @@ We would also greatly appreciate it if you would contribute to FTCLib. Make sure
 * Colin - FRC 3457
 * Shengming - FTC 4781 alum
 * Noah - FTC 16626 alum
+* Sebastian - FTC 18341
+* Abhay - FRC 492 alum
 * Dan - FTC 7026
 * Michael - FTC 14470
 * Jeremiah - FTC 10641
