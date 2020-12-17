@@ -44,7 +44,7 @@
   * [Command Scheduler](command-base/command-system/command-scheduler.md)
   * [Binding Commands to Triggers](command-base/command-system/binding-commands-to-triggers.md)
   * [Robot and CommandOpMode](command-base/command-system/robot-and-commandopmode.md)
-  * [Convenience Commands](command-base/command-system/convenience-commands.md)
+  * [Convenience Features](command-base/command-system/convenience-commands.md)
 * [Old Commands](command-base/old-commands.md)
 
 ---
