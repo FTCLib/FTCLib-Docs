@@ -129,3 +129,35 @@ For all types of holonomic drive you do this by calling the .`driveFieldCentric(
 m_drive.driveFieldCentric(strafeSpeed, forwardSpeed, turn, heading);
 ```
 
+### Sample
+
+{% code title="BasicDriveOpMode.java" %}
+```java
+@TeleOp
+public class BasicDriveOpMode extends OpMode {
+
+    private Motor fL, fR, bL, bR;
+    private MecanumDrive drive;
+    private GamepadEx driverOp;
+
+    @Override
+    public void init() {
+        /* instantiate motors */
+        
+        drive = new MecanumDrive(fL, fR, bL, bR);
+        driverOp = new GamepadEx(gamepad1);
+    }
+    
+    @Override
+    public void loop() {
+        drive.driveRobotCentric(
+            driverOp.getLeftX(),
+            driverOp.getLeftY(),
+            driverOp.getRightY()
+        );
+    }
+
+}
+```
+{% endcode %}
+
