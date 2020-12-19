@@ -70,6 +70,18 @@ while (!m_motor.atTargetPosition()) {
   m_motor.set(0.75);
 }
 m_motor.stopMotor(); // stop the motor
+
+/* ALTERNATIVE TARGET DISTANCE */
+
+// configure a distance per pulse,
+// which is the distance traveled in a single tick
+// dpp = distance traveled in one rotation / CPR
+m_motor.setDistancePerPulse(0.015);
+
+// set the target
+m_motor.setTargetDistance(18.0);
+
+m_motor.set(0.5); // mode must be PositionControl
 ```
 
 Velocity control has the motor run using velocity in ticks per second with both a feedback and feedforward controller rather than simply setting the speed to a percentage of the maximum output speed. This can lead to smoother control for your motors, and is highly recommended for autonomous programs.
@@ -90,6 +102,10 @@ m_motor.setFeedforwardCoefficients(0.92, 0.47);
 double[] ffCoeffs = m_motor.getFeedforwardCoefficients();
 double kS = ffCoeffs[0];
 double kV = ffCoeffs[1];
+
+m_motor.setFeedforwardCoefficients(0.92, 0.47, 0.3);
+ffCoeffs = m_motor.getFeedforwardCoefficients();
+kA = ffCoeffs[2];
 
 // set the output of the motor
 m_motor.set(-0.54);
@@ -124,7 +140,7 @@ m_motor.resetEncoder();
 int pos = m_motor.getCurrentPosition();
 
 // get the current velocity
-double velocity = m_motor.getVelocity();
+double velocity = m_motor.getVelocity(); // only for MotorEx
 double corrected = m_motor.getCorrectedVelocity();
 
 // grab the encoder instance
@@ -133,7 +149,7 @@ Motor.Encoder encoder = m_motor.encoder;
 // get number of revolutions
 double revolutions = encoder.getRevolutions();
 
-// set the distance per pulse to 18 inches / tick
+// set the distance per pulse to 18 mm / tick
 encoder.setDistancePerPulse(18.0);
 m_motor.setDistancePerPulse(18.0); // also an option
 
@@ -144,13 +160,13 @@ distance = m_motor.getDistance(); // also an option
 
 ## The MotorEx Object
 
-MotorEx is an implementation of the Motor class with better integrated velocity control. Unlike the Motor object, it uses the corrected velocity by default instead of the raw velocity. It also uses the `DcMotorEx` object instead of the `DcMotor`. Calling `getVelocity()` will return the corrected velocity value.
+`MotorEx` is an implementation of the Motor class with better integrated velocity control. Unlike the Motor object, it uses the corrected velocity by default instead of the raw velocity returned by the SDK's encoder estimates. It also uses the `DcMotorEx` object instead of the `DcMotor`. Calling `getVelocity()` will return the velocity.
 
 You can also set the velocity directly using `setVelocity()`. You can pass the angular rate and the angle unit \(optional\). Passing just the angular rate will set the velocity in ticks per second. Passing an angle unit will set the velocity to units per second, depending on the unit that is passed into the method.
 
 ### Bulk Reading
 
-A bulk read reads all of the sensor data \(except i2c\) on a lynx module to save cycle times. Bulk reads were introduced in SDK version 5.4. Since FTCLib uses wrappers, we can treat them the same way as other sensors.
+A bulk read reads all of the sensor data \(except I2C\) on a lynx module to save cycle times. Bulk reads were introduced in SDK version 5.4. Since FTCLib uses wrappers, we can treat them the same way as other sensors.
 
 Here's a sample implementation of auto-caching.
 
@@ -179,9 +195,7 @@ You can also take a look at [this sample](https://github.com/FIRST-Tech-Challeng
 
 ## CRServo
 
-Th [CRServo](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/motors/CRServo.java) class is just a motor object intended to be used for a continuous rotation servo. To use it, you create a custom implementation of the `Motor` class where you pass a `CRServo` object from the SDK into the constructor. Then, using the `CRServo` class in FTCLib, you can extend its functionality and capabilities.
-
-Its general purpose is to be used in FTCLib classes that require a `Motor` input.
+Th [CRServo](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/motors/CRServo.java) class is just a motor object intended to be used for a continuous rotation servo. Its general purpose is to be used in FTCLib classes that require a `Motor` input. It works just like a regular motor, without any of the encoder stuff.
 
 ## MotorGroup
 
