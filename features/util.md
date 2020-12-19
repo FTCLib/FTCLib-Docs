@@ -89,7 +89,8 @@ A timer can be created with a length or length and Time Unit. The various functi
 | `timer.start()` | Void | Starts the Timer |
 | `timer.pause()` | Void | Pauses the Timer |
 | `timer.resume()` | Void | Resumes the Timer |
-| `timer.currentTime()` | long | Returns the Current Time |
+| `timer.elapsedTime()` | long | Returns the Passed Time |
+| `timer.remainingTime()` | long | Returns Time Left |
 | `timer.done()` | Boolean | Returns if the Timer is Completed |
 | `timer.isTimerOn()` | Boolean | Returns if the Timer is Active |
 

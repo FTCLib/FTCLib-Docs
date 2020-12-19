@@ -187,3 +187,7 @@ Its general purpose is to be used in FTCLib classes that require a `Motor` input
 
 A motor group takes a group of motors and acts like a single motor. It utilizes an array of motors and takes in a varargs to produce simple actions like moving in a group.
 
+```java
+MotorGroup leftMotors = new MotorGroup(frontLeft, backLeft);
+```
+

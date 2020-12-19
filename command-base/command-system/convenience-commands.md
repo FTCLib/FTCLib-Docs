@@ -93,6 +93,10 @@ toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
     // to require
     .whileHeld(new RunCommand(intake::run, intake))
     .whenReleased(new InstantCommand(intake::stop, intake));
+    
+// say we have a drive subsystem
+// with a drive method
+schedule(new RunCommand(driveSubsystem::drive, driveSubsystem));
 ```
 
 ### ConditionalCommand
@@ -217,12 +221,9 @@ public Height height() {
 SelectCommand wobbleCommand = new SelectCommand(
     // the first parameter is a map of commands
     new HashMap<Object, Command>() {{
-        put(Height.ZERO, new ScheduleCommand(
-            new PurePursuitCommand(...)));
-        put(Height.ONE, new ScheduleCommand(
-            new PurePursuitCommand(...)));
-        put(Height.FOUR, new ScheduleCommand(
-            new PurePursuitCommand(...)));
+        put(Height.ZERO, new new PurePursuitCommand(...)));
+        put(Height.ONE, new PurePursuitCommand(...)));
+        put(Height.FOUR, new PurePursuitCommand(...)));
     }},
     // the selector
     this::height

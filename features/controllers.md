@@ -94,12 +94,12 @@ pController.setSetPoint(1200);
  * the desired setpoint within a specified tolerance
  * range
  */
-do {
+while (!pController.atSetPoint()) {
   double output = pController.calculate(
     m_motor.getCurrentPosition()  // the measured value
   );
   m_motor.setVelocity(output);
-} while (!pController.atSetPoint());
+}
 m_motor.stopMotor(); // stop the motor
 
 // NOTE: motors have internal PID control
@@ -159,7 +159,7 @@ SimpleMotorFeedforward feedforward =
     new SimpleMotorFeedforward(kS, kV, kA);
 ```
 
-Please note that the `kA` value is optional. If the mechanism does not have much inertia, then it is not required. For the `pidWrite()` method in `MotorEx`, the acceleration is not used. This is true for the other feedforward classes as well.
+Please note that the `kA` value is optional. If the mechanism does not have much inertia, then it is not required.
 
 To calculate the feedforward, simply call the `calculate()` method with the desired motor velocity and acceleration:
 
