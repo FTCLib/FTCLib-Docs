@@ -108,6 +108,7 @@ ffCoeffs = m_motor.getFeedforwardCoefficients();
 kA = ffCoeffs[2];
 
 // set the output of the motor
+// this must be called in a control loop
 m_motor.set(-0.54);
 ```
 
