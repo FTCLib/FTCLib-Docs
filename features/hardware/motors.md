@@ -81,6 +81,7 @@ m_motor.setDistancePerPulse(0.015);
 // set the target
 m_motor.setTargetDistance(18.0);
 
+// this must be called in a control loop
 m_motor.set(0.5); // mode must be PositionControl
 ```
 
