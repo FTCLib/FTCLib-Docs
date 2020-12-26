@@ -87,6 +87,19 @@ public UGRectDetector(HardwareMap hMap, String webcamName)
 
 If you use the first constructor, the detector will set the camera to the phone's camera. If the second is used, the webcam will be used.
 
+### Manipulating Detector Settings
+
+You can change the orientation, width, and height of the camera for all instances \(since the camera doesn't change between runs\). You can update the settings by manipulating the static variables.
+
+```java
+// change the height and width of the camera
+UGRectDetector.CAMERA_WIDTH = 320;
+UGRectDetector.CAMERA_HEIGHT = 240;
+
+// change the orientation of the camera
+UGRectDetector.ORIENTATION = OpenCvCameraOrientation.UPRIGHT;
+```
+
 ## Setting Rectangle Positions
 
 ```java
