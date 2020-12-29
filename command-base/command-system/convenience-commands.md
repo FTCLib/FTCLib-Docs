@@ -4,7 +4,7 @@ description: Using FTCLib-provided Commands to Enhance Your Program
 
 # Convenience Features
 
-FTCLib offers convenience commands to make your paradigm program more compact. The idea is that it improves the overall structure of your program. Some of these convenience commands are just that: for convenience. This does not mean they are exceptional. Plenty are simplified for minimal competitive use, such as the [`PurePursuitCommand`](../../pathing/pure-pursuit.md#using-the-pure-pursuit-command).
+FTCLib offers convenience features to make your paradigm program more compact. The idea is that it improves the overall structure of your program. Some of these convenience commands are just that: for convenience. This does not mean they are exceptional. Plenty are simplified for minimal competitive use, such as the [`PurePursuitCommand`](../../pathing/pure-pursuit.md#using-the-pure-pursuit-command).
 
 ## Framework Commands
 
@@ -339,5 +339,124 @@ SequentialCommandGroup auto = new SequentialCommandGroup(
     new WaitUntilCommand(forkedCommand::isFinished),
     ...
 );
+```
+
+## Command Decorators
+
+Decorators are methods that allow you to make command bindings and logic without having to create new commands.
+
+### withTimeout
+
+Returns a `ParallelRaceGroup` with a specified timeout in milliseconds.
+
+```java
+schedule(
+    fooCommand.withTimeout(1000) // ends after 1000 milliseconds
+);
+```
+
+### interruptOn
+
+Returns a `ParallelRaceGroup` that ends once a specified condition is met.
+
+```java
+schedule(
+    fooCommand.interruptOn(() -> {
+        /* BOOLEAN SUPPLIER */
+        return ...;
+    })
+);
+```
+
+### whenFinished
+
+Returns a `SequentialCommandGroup` that runs a given Runnable after the calling command finishes.
+
+```java
+schedule(
+    fooCommand.whenFinished(() -> {
+        /* RUNNABLE */
+    })
+);
+```
+
+### beforeStarting
+
+Returns a `SequentialCommandGroup` that runs a given Runnable before the calling command is initialized.
+
+```java
+schedule(
+    fooCommand.beforeStarting(() -> {
+        /* RUNNABLE */
+    })
+);
+```
+
+### andThen
+
+Returns a `SequentialCommandGroup` that runs all the given commands in sequence after the calling command finishes.
+
+```java
+schedule(
+    fooCommand.andThen(
+        barCommand, bazCommand, ...
+    )
+);
+```
+
+### deadlineWith
+
+Returns a `ParallelDeadlineGroup` with the calling command as the deadline to run in parallel with the given commands.
+
+```java
+schedule(
+    // ends when fooCommand finishes
+    fooCommand.deadlineWith(
+        barCommand, bazCommand, ...
+    )
+);
+```
+
+### alongWith
+
+Returns a `ParallelCommandGroup` that runs the given commands in parallel with the calling command.
+
+```java
+schedule(
+    fooCommand.alongWith(
+        barCommand, bazCommand, ...
+    )
+);
+```
+
+### raceWith
+
+Returns a `ParallelRaceGroup` that runs all the commands in parallel until one of them finishes.
+
+```java
+schedule(
+    // runs until one of the commands finishes
+    fooCommand.raceWith(
+        barCommand, bazCommand, ...
+    )
+);
+```
+
+### perpetually
+
+Swallows the command into a `PerpetualCommand` and returns it.
+
+```java
+// returns a perpetual command
+PerpetualCommand perpetual = fooCommand.perpetually();
+```
+
+### asProxy
+
+Swallows the command into a `ProxyScheduleCommand` and returns it. This is similar to a `ScheduleCommand` except it ends when all the commands that it scheduled are finished rather than immediately.
+
+```java
+// reurns a proxy schedule command
+ProxyScheduleCommand proxySchedule = fooCommand.asProxy();
 ```
 
