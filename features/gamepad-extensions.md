@@ -155,8 +155,10 @@ myGamepad.wasJustReleased(GamepadKeys.Button.A);
 
 // to read all buttons at once, perform a single call
 myGamepad.readButtons();
-// this is the equivalent of calling readValue() once for all your
-// readers
+/*
+this is the equivalent of calling readValue() once
+for all your readers
+*/
 ```
 
 ## ToggleButtonReader
@@ -173,5 +175,23 @@ The `ToggleButtonReader` class extends `ButtonReader` and adds the ability to ge
 
 ```java
 toggleButtonReader.getState();
+```
+
+### Usage
+
+```java
+GamepadEx toolOp = new GamepadEx(gamepad2);
+ToggleButtonReader aReader = new ToggleButtonReader(
+  toolOp, GamepadKeys.Button.A
+);
+
+while (...) {
+  if (aReader.getState()) {
+    // if toggle state true
+  } else {
+    // if toggle state false
+  }
+  aReader.readValue();
+}
 ```
 
