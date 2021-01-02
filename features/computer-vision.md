@@ -6,15 +6,13 @@ description: package com.arcrobotics.ftclib.vision
 
 Computer Vision is the process of helping computers to understand the digital images such as photographs and videos provided to them. FTCLib provides examples on the object detection needed for the current season \(right now being Ultimate Goal detection\) using the [EasyOpenCV library](https://github.com/OpenFTC/EasyOpenCV).
 
-## Install Dependency on the Phone
+## Installation Requirements
 
 Since FTCLib depends on EasyOpenCV for vision, and because EasyOpenCV depends on [OpenCV-Repackaged](https://github.com/OpenFTC/OpenCV-Repackaged), you will need to copy [`libOpenCvNative.so`](https://github.com/OpenFTC/OpenCV-Repackaged/blob/master/doc/libOpenCvNative.so) from the `/doc` folder of that repo into the `FIRST` folder on the USB storage of the Robot Controller \(i.e. connect the Robot Controller to your computer with a USB cable, put it into MTP mode, and drag 'n drop the file\)
 
-## Install Dependency on Control Hub
+Due to 64 bits vs 32 bits conflicts, after moving the so file, please remove any instance of **arm64-v8a** in `build.common.gradle`. EasyOpenCV runs in 32 bits while some phones and the Control Hub are 64 bit.
 
-The installation on the control hub is the exact same as the phone with one extra step. Due to 64 bits vs 32 bits conflicts, after moving the so file, please remove any instance of **arm64-v8a** in build.common.gradle.
-
-## UGRectRingPipeline
+## `UGRectRingPipeline`
 
 The heart of the Ultimate Goal detector is the pipeline. A pipeline is just a fancy way describing the sequence of instructions given to continuously manipulate the image\(in this case, what the camera sees\). Ignoring the fancy code, the pipeline boils down to these following instructions:
 
@@ -68,11 +66,11 @@ bottomAverage = bottomMean.val[0];
 topAverage = topMean.val[0];
 ```
 
-Here we crop the mat to just everything inside the two rectangles. Then we find the average of the values and store them in bottomAverage and topAverage.
+Here we crop the mat to just everything inside the two rectangles. Then we find the average of the values and store them in `bottomAverage` and `topAverage`.
 
-## Creating An Instance of UGRectDetector
+## Creating An Instance of `UGRectDetector`
 
-The UGRectDetector is a class that will show how you would use the pipeline. For more in-depth explanation of what everything does or more functionalities, please visit [here](https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples). To start, create an instance of UGRectDetector. The detector's constructor is overloaded. You can choose between:
+The `UGRectDetector` is a class that will show how you would use the pipeline. For more in-depth explanation of what everything does or more functionalities, please visit [here](https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples). To start, create an instance of `UGRectDetector`. The detector's constructor is overloaded. You can choose between:
 
 ```java
 public UGRectDetector(HardwareMap hMap)
@@ -97,183 +95,101 @@ UGRectDetector.CAMERA_WIDTH = 320;
 UGRectDetector.CAMERA_HEIGHT = 240;
 
 // change the orientation of the camera
-UGRectDetector.ORIENTATION = OpenCvCameraOrientation.UPRIGHT;
+UGRectDetector.ORIENTATION = OpenCvCameraRotation.UPRIGHT;
 ```
 
-## Setting Rectangle Positions
+### Setting Rectangle Positions
 
 ```java
 public void setTopRectangle(double topRectHeightPercentage, double topRectWidthPercentage)
 ```
 
-* `topRectHeightPercentage`: topRectHeightPercentage is the percentage of the height of the user's input and should be a decimal under 1. It is used to calculate the first y value for the top rectangle. 
-* `topRectWidthPercentage`: topRectWidthPercentage is the percentage of the width of the user's input and should be a decimal under 1. It is used to calculate the first x value for the top rectangle.
+* `topRectHeightPercentage`: the percentage of the height of the user's input and should be a decimal under 1. It is used to calculate the first y value for the top rectangle. 
+* `topRectWidthPercentage`: the percentage of the width of the user's input and should be a decimal under 1. It is used to calculate the first x value for the top rectangle.
 
 ```java
 public void setBottomRectangle(double bottomRectHeightPercentage, double bottomRectWidthPercentage)
 ```
 
-* `bottomRectHeightPercentage`: bottomRectHeightPercentage is the percentage of the height of the user's input and should be a decimal under 1. It is used to calculate the first y value for the bottom rectangle. 
-* `bottomRectWidthPercentage`: bottomRectWidthPercentage is the percentage of the width of the user's input and should be a decimal under 1. It is used to calculate the first x value for the bottom rectangle.
+* `bottomRectHeightPercentage`: the percentage of the height of the user's input and should be a decimal under 1. It is used to calculate the first y value for the bottom rectangle. 
+* `bottomRectWidthPercentage`: the percentage of the width of the user's input and should be a decimal under 1. It is used to calculate the first x value for the bottom rectangle.
 
 ```java
 public void setRectangleSize(int rectangleWidth, int rectangleHeight)
 ```
 
-* `rectangleWidth` : rectangleWidth is the width of the rectangles in terms of pixels
-* `rectangleHeight` : rectangleHeight is the height of the rectangles in terms of pixels
+* `rectangleWidth` : the width of the rectangles in terms of pixels
+* `rectangleHeight` : the height of the rectangles in terms of pixels
 
 After creating an instance of the detector and setting the rectangle positions, continuously run `DetectorInstance.getStack()` to get the number in the stack.
 
-## UGContourRingPipeline
+## `UGContourRingPipeline`
 
 Vision Pipelines, the heart of any Ultimate Goal Detector. A pipeline is just a fancy way of saying a certain set of instructions that are applied to every inputted frame we see from the camera.
 
 This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine the number of rings currently in the ring stack.
 
-### Creating a Detector
+### Using the Detector
+
+The contour pipeline comes with a premade detector that can be used out of the box in your opmode. The `UGContourRingDetector` is an object that runs the pipeline. You can [manipulate the pipeline settings](computer-vision.md#tuning) separately, but some of the settings of the detector get carried over to the pipeline.
+
+To create an instance of the detector, there are different constructors, some with optional parameters.
+
+```java
+// creates a phone camera detector
+detector = new UGContourRingDetector(
+    hardwareMap, OpenCvInternalCamera.CameraDirection.BACK,
+    telemetry, true
+);
+
+// creates a webcam detector
+detector = new UGContourRingDetector(
+    hardwareMap, "webcam"
+);
+
+// creates a webcam detector with telemetry debugging
+detector = new UGContourRingDetector(
+    hardwareMap, "webcam", telemetry, true
+);
+```
+
+You can, like with the rectangle detector, manipulate the settings of the contour detector.
 
 {% tabs %}
 {% tab title="Java" %}
 ```java
-import com.arcrobotics.ftclib.vision.UGContourRingPipeline;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
-
-public class UGContourRingPipelineJavaExample extends LinearOpMode {
-    private static final int CAMERA_WIDTH = 320; // width  of wanted camera resolution
-    private static final int CAMERA_HEIGHT = 240; // height of wanted camera resolution
-
-    private static final int HORIZON = 100; // horizon value to tune
-
-    private static final boolean DEBUG = false; // if debug is wanted, change to true
-
-    private static final boolean USING_WEBCAM = false; // change to true if using webcam
-    private static final String WEBCAM_NAME = ""; // insert webcam name from configuration if using webcam
-
-    private UGContourRingPipeline pipeline;
-    private OpenCvCamera camera;
-
-    @Override
-    public void runOpMode() throws InterruptedException {
-        int cameraMonitorViewId = this
-            .hardwareMap
-            .appContext
-            .getResources().getIdentifier(
-                    "cameraMonitorViewId",
-                    "id",
-                    hardwareMap.appContext.getPackageName()
-            );
-        if (USING_WEBCAM) {
-            camera = OpenCvCameraFactory
-                    .getInstance()
-                    .createWebcam(hardwareMap.get(WebcamName.class, WEBCAM_NAME), cameraMonitorViewId);
-        } else {
-            camera = OpenCvCameraFactory
-                    .getInstance()
-                    .createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        }
-
-        camera.setPipeline(pipeline = new UGContourRingPipeline(telemetry, DEBUG));
-
-        UGContourRingPipeline.Config.setCAMERA_WIDTH(CAMERA_WIDTH);
-
-        UGContourRingPipeline.Config.setHORIZON(HORIZON);
-
-        camera.openCameraDeviceAsync(() -> camera.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, OpenCvCameraRotation.UPRIGHT));
-
-        waitForStart();
-
-        while (opModeIsActive()) {
-            String height = "[HEIGHT]" + " " + pipeline.getHeight();
-            telemetry.addData("[Ring Stack] >>", height);
-            telemetry.update();
-        }
-    }
-}
+UGContourRingDetector.PipelineConfiguration
+    .setCAMERA_WIDTH(320);
+UGContourRingDetector.PipelineConfiguration
+    .setCAMERA_HEIGHT(240);
+    
+UGContourRingDetector.PipelineConfiguration
+    .setHORIZON(100);
+    
+UGContourRingDetector.PipelineConfiguration
+    .setCAMERA_ORIENTATION(OpenCvCameraRotation.UPRIGHT);
 ```
 {% endtab %}
 
 {% tab title="Kotlin" %}
 ```kotlin
-import com.arcrobotics.ftclib.vision.UGContourRingPipeline
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
-import org.openftc.easyopencv.*
+UGContourRingDetector.PipelineConfiguration.CAMERA_WIDTH = 320
+UGContourRingDetector.PipelineConfiguration.CAMERA_HEIGHT = 240
 
-class UGContourRingPipelineKtExample: LinearOpMode() {
-    companion object {
-        val CAMERA_WIDTH = 320 // width  of wanted camera resolution
-        val CAMERA_HEIGHT = 240 // height of wanted camera resolution
+UGContourRingDetector.PipelineConfiguration.HORIZON = 100
 
-        val HORIZON = 100 // horizon value to tune
-
-        val DEBUG = false // if debug is wanted, change to true
-
-        val USING_WEBCAM = false // change to true if using webcam
-        val WEBCAM_NAME = "" // insert webcam name from configuration if using webcam
-    }
-
-    private lateinit var pipeline: UGContourRingPipeline
-    private lateinit var camera: OpenCvCamera
-
-    private lateinit var cameraMonitorViewId: Int
-
-    private fun configurePhoneCamera(): OpenCvInternalCamera = OpenCvCameraFactory.getInstance()
-                .createInternalCamera(
-                        OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId,
-                )
-
-    private fun configureWebCam(): OpenCvWebcam = OpenCvCameraFactory.getInstance().createWebcam(
-                        hardwareMap.get(
-                                WebcamName::class.java,
-                                WEBCAM_NAME
-                        ),
-                        cameraMonitorViewId,
-                )
-
-    override fun runOpMode() {
-        cameraMonitorViewId = = hardwareMap
-            .appContext
-            .resources
-            .getIdentifier(
-                    "cameraMonitorViewId",
-                    "id",
-                    hardwareMap.appContext.packageName,
-            )
-        camera = if (USING_WEBCAM) configureWebCam() else configurePhoneCamera()
-
-        camera.setPipeline(UGContourRingPipeline(telemetry, DEBUG).apply { pipeline = this })
-
-        UGContourRingPipeline.Config.CAMERA_WIDTH = CAMERA_WIDTH
-
-        UGContourRingPipeline.Config.HORIZON = HORIZON
-
-        camera.openCameraDeviceAsync {
-            camera.startStreaming(
-                    CAMERA_WIDTH,
-                    CAMERA_HEIGHT,
-                    OpenCvCameraRotation.UPRIGHT,
-            )
-        }
-
-        waitForStart()
-
-        while (opModeIsActive()) {
-            telemetry.addData("[Ring Stack] >>", "[HEIGHT] ${pipeline.height}")
-            telemetry.update()
-        }
-    }
-
-}
+UGContourRingDetector.PipelineConfiguration.CAMERA_ORIENTATION = OpenCvCameraRotation.UPRIGHT
 ```
 {% endtab %}
 {% endtabs %}
+
+To initialize the detector, simply call `init`.
+
+```java
+detector.init();
+```
+
+This initializes the pipeline with your configured settings. To retrieve the height determined by the pipeline, simply call `DetectorInstance.getHeight()`.
 
 ### Tuning
 
@@ -295,7 +211,7 @@ NOTE: the returned image from the pipeline will be majority black, this is to sh
 {% endhint %}
 
 {% hint style="warning" %}
-Config is stored in a companion object, this means that every instance of the UGContourRingPipeline will share the same configuration.
+Config is stored in a companion object, this means that every instance of the `UGContourRingPipeline` will share the same configuration.
 
 These values and variables may change with future releases.
 {% endhint %}
