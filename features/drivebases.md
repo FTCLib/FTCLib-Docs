@@ -123,7 +123,7 @@ m_drive.driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed)
 
 Field-centric assumes that each push of the joystick is in relation to the global position of the robot—this means that whenever the user pushes the drive stick forward, the robot will move away from the driver no matter its orientation. This is done by rotating the direction of the joystick clockwise by an angle measurement equivalent to the global heading of the robot.
 
-For all types of holonomic drive you do this by calling the .`driveFieldCentric()` method that takes the gamepad inputs and converts them into directional values. Additionally, you include the gyro value for the heading of the robot so that it can account for that in its movement.
+For all types of holonomic drive you do this by calling the .`driveFieldCentric()` method that takes the gamepad inputs and converts them into directional values. Additionally, you include the reading for the heading in degrees.
 
 ```java
 m_drive.driveFieldCentric(strafeSpeed, forwardSpeed, turn, heading);
