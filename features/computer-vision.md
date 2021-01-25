@@ -450,7 +450,7 @@ We also implemented a horizon check. Anything above the horizon is disregarded a
 {% tabs %}
 {% tab title="Java" %}
 ```java
-double aspectRatio = maxRect.getHeight() / maxRect.getWidth();
+double aspectRatio = (double) maxRect.height / maxRect.width;
 
 height = maxWidth >= MIN_WIDTH ? aspectRatio > BOUND_RATIO ? FOUR : ONE : ZERO;
 
