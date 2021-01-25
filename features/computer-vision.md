@@ -116,7 +116,8 @@ After creating an instance of the detector and setting the rectangle positions, 
 
 Vision Pipelines, the heart of any Ultimate Goal Detector. A pipeline is just a fancy way of saying a certain set of instructions that are applied to every inputted frame we see from the camera. 
 
-This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine the number of rings currently in the ring stack.
+This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine the number of rings
+ currently in the ring stack.
 
 ### Creating a Detector
 
@@ -353,7 +354,7 @@ We then perform an inRange operation on the input Mat and store the result in a 
 {% tabs %}
 {% tab title="Java" %}
 ```java
-Imgproc.GaussianBlur(mask, mask, Size(5.0, 15.0), 0.00)
+Imgproc.GaussianBlur(mask, mask, new Size(5.0, 15.0), 0.00)
 ```
 {% endtab %}
 
