@@ -62,11 +62,11 @@ import com.arcrobotics.ftclib.util.InterpLUT;
 InterpLUT lut = new InterpLUT();
 
 //Adding each val with a key
-lut.add(5, 1);
-lut.add(4.1, 0.9);
-lut.add(3.6, 0.75);
-lut.add(2.7, .5);
 lut.add(1.1, 0.2);
+lut.add(2.7, .5);
+lut.add(3.6, 0.75);
+lut.add(4.1, 0.9);
+lut.add(5, 1);
 //generating final equation
 lut.createLUT();
 
