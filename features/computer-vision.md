@@ -116,7 +116,8 @@ After creating an instance of the detector and setting the rectangle positions, 
 
 Vision Pipelines, the heart of any Ultimate Goal Detector. A pipeline is just a fancy way of saying a certain set of instructions that are applied to every inputted frame we see from the camera. 
 
-This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine the number of rings currently in the ring stack.
+This is a Vision Pipeline utilizing Contours and an Aspect Ratio to determine the number of rings
+ currently in the ring stack.
 
 ### Creating a Detector
 
@@ -353,7 +354,7 @@ We then perform an inRange operation on the input Mat and store the result in a 
 {% tabs %}
 {% tab title="Java" %}
 ```java
-Imgproc.GaussianBlur(mask, mask, Size(5.0, 15.0), 0.00)
+Imgproc.GaussianBlur(mask, mask, new Size(5.0, 15.0), 0.00)
 ```
 {% endtab %}
 
@@ -398,7 +399,7 @@ Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN
 {% endtab %}
 {% endtabs %}
 
-After finding the contours on the black and white mask, we then perform a linear search algorithm on the resulting list of contours \(stored in as MatOfPoint\). We first find the bounding rectangle of each contour and use this bounding rectangle \(not rotated\) to find the rectangle with the biggest width. We do this in order to not confuse the ring stack with other objects that may have been thought to be orange by the mask. Since the ring stack will most likely be the largest blob of orange in the view of the camera. When then do a check on the width of the widest contour. To see if it is actually a ring stack since zero is a valid option we must account for it. This check also makes sure that we don't mistake other smaller objects on the field as the ring stack, even if they are rings. 
+After finding the contours on the black and white mask, we then perform a linear search algorithm on the resulting list of contours \(stored in as MatOfPoint\). We first find the bounding rectangle of each contour and use this bounding rectangle \(not rotated\) to find the rectangle with the biggest width. We do this in order to not confuse the ring stack with other objects that may have been thought to be orange by the mask. Since the ring stack will most likely be the largest blob of orange in the view of the camera. We then do a check on the width of the widest contour. To see if it is actually a ring stack since zero is a valid option we must account for it. This check also makes sure that we don't mistake other smaller objects on the field as the ring stack, even if they are rings. 
 
 {% tabs %}
 {% tab title="Java" %}
@@ -449,7 +450,7 @@ We also implemented a horizon check. Anything above the horizon is disregarded a
 {% tabs %}
 {% tab title="Java" %}
 ```java
-double aspectRatio = maxRect.getHeight() / maxRect.getWidth();
+double aspectRatio = (double) maxRect.height / maxRect.width;
 
 height = maxWidth >= MIN_WIDTH ? aspectRatio > BOUND_RATIO ? FOUR : ONE : ZERO;
 
