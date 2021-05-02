@@ -11,8 +11,12 @@
 * [Drivebases](features/drivebases.md)
 * [Geometry](features/geometry.md)
 * [Controllers](features/controllers.md)
-* [Computer Vision](features/computer-vision.md)
 * [Utility Functions](features/util.md)
+
+## Vision
+
+* [Setting Up Vision](vision/computer-vision.md)
+* [Ring Stack Detection](vision/ring-stack-detection.md)
 
 ## Kinematics
 

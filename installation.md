@@ -4,16 +4,14 @@ description: How to import FTCLib into your Android Studio FTC Project
 
 # Installation
 
-**THIS VERSION IS NOT OUT YET!**
-
 ## build.common.gradle
 
-First, you need to add the `jcenter` library repository to your `build.gradle` file at the project root:
+First, you need to add the `mavenCentral` library repository to your `build.gradle` file at the project root:
 
 {% code title="build.gradle" %}
 ```groovy
     repositories {
-        jcenter()
+        mavenCentral()
     }
 ```
 {% endcode %}
@@ -64,7 +62,7 @@ Add this dependency block for the base library:
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.2.0' // core
+    implementation 'org.ftclib.ftclib:core:1.2.0' // core
 ```
 {% endcode %}
 
@@ -75,8 +73,8 @@ Add this dependency block for the vision library:
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
 dependencies {
-    implementation 'com.arcrobotics.ftclib:vision:1.2.0' // vision
-    implementation 'com.arcrobotics:ftclib:1.2.0' // core
+    implementation 'org.ftclib.ftclib:vision:1.2.0' // vision
+    implementation 'org.ftclib.ftclib:core:1.2.0' // core
 }
 ```
 {% endcode %}
