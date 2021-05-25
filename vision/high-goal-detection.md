@@ -1,3 +1,7 @@
+---
+description: Page in progress
+---
+
 # High Goal Detection
 
 ## `UGBasicHighGoalPipeline`
