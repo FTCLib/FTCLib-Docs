@@ -17,6 +17,7 @@
 
 * [Setting Up Vision](vision/computer-vision.md)
 * [Ring Stack Detection](vision/ring-stack-detection.md)
+* [High Goal Detection](vision/high-goal-detection.md)
 
 ## Kinematics
 
