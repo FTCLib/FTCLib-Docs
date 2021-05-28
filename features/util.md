@@ -6,10 +6,10 @@ description: package com.arcrobotics.ftclib.util;
 
 FTCLib comes with many different Utility Functions:
 
-* [Look Up Tables](https://docs.ftclib.org/ftclib/v/v1.1.0/features/util#what-is-a-look-up-table)
-* [Timing Functions](https://docs.ftclib.org/ftclib/v/v1.1.0/features/util#timing-functions)
-* [Math Utilities](https://docs.ftclib.org/ftclib/v/v1.1.0/features/util#math-utilities)
-* [Directional Enums](https://docs.ftclib.org/ftclib/v/v1.1.0/features/util#directional-enums)
+* [Look Up Tables](https://docs.ftclib.org/ftclib/v/v1.2.0/features/util#what-is-a-look-up-table)
+* [Timing Functions](https://docs.ftclib.org/ftclib/v/v1.2.0/features/util#timing-functions)
+* [Math Utilities](https://docs.ftclib.org/ftclib/v/v1.2.0/features/util#math-utilities)
+* [Directional Enums](https://docs.ftclib.org/ftclib/v/v1.2.0/features/util#directional-enums)
 
 ## What is a Look Up Table?
 

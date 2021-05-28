@@ -9,7 +9,7 @@ Each hardware device in FTCLib is based on the `HardwareDevice` interface. This 
 * `disable()`: disables the device
 * `getDeviceType()`: returns a String characterization of the device
 
-FTCLib offers _a lot_ of hardware devices that can be implemented or customized into your program. The best advice we can give to users is to take a look at the [hardware package](https://github.com/FTCLib/FTCLib/tree/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware) in the FTCLib repository. Here is the list of devices we currently have available \(not including motors\):
+FTCLib offers _a lot_ of hardware devices that can be implemented or customized into your program. The best advice we can give to users is to take a look at the [hardware package](https://github.com/FTCLib/FTCLib/tree/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/hardware) in the FTCLib repository. Here is the list of devices we currently have available \(not including motors\):
 
 ## Gyro Extensions
 
@@ -22,15 +22,15 @@ The `GyroEx` class is an extended gyro that allows users to add more configurabl
 * `getRotation2d()`: transforms the heading into a `Rotation2d` object
 * `reset()`: applies an offset so that `getHeading()` returns the 0 position
 
-A useful implementation of this is the [RevIMU](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/RevIMU.java) class for the built-in imu on your REV hub.
+A useful implementation of this is the [RevIMU](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/hardware/RevIMU.java) class for the built-in imu on your REV hub.
 
 ## Sensors
 
 There are a few sensors that are offered in FTCLib:
 
-* [SensorColor](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SensorColor.java)
-* [SensorDistance](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SensorDistance.java) & [SensorDistanceEx](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SensorDistanceEx.java)
-* [SensorRevTOFDistance](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SensorRevTOFDistance.java)
+* [SensorColor](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SensorColor.java)
+* [SensorDistance](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SensorDistance.java) & [SensorDistanceEx](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SensorDistanceEx.java)
+* [SensorRevTOFDistance](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SensorRevTOFDistance.java)
 
 The `SensorColor` class is just an extension for the `ColorSensor` class that is in the SDK.
 
@@ -38,9 +38,9 @@ The `SensorColor` class is just an extension for the `ColorSensor` class that is
 
 ## Servos
 
-The [ServoEx](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/ServoEx.java) interface allows for more methods and actions than the normal servo class in the SDK. You can change the position of the servo relative to the last position or set it to an absolute position. You can either specify a position within the range of the servo's motion or have it rotate a certain number of specified angle units.
+The [ServoEx](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/hardware/ServoEx.java) interface allows for more methods and actions than the normal servo class in the SDK. You can change the position of the servo relative to the last position or set it to an absolute position. You can either specify a position within the range of the servo's motion or have it rotate a certain number of specified angle units.
 
-An example implementation of this can be found in the [SimpleServo](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SimpleServo.java) class. You can create a simple servo like this:
+An example implementation of this can be found in the [SimpleServo](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/hardware/SimpleServo.java) class. You can create a simple servo like this:
 
 ```java
 ServoEx servo = new SimpleServo(

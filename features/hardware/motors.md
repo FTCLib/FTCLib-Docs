@@ -203,7 +203,7 @@ You can also take a look at [this sample](https://github.com/FIRST-Tech-Challeng
 
 ## CRServo
 
-Th [CRServo](https://github.com/FTCLib/FTCLib/blob/v1.1.0/core/src/main/java/com/arcrobotics/ftclib/hardware/motors/CRServo.java) class is just a motor object intended to be used for a continuous rotation servo. Its general purpose is to be used in FTCLib classes that require a `Motor` input. It works just like a regular motor, without any of the encoder stuff.
+Th [CRServo](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/hardware/motors/CRServo.java) class is just a motor object intended to be used for a continuous rotation servo. Its general purpose is to be used in FTCLib classes that require a `Motor` input. It works just like a regular motor, without any of the encoder stuff.
 
 ## MotorGroup
 
