@@ -141,5 +141,5 @@ Alternatively, this can also be done inline by passing a lambda to the construct
 Trigger exampleTrigger = new Trigger(condition::get);
 ```
 
-**Note**: This is not very effective, but can be done if you want to write your own custom methods \(A.K.A. being a try-hard\).
+This can be used for implementing a type of "triggering condition," which one might see with a sensor. On the activation of the trigger, you can cause certain commands to be scheduled or cancelled.
 
