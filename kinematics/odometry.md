@@ -55,7 +55,7 @@ diffOdom.updatePose(new Pose2d(1, 2, 0));
 // control loop
 while (!isStopRequested()) {
     /* implementation */
-    
+
     // update the position
     diffOdom.updatePose();
 }

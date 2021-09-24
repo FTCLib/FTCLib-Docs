@@ -95,7 +95,7 @@ CommandOpMode is an abstract class, which means the user must create their own i
 @Override
 public void initialize() {
     // iniialize hardware
-    
+
     // schedule all commands
     schedule(commands...);
     // register unregistered subsystems

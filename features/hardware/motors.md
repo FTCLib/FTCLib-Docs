@@ -59,7 +59,7 @@ double kP = m_motor.getPositionCoefficient();
 // set the target position
 m_motor.setTargetPosition(1200);      // an integer representing
                                       // desired tick count
-                                      
+
 m_motor.set(0);
 
 // set the tolerance
@@ -194,7 +194,7 @@ int cycles = 0;
 while (cycles++ < 500) {
     double v1 = m1.getVelocity();
     double v2 = m2.getVelocity();
-    
+
     /* implementation */
 }
 ```

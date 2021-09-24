@@ -19,7 +19,7 @@ The FTCLib provides 2 different variations of look up tables. In this year's gam
 
 ## LUT \(Look Up Table\)
 
-Provides a way to store values in a table to quickly retrieve them. For example, this might be used to store different speeds or angles based on certain distances. This class allows you to find the closest entry to the input. 
+Provides a way to store values in a table to quickly retrieve them. For example, this might be used to store different speeds or angles based on certain distances. This class allows you to find the closest entry to the input.
 
 For example if you enter:
 
@@ -82,7 +82,7 @@ FTCLib Comes with multiple timers and Timing Functions. They let you set the len
 
 ### Timer
 
-A timer can be created with a length or length and Time Unit. The various functions nested within the Timer object are: 
+A timer can be created with a length or length and Time Unit. The various functions nested within the Timer object are:
 
 | Function | Return Type | Description |
 | :--- | :--- | :--- |
@@ -96,9 +96,9 @@ A timer can be created with a length or length and Time Unit. The various functi
 
 ## Math Utilities
 
-FTCLib currently adds 1 math utility, clamp. It lets you restrict a value to a certain max and min and is usable in double and int. 
+FTCLib currently adds 1 math utility, clamp. It lets you restrict a value to a certain max and min and is usable in double and int.
 
-**Example Usage:** 
+**Example Usage:**
 
 Double Method:
 
