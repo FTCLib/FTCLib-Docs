@@ -13,8 +13,6 @@ We would also greatly appreciate it if you would contribute to FTCLib. Make sure
 ## Developers
 
 * Jackson - FRC 6905 alum
-* Pranav - FTC 5387 alum
-* Peter - FTC 5890
 * Purav - FTC 14614
 
 ## Collaborators
@@ -23,6 +21,8 @@ We would also greatly appreciate it if you would contribute to FTCLib. Make sure
 * Ryan - FTC 1002
 * Jaran - FTC 6133 alum
 * Ethan - FTC 12864
+* Pranav - FTC 5387 alum
+* Peter - FTC 5890 mentor
 
 ## Contributors
 
