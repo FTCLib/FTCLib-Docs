@@ -85,5 +85,5 @@ Since FTCLib depends on EasyOpenCV for vision, and because EasyOpenCV depends on
 
 ### Sync Gradle and Finished!
 
-![Click that button and if successful, you can now use FTCLib](.gitbook/assets/image%20%281%29.png)
+![Click that button and if successful, you can now use FTCLib](.gitbook/assets/gradle-sync.png)
 
