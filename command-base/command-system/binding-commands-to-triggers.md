@@ -34,7 +34,7 @@ This binding schedules a command when a trigger changes from active to inactive 
 
 This binding toggles a command, scheduling it when a trigger changes from inactive to active \(or a button is initially pressed\), and cancelling it under the same condition if the command is currently running. Note that while this functionality is supported, toggles are _not_ a highly-recommended option for user control, as they require the driver to mentally keep track of the robot state.
 
-Since v2.0.1, courtesy of Ethan Leitner, the toggle binding has an additional option of switching between two commands. This is a replacement of the `ConditionalCommand` option for toggling. Simply pass two commands into the method instead of one, and the binding will toggle between those two commands.
+Since v1.2.0, courtesy of Ethan Leitner, the toggle binding has an additional option of switching between two commands. This is a replacement of the `ConditionalCommand` option for toggling. Simply pass two commands into the method instead of one, and the binding will toggle between those two commands.
 
 ### cancelWhenActive/cancelWhenPressed
 
