@@ -12,27 +12,27 @@ We would also greatly appreciate it if you would contribute to FTCLib. Make sure
 
 ## Developers
 
-* Jackson - FRC 6905 alum
+* Jackson - FRC 6905
 * Purav - FTC 14614
+* Ethan - FTC 12864/FRC 6905
 
 ## Collaborators
 
 * Jiaming - FTC 6964
 * Ryan - FTC 1002
-* Jaran - FTC 6133 alum
-* Ethan - FTC 12864
-* Pranav - FTC 5387 alum
-* Peter - FTC 5890 mentor
+* Jaran - FTC 6133
+* Pranav - FTC 5387
+* Peter - FTC 5890
 
 ## Contributors
 
 * Xing - FTC 15303
 * Sam - FTC 4314
 * Colin - FRC 3457
-* Shengming - FTC 4781 alum
-* Noah - FTC 16626 alum
+* Shengming - FTC 4781
+* Noah - FTC 16626
 * Sebastian - FTC 18341
-* Abhay - FRC 492 alum
+* Abhay - FRC 492
 * Dan - FTC 7026
 * Michael - FTC 14470
 * Jeremiah - FTC 10641
