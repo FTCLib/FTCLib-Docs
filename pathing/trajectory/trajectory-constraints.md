@@ -20,7 +20,7 @@ The `DifferentialDriveVoltageConstraint` only ensures that theoretical voltage c
 
 ## Creating a Custom Constraint
 
-Users can create their own constraint by implementing the `TrajectoryConstraint` [interface](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/trajectory/constraint/TrajectoryConstraint.java).
+Users can create their own constraint by implementing the `TrajectoryConstraint` [interface](https://github.com/FTCLib/FTCLib/blob/v2.0.1/core/src/main/java/com/arcrobotics/ftclib/trajectory/constraint/TrajectoryConstraint.java).
 
 ```java
 @Override

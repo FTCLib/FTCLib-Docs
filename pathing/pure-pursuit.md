@@ -4,7 +4,7 @@ description: package com.arcrobotics.ftclib.purepursuit
 
 # Pure Pursuit
 
-The pure pursuit algorithm in FTCLib is developed so that the user only needs to add the desired waypoints and call the `followPath()` method in the [Path](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/purepursuit/Path.java) class. To use this, you need to pass the [mecanum](https://docs.ftclib.org/ftclib/features/drivebases#mecanum) drivetrain as well as the odometry for the robot. Once the method is finished, it will return true or false depending on if it was successful or not.
+The pure pursuit algorithm in FTCLib is developed so that the user only needs to add the desired waypoints and call the `followPath()` method in the [Path](https://github.com/FTCLib/FTCLib/blob/v2.0.1/core/src/main/java/com/arcrobotics/ftclib/purepursuit/Path.java) class. To use this, you need to pass the [mecanum](https://docs.ftclib.org/ftclib/features/drivebases#mecanum) drivetrain as well as the odometry for the robot. Once the method is finished, it will return true or false depending on if it was successful or not.
 
 As an alternative, you can call the `loop()` method and directly input your odometry positions there. Make sure you update the odometry positions with each iteration of the loop.
 
@@ -125,7 +125,7 @@ Waypoint p3 = new PointTurnWaypoint(
 
 **InterruptWaypoint**
 
-The `action` here is an [InterruptAction](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/purepursuit/actions/InterruptAction.java), which is an interface that the user can implement to create a custom action to occur at this point. A recommendation is to pair this with the [command paradigm](../command-base/command-system/) that FTCLib provides.
+The `action` here is an [InterruptAction](https://github.com/FTCLib/FTCLib/blob/v2.0.1/core/src/main/java/com/arcrobotics/ftclib/purepursuit/actions/InterruptAction.java), which is an interface that the user can implement to create a custom action to occur at this point. A recommendation is to pair this with the [command paradigm](../command-base/command-system/) that FTCLib provides.
 
 ```java
 // Empty constructor. Note: Only use this constructor
@@ -260,7 +260,7 @@ m_path.reset();
 
 The `followPath()` method is the automatic implementation of pure pursuit for FTCLib. For teams that want to use all of FTCLib's features to the fullest, this is the recommended process.
 
-An important note for the pure pursuit algorithm is that it only works well with odometry. You can use the various odometry systems provided by FTCLib. An important thing to note is that `followPath()` makes use of the [Odometry](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/kinematics/Odometry.java) abstract class and the [mecanum drivebase](https://docs.ftclib.org/ftclib/features/drivebases#mecanum). Then, the method will call the loop method and do everything for you.
+An important note for the pure pursuit algorithm is that it only works well with odometry. You can use the various odometry systems provided by FTCLib. An important thing to note is that `followPath()` makes use of the [Odometry](https://github.com/FTCLib/FTCLib/blob/v2.0.1/core/src/main/java/com/arcrobotics/ftclib/kinematics/Odometry.java) abstract class and the [mecanum drivebase](https://docs.ftclib.org/ftclib/features/drivebases#mecanum). Then, the method will call the loop method and do everything for you.
 
 ```java
 // follow path
@@ -271,7 +271,7 @@ An issue this method has is that we cannot directly access the hardware of the r
 
 ### Creating Your Odometry
 
-As a way of working around this issue, the odometry needs to be setup in a particular way with [Suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html). A supplier is a functional interface that uses lambdas to reference a certain value. Let's work with the [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java) class for these examples.
+As a way of working around this issue, the odometry needs to be setup in a particular way with [Suppliers](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html). A supplier is a functional interface that uses lambdas to reference a certain value. Let's work with the [HolonomicOdometry](https://github.com/FTCLib/FTCLib/blob/v2.0.1/core/src/main/java/com/arcrobotics/ftclib/kinematics/HolonomicOdometry.java) class for these examples.
 
 You're going to want to instantiate your odometry using this constructor:
 
@@ -329,11 +329,11 @@ m_robot.stop();
 
 ## Using the Pure Pursuit Command
 
-If you're using your odometry for multiple subsystems, you're likely going to want to make use of the [PurePursuitCommand](https://github.com/FTCLib/FTCLib/blob/v1.2.0/core/src/main/java/com/arcrobotics/ftclib/command/PurePursuitCommand.java) due to the shared odometry \(as we only want to update it once per cycle\). This is actually the recommended method of using pure pursuit, especially if you want to use it with the command-based paradigm that FTCLib has to offer.
+If you're using your odometry for multiple subsystems, you're likely going to want to make use of the [PurePursuitCommand](https://github.com/FTCLib/FTCLib/blob/v2.0.1/core/src/main/java/com/arcrobotics/ftclib/command/PurePursuitCommand.java) due to the shared odometry \(as we only want to update it once per cycle\). This is actually the recommended method of using pure pursuit, especially if you want to use it with the command-based paradigm that FTCLib has to offer.
 
 ### Creating an Odometry Subsystem
 
-The pre-built PurePursuitCommand requires the use of FTCLib's [OdometrySubsystem](https://docs.ftclib.org/ftclib/v/v1.2.0/kinematics/odometry#using-the-odometry-subsystem). It is fairly easy to set up. All that is needed is for the user to pass in their odometry class into the constructor of the subsystem.
+The pre-built PurePursuitCommand requires the use of FTCLib's [OdometrySubsystem](https://docs.ftclib.org/ftclib/kinematics/odometry#using-the-odometry-subsystem). It is fairly easy to set up. All that is needed is for the user to pass in their odometry class into the constructor of the subsystem.
 
 ```java
 // create the odometry object
@@ -391,5 +391,5 @@ The rest of the class does everything for you through the command-based paradigm
 
 ### Running the Command
 
-It is run the exact same way everything else is run in the paradigm: by running the scheduler. Take a look at [this sample](https://github.com/FTCLib/FTCLib/blob/dev/examples/src/main/java/com/example/ftclibexamples/PurePursuitSample.java) to see how everything works together.
+It is run the exact same way everything else is run in the paradigm: by running the scheduler. Take a look at [this sample](https://github.com/FTCLib/FTCLib/blob/v2.0.1/examples/src/main/java/com/example/ftclibexamples/PurePursuitSample.java) to see how everything works together.
 
