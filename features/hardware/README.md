@@ -61,7 +61,7 @@ servo = new SimpleServo(
 );
 ```
 
-`MIN_ANLGLE` and `MAX_ANGLE` are the minimum and maximum angle positions in degrees you would like to set the servo. This functionally serves as the servo's effective range. If you want to change the effective range at any point, you can do the following:
+`MIN_ANGLE` and `MAX_ANGLE` are the minimum and maximum angle positions in degrees you would like to set the servo. This functionally serves as the servo's effective range. If you want to change the effective range at any point, you can do the following:
 
 ```java
 // change the effective range to a min and max in DEGREES
