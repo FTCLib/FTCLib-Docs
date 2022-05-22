@@ -28,7 +28,7 @@ We would also greatly appreciate it if you would contribute to FTCLib. Make sure
 
 * Xing - FTC 15303
 * Sam - FTC 4314
-* Colin - FRC 3457
+* Colin - FRC 5431
 * Shengming - FTC 4781
 * Noah - FTC 16626
 * Sebastian - FTC 18341
