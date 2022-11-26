@@ -1,6 +1,7 @@
 ---
 description: package com.arcrobotics.ftclib.purepursuit
 ---
+# This is buggy and is being replaced in the next version of FTCLib. Its use is currently not recommend
 
 # Pure Pursuit
 
