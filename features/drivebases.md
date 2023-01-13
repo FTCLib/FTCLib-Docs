@@ -72,6 +72,9 @@ HDrive kiwi_B = new HDrive(left, right, slide,
 ```
 
 Your slide motor is generally the back of the kiwi drive and the others are self-explanatory.
+Note that the motor angles above are in Radians.
+Ensure that you're associating the correct motor/wheel with the corresponding argument as they _don't_ go around the robot in order.
+Forward is 0 degrees.
 
 #### X-Drive
 
@@ -128,6 +131,7 @@ For all types of holonomic drive you do this by calling the .`driveFieldCentric(
 ```java
 m_drive.driveFieldCentric(strafeSpeed, forwardSpeed, turn, heading);
 ```
+The `heading` argument is the current heading of the robot, usually from the IMU. Note that it is in _degress_ here, not radians.
 
 ### Sample
 
