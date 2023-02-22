@@ -62,7 +62,7 @@ Add this dependency block for the base library:
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
 dependencies {
-    implementation 'org.ftclib.ftclib:core:2.0.1' // core
+    implementation 'org.ftclib.ftclib:core:2.1.1' // core
 ```
 {% endcode %}
 
@@ -73,8 +73,8 @@ Add this dependency block for the vision library:
 {% code title="build.gradle \(Module: TeamCode\)" %}
 ```groovy
 dependencies {
-    implementation 'org.ftclib.ftclib:vision:2.0.1' // vision
-    implementation 'org.ftclib.ftclib:core:2.0.1' // core
+    implementation 'org.ftclib.ftclib:vision:2.1.0' // vision
+    implementation 'org.ftclib.ftclib:core:2.1.1' // core
 }
 ```
 {% endcode %}

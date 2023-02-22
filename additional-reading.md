@@ -13,6 +13,6 @@ We also recommend that you read the [SDK documentation](https://ftctechnh.github
 
 Please be sure to check out other libraries that have inspired us, like [Road Runner](https://acme-robotics.gitbook.io/road-runner/) and [EasyOpenCV](https://github.com/OpenFTC/EasyOpenCV). You can use these libraries in conjunction with FTCLib if you would like; although, FTCLib already uses EasyOpenCV in its vision package.
 
-Currently, there is a Road Runner quickstart that uses FTCLib [here](https://www.github.com/FTCLib/RoadRunner-FTCLib-Quickstart), It makes use of the [command-based](command-base/command-system/) paradigm. **This project is out-of-date and will be sunset by August 2022.** It will be replaced by a new quickstart project that
+Currently, there is a Road Runner quickstart that uses FTCLib [here](https://www.github.com/FTCLib/RoadRunner-FTCLib-Quickstart), It makes use of the [command-based](command-base/command-system/) paradigm. **This project is out-of-date and will be sunset** It will be replaced by a new quickstart project that
 utilizes FTCLib trajectories and features rather than relying on Road Runner.
 

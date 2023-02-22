@@ -8,7 +8,7 @@ description: Organizing your code with the Robot class and CommandOpMode.
 
 ## The Robot Class
 
-The [Robot](https://github.com/FTCLib/FTCLib/blob/v2.0.1/core/src/main/java/com/arcrobotics/ftclib/command/Robot.java) class makes using the CommandScheduler so much simpler in the user's code. Similar to WPILib, the Robot class allows for making a Robot paradigm. This allows for the creation of multiple opmodes tied to one object. This is also the basis for disabling the robot, meaning we want to interrupt the commands and not allow for scheduling new ones. This is done with the static `disable()` and `enable()` methods:
+The [Robot](https://github.com/FTCLib/FTCLib/blob/v2.1.1/core/src/main/java/com/arcrobotics/ftclib/command/Robot.java) class makes using the CommandScheduler so much simpler in the user's code. Similar to WPILib, the Robot class allows for making a Robot paradigm. This allows for the creation of multiple opmodes tied to one object. This is also the basis for disabling the robot, meaning we want to interrupt the commands and not allow for scheduling new ones. This is done with the static `disable()` and `enable()` methods:
 
 ```java
 // disable the Robot
@@ -81,7 +81,7 @@ m_robot.reset();    // resets the scheduler instance
 
 ## CommandOpMode
 
-The [CommandOpMode](https://github.com/FTCLib/FTCLib/blob/v2.0.1/core/src/main/java/com/arcrobotics/ftclib/command/CommandOpMode.java) is the center of the FTC-centric command-based paradigm. It makes everything simpler for the user and greatly decreases the amount of code needed to run everything. Unlike the Robot class, it is opmode-specific, so it does not store a common reference to subsystems. If desired, the user can create a map that houses all of the referenced hardware, but this is currently not a feature offered \(but totally supported\) by FTCLib.
+The [CommandOpMode](https://github.com/FTCLib/FTCLib/blob/v2.1.1/core/src/main/java/com/arcrobotics/ftclib/command/CommandOpMode.java) is the center of the FTC-centric command-based paradigm. It makes everything simpler for the user and greatly decreases the amount of code needed to run everything. Unlike the Robot class, it is opmode-specific, so it does not store a common reference to subsystems. If desired, the user can create a map that houses all of the referenced hardware, but this is currently not a feature offered \(but totally supported\) by FTCLib.
 
 If desired, the user can override the methods from the CommandOpMode. Similarly to the Robot class, you can disable the CommandOpMode with static methods \(which actually disable the Robot class, which is what is referenced in the CommandScheduler for `runsWhenDisabled()` commands.
 
@@ -103,5 +103,5 @@ public void initialize() {
 }
 ```
 
-That is functionally all that needs to be done, everything else is done for the user internally. You can find a sample project utilizing CommandOpMode [here](https://github.com/FTCLib/FTCLib/blob/v2.0.1/examples/src/main/java/com/example/ftclibexamples/PurePursuitSample.java).
+That is functionally all that needs to be done, everything else is done for the user internally. You can find a sample project utilizing CommandOpMode [here](https://github.com/FTCLib/FTCLib/blob/v2.1.1/examples/src/main/java/com/example/ftclibexamples/PurePursuitSample.java).
 

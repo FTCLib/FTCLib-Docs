@@ -165,4 +165,4 @@ public class BasicDriveOpMode extends OpMode {
 ```
 {% endcode %}
 
-You can find an additional sample [here](https://github.com/FTCLib/FTCLib/blob/v2.0.1/examples/src/main/java/com/example/ftclibexamples/MecanumDrivingSample.java) which is more thoroughly detailed.
+You can find an additional sample [here](https://github.com/FTCLib/FTCLib/blob/v2.1.1/examples/src/main/java/com/example/ftclibexamples/MecanumDrivingSample.java) which is more thoroughly detailed.
