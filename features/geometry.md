@@ -32,7 +32,7 @@ FTCLib provides 2 classes, `Transform2d`, which represents a transformation to a
 
 `Transform2d` represents a **relative** transformation. It has an translation and a rotation component. Transforming a `Pose2d` by a `Transform2d` rotates the translation component of the transform by the rotation of the pose, and then adds the rotated translation component and the rotation component to the pose. In other words, `Pose2d.plus(Transform2d)` returns $$\begin{bmatrix} x_{p} \\ y_{p} \\ \theta_{p} \end{bmatrix} + \begin{bmatrix} \cos{\theta_{p}} & -\sin{\theta_{p}} & 0 \\ \sin{\theta_{p}} & \cos{\theta_{p}} & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x_{t} \\ y_{t} \\ \theta_{t} \end{bmatrix}$$ .
 
-`Twist2d` represents a change in distance along an arc. Usually, this class is used to represent the movement of a drivetrain, where the x component is the forward distance driven, the y component is the distance driven to the side \(left positive\), and the $$\theta$$ component is the change in heading.
+`Twist2d` represents a change in distance along an arc. For a given arc traveled, $$x$$ is the distance traveled forward as measured from the robot's perspective throughout the movement (for a differential drive, this is the arc length), $$y$$ is the distance traveled sideways from the robot's perspective (for a differential drive, this is 0), and $$\theta$$ is the change in heading.
 
 Both classes can be used to estimate robot location. `Twist2d` is used in some of the FTCLib odometry classes to update the robot’s pose based on movement, while `Transform2d` can be used to estimate the robot’s global position from vision data.
 

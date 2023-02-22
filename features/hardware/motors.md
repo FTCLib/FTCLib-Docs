@@ -159,11 +159,15 @@ m_motor.setDistancePerPulse(18.0); // also an option
 double distance = encoder.getDistance();
 distance = m_motor.getDistance(); // also an option
 
-/** USEFUL FEATURE **/
+/** USEFUL FEATURES **/
 
 // you can set the encoder of the motor to a different motor's
 // encoder
 m_motor.encoder = other_motor.encoder;
+
+// sometimes the encoder needs to be reset completely
+// through hardware
+m_motor.stopAndResetEncoder();
 ```
 
 ## The MotorEx Object
